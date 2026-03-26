@@ -68,28 +68,6 @@ body {
   min-height: max(884px, 100dvh);
 }
 
-.animate-svg-signature {
-  stroke-dasharray: 100;
-  stroke-dashoffset: 100;
-  animation: svg-signature-draw 3.5s cubic-bezier(0.2, 0.6, 0.4, 1) forwards;
-  animation-delay: 0.5s;
-}
-
-.animate-svg-fill {
-  opacity: 0;
-  animation: svg-signature-fill 0.8s ease-in forwards;
-  animation-delay: 3.5s;
-}
-
-@keyframes svg-signature-draw {
-  0% { stroke-dashoffset: 100; }
-  100% { stroke-dashoffset: 0; }
-}
-
-@keyframes svg-signature-fill {
-  0% { opacity: 0; }
-  100% { opacity: 0.9; }
-}
 
 .glass-card {
   background: rgba(47, 52, 69, 0.4);
