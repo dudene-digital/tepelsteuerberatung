@@ -1,25 +1,9 @@
+import Navbar from "@/components/Navbar";
+
 export default function Home() {
   return (
     <>
-      
-
-<nav className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-xl shadow-[0_0_40px_rgba(165,231,255,0.06)]">
-<div className="flex justify-between items-center max-w-7xl mx-auto px-8 py-6">
-<div className="flex items-center gap-3">
-<span className="material-symbols-outlined text-cyan-400 text-2xl" data-icon="account_balance">account_balance</span>
-<span className="text-xl font-extrabold tracking-tighter text-slate-50 dark:text-white font-manrope uppercase">FABIAN TEPEL</span>
-</div>
-<div className="hidden md:flex items-center gap-10">
-<a className="font-manrope text-sm font-semibold tracking-widest uppercase text-cyan-400 border-b-2 border-cyan-400 pb-1 transition-all" href="#home">Home</a>
-<a className="font-manrope text-sm font-semibold tracking-widest uppercase text-slate-400 hover:text-slate-100 transition-colors" href="#services">Services</a>
-<a className="font-manrope text-sm font-semibold tracking-widest uppercase text-slate-400 hover:text-slate-100 transition-colors" href="#start-up">Start-up</a>
-<a className="font-manrope text-sm font-semibold tracking-widest uppercase text-slate-400 hover:text-slate-100 transition-colors" href="#kontakt">Kontakt</a>
-</div>
-<a href="#kontakt" className="bg-primary-container text-on-primary-container font-headline font-bold px-6 py-2.5 rounded-lg scale-95 active:scale-90 transition-transform hover:shadow-[0_0_20px_rgba(0,210,255,0.3)] inline-block">
-                Erstgespräch
-            </a>
-</div>
-</nav>
+      <Navbar />
 <main className="relative">
 
 <section id="home" className="relative min-h-screen flex items-center pt-24 overflow-hidden">
