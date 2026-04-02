@@ -112,14 +112,15 @@ export default function Home() {
 </button>
 </div>
 
-<div className="bg-primary/5 p-6 md:p-10 rounded-[2rem] border border-primary/20 hover:bg-primary/10 transition-all duration-500 group flex flex-col justify-center text-center">
-<div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-8">
-<span className="material-symbols-outlined text-4xl text-primary" data-icon="rocket_launch" data-weight="fill" style={{ fontVariationSettings: "'FILL' 1" }}>rocket_launch</span>
-</div>
+<div className="glass-card p-6 md:p-10 rounded-[2rem] border border-outline-variant/10 hover:bg-surface-variant/30 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,210,255,0.1)] transition-all duration-500 group">
+<span className="material-symbols-outlined text-4xl text-tertiary mb-8 block" data-icon="rocket_launch">rocket_launch</span>
 <h3 className="font-headline text-2xl font-bold mb-4 text-on-surface">Du baust das Business, ich halte dir den Rücken frei.</h3>
-<p className="text-on-surface-variant leading-relaxed">
+<p className="text-on-surface-variant leading-relaxed mb-8">
                             Konzentriere dich auf dein Produkt. Ich kümmere mich um die steuerliche Struktur, die Finanzplanung und die Kommunikation mit dem Finanzamt.
                         </p>
+<button className="text-tertiary font-headline font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
+                            Mehr erfahren <span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
 </div>
 </div>
 </div>
