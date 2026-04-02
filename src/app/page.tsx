@@ -85,9 +85,7 @@ export default function Home() {
 <p className="text-on-surface-variant leading-relaxed mb-8">
                             Belege scannen statt abheften. Wir nutzen modernste digitale Schnittstellen und Automatisierungen, damit du dich nie wieder mit Pendelordnern herumschlagen musst.
                         </p>
-<button className="text-tertiary font-headline font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
-                            Mehr erfahren <span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
-</button>
+
 </div>
 
 <div className="glass-card p-6 md:p-10 rounded-[2rem] border border-outline-variant/10 hover:bg-surface-variant/30 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,210,255,0.1)] transition-all duration-500 group">
@@ -96,9 +94,7 @@ export default function Home() {
 <p className="text-on-surface-variant leading-relaxed mb-8">
                             Das Steuerrecht ändert sich, dein Business wächst. Wir passen unsere Prozesse monatlich an deine Bedürfnisse an, statt in alten Strukturen zu verharren.
                         </p>
-<button className="text-tertiary font-headline font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
-                            Mehr erfahren <span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
-</button>
+
 </div>
 
 <div className="glass-card p-6 md:p-10 rounded-[2rem] border border-outline-variant/10 hover:bg-surface-variant/30 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,210,255,0.1)] transition-all duration-500 group">
@@ -107,9 +103,7 @@ export default function Home() {
 <p className="text-on-surface-variant leading-relaxed mb-8">
                             Wir telefonieren nicht nur, wenn die Frist abläuft. Regelmäßige Check-ins per Video-Call stellen sicher, dass wir proaktiv statt reaktiv handeln.
                         </p>
-<button className="text-tertiary font-headline font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
-                            Mehr erfahren <span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
-</button>
+
 </div>
 
 <div className="glass-card p-6 md:p-10 rounded-[2rem] border border-outline-variant/10 hover:bg-surface-variant/30 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,210,255,0.1)] transition-all duration-500 group">
@@ -118,9 +112,7 @@ export default function Home() {
 <p className="text-on-surface-variant leading-relaxed mb-8">
                             Konzentriere dich auf dein Produkt. Ich kümmere mich um die steuerliche Struktur, die Finanzplanung und die Kommunikation mit dem Finanzamt.
                         </p>
-<button className="text-tertiary font-headline font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
-                            Mehr erfahren <span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
-</button>
+
 </div>
 </div>
 </div>
