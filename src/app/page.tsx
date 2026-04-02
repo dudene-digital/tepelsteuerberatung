@@ -83,7 +83,7 @@ export default function Home() {
 <span className="material-symbols-outlined text-4xl text-primary mb-8 block" data-icon="cloud_off">cloud_off</span>
 <h3 className="font-headline text-2xl font-bold mb-4 text-on-surface">Kein Papierkram mehr</h3>
 <p className="text-on-surface-variant leading-relaxed mb-8">
-                            Belege scannen statt abheften. Wir nutzen modernste DATEV-Schnittstellen und Automatisierungen, damit du dich nie wieder mit Pendelordnern herumschlagen musst.
+                            Belege scannen statt abheften. Wir nutzen modernste digitale Schnittstellen und Automatisierungen, damit du dich nie wieder mit Pendelordnern herumschlagen musst.
                         </p>
 <button className="text-tertiary font-headline font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
                             Mehr erfahren <span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
