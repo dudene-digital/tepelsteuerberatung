@@ -146,9 +146,7 @@ export default function Home() {
 <span className="text-on-surface">Cashflow-Monitoring &amp; Finanzplanung</span>
 </li>
 </ul>
-<button className="bg-surface-container-high border border-outline-variant/30 text-on-surface px-12 py-5 rounded-xl font-headline font-bold text-lg hover:border-primary transition-all">
-                        Details zum Start-up Paket
-                    </button>
+
 </div>
 <div className="relative">
 <div className="relative z-10 p-4 glass-card rounded-[3rem] border border-outline-variant/20 shadow-2xl overflow-hidden animate-float">
