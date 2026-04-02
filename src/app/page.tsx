@@ -338,6 +338,29 @@ Jetzt Kontakt <span className="material-symbols-outlined" data-icon="arrow_forwa
 </form>
 </div>
 </div>
+
+{/* OSM Map */}
+<div className="mt-12 rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-outline-variant/30 shadow-2xl relative">
+  <div className="absolute top-6 left-6 z-10 bg-surface-container/90 backdrop-blur-md px-5 py-3 rounded-xl border border-outline-variant/20 shadow-lg">
+    <div className="flex items-center gap-3">
+      <span className="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+      <div>
+        <p className="font-headline font-bold text-sm text-on-surface">Tepel Steuerberatung</p>
+        <p className="text-xs text-on-surface-variant">Gottfried-Kinkel-Straße 21, 65187 Wiesbaden</p>
+      </div>
+    </div>
+  </div>
+  <iframe
+    title="Standort Tepel Steuerberatung"
+    width="100%"
+    height="350"
+    style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) saturate(0.3) brightness(0.8) contrast(1.1)" }}
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+    src="https://www.openstreetmap.org/export/embed.html?bbox=8.2385%2C50.0597%2C8.2485%2C50.0637&layer=mapnik&marker=50.0617%2C8.2435"
+  ></iframe>
+</div>
+
 </div>
 </section>
 
