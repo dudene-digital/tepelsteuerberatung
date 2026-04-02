@@ -206,7 +206,7 @@ export default function Home() {
 </div>
 <span className="font-label text-sm uppercase tracking-[0.2em] text-tertiary font-bold">Digitaler Workflow</span>
 </div>
-<h2 className="font-headline text-4xl md:text-5xl font-extrabold mb-8 leading-tight">BUCHHALTUNG 2.0.</h2>
+<h2 className="font-headline text-4xl md:text-5xl font-extrabold mb-8 leading-tight">BUCHHALTUNG 2.0</h2>
 <p className="text-xl text-on-surface-variant mb-10 leading-relaxed">
                         Vergiss Pendelordner und Schuhkartons voller Belege. Mit <strong>innovativen Werkzeugen</strong>{" "}digitalisieren wir deine Buchführung komplett. Du fotografierst Belege per App oder lädst sie hoch, das geht auch automatisiert &ndash; ich kümmere mich um den Rest.
                     </p>
