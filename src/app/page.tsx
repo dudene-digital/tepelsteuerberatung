@@ -210,6 +210,20 @@ export default function Home() {
 <p className="text-xl text-on-surface-variant mb-10 leading-relaxed">
                         Vergiss Pendelordner und Schuhkartons voller Belege. Mit <strong>innovativen Werkzeugen</strong> digitalisieren wir deine Buchführung komplett. Du fotografierst Belege per App oder lädst sie hoch, das geht auch automatisiert &ndash; ich kümmere mich um den Rest.
                     </p>
+<ul className="space-y-4">
+<li className="flex items-start gap-3">
+<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
+<span className="text-on-surface">100% papierlos &amp; ortsunabhängig</span>
+</li>
+<li className="flex items-start gap-3">
+<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
+<span className="text-on-surface">Digitaler Einblick in deine Unternehmenskennzahlen</span>
+</li>
+<li className="flex items-start gap-3">
+<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
+<span className="text-on-surface">Automatisierte Schnittstellen zu Bank &amp; Bezahlsystemen</span>
+</li>
+</ul>
 </div>
 <div className="relative">
 <div className="relative z-10 p-4 glass-card rounded-[3rem] border border-outline-variant/20 shadow-2xl overflow-hidden animate-float-delayed">
@@ -240,6 +254,20 @@ export default function Home() {
 <p className="text-xl text-on-surface-variant mb-10 leading-relaxed">
                         Dein Team wächst? Ich übernehme die komplette Lohnabrechnung, inklusive aller Meldungen an Sozialversicherungsträger und Finanzamt. Digitaler Abruf der Abrechnungen für deine Mitarbeiter inklusive.
                     </p>
+<ul className="space-y-4">
+<li className="flex items-start gap-3">
+<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
+<span className="text-on-surface">Digitale Lohnauswertungen via App</span>
+</li>
+<li className="flex items-start gap-3">
+<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
+<span className="text-on-surface">Rechtssichere Abrechnung von Benefits &amp; Sachbezügen</span>
+</li>
+<li className="flex items-start gap-3">
+<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
+<span className="text-on-surface">Volle Übernahme der Melde- und Bescheinigungswesen</span>
+</li>
+</ul>
 </div>
 </div>
 </section>
