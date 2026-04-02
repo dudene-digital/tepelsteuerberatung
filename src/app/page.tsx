@@ -31,7 +31,7 @@ export default function Home() {
 </div>
 <div className="lg:col-span-5 relative mt-16 lg:mt-0">
 <div className="relative w-full aspect-square rounded-[2rem] overflow-hidden shadow-2xl animate-float">
-<img alt="Fabian Tepel" className="w-full h-full object-cover" data-alt="Modern professional portrait of a young male tax advisor in a bright minimalist office with soft cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMarYIqRxP0j17DRICoWkgN4KGHXqDgaCCjoQ6AwPHPgO5GB2z4zJM0fs3AHP5H0am9YMZ0cGg8sGEU__1tIUKYLLaoZ0dRFGOh9g2GP770ydi3aWEG7DMa0cClWV02Nk2lEZQB9zYaC7wLOB7Kwc92W_G2nNBtkSyUDd7oSSnsoQdWo0CpgxJaaynNrxstRZ-B9srd7_FDkblPBNenz12j585NFVAJe6w-6ugjbHESLjE1JyrP1LvdLUwxfk6pFm07TWbDTSLRbtB"/>
+<img alt="Fabian Tepel" className="w-full h-full object-cover" src="/fabian-tepel.png"/>
 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
 
 </div>
