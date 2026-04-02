@@ -262,7 +262,7 @@ export default function Home() {
 <div className="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center group-hover:bg-primary/20 transition-colors">
 <span className="material-symbols-outlined text-tertiary text-lg" data-icon="location_on">location_on</span>
 </div>
-<span className="leading-snug flex-1">Gerichtsstraße 2, 65185 Wiesbaden</span>
+<span className="leading-snug flex-1">Gottfried-Kinkel-Straße 21, 65187 Wiesbaden</span>
 </li>
 </ul>
 <a href="mailto:fabian@tepel-steuerberatung.de" className="bg-surface-bright text-on-surface px-8 py-4 rounded-xl font-headline font-bold text-lg border border-outline-variant/30 hover:border-primary transition-all flex items-center gap-3 w-fit">
