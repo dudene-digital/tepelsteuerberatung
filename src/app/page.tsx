@@ -1,8 +1,85 @@
 import Navbar from "@/components/Navbar";
 
 export default function Home() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AccountingService",
+    name: "Tepel Steuerberatung",
+    alternateName: "Fabian Tepel Steuerberatung",
+    url: "https://tepel-steuerberatung.de",
+    telephone: "+491723870104",
+    email: "fabian@tepel-steuerberatung.de",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Gottfried-Kinkel-Straße 21",
+      addressLocality: "Wiesbaden",
+      postalCode: "65187",
+      addressCountry: "DE",
+      addressRegion: "Hessen",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 50.0617,
+      longitude: 8.2435,
+    },
+    description:
+      "Digitale & agile Steuerberatung in Wiesbaden. Maßgeschneiderte Lösungen für Unternehmer, Start-ups und Freiberufler.",
+    priceRange: "$$",
+    areaServed: {
+      "@type": "City",
+      name: "Wiesbaden",
+    },
+    founder: {
+      "@type": "Person",
+      name: "Fabian Tepel",
+      jobTitle: "Steuerberater",
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Steuerberatungsleistungen",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Finanzbuchhaltung",
+            description: "Digitale Buchhaltung – 100% papierlos & ortsunabhängig",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Lohn & Gehalt",
+            description: "Komplette Lohnabrechnung inkl. Meldungen an Sozialversicherungsträger und Finanzamt",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Jahresabschlüsse & Steuererklärungen",
+            description: "Erstellung von Jahresabschlüssen und Steuererklärungen",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Strategische Steuerberatung",
+            description: "Proaktive Steuergestaltung, Belastungsvergleich und betriebswirtschaftliche Analyse",
+          },
+        },
+      ],
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
 <main className="relative">
 
