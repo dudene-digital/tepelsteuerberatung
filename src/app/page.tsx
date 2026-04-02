@@ -177,6 +177,20 @@ export default function Home() {
 <p className="text-xl text-on-surface-variant mb-10 leading-relaxed">
                         Steuerberatung heißt für mich nicht nur, die Vergangenheit zu verwalten, sondern deine Zukunft zu gestalten. Wir optimieren deine Steuerlast proaktiv und passen die Strategie an, wenn dein Business skaliert.
                     </p>
+<ul className="space-y-4">
+<li className="flex items-start gap-3">
+<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
+<span className="text-on-surface">Proaktive Steuergestaltung &amp; Belastungsvergleich</span>
+</li>
+<li className="flex items-start gap-3">
+<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
+<span className="text-on-surface">Betriebswirtschaftliche Analyse &amp; KPI-Reporting</span>
+</li>
+<li className="flex items-start gap-3">
+<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
+<span className="text-on-surface">Begleitung bei Finanzierungsrunden &amp; Exits</span>
+</li>
+</ul>
 </div>
 </div>
 </section>
