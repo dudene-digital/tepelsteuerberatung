@@ -307,9 +307,20 @@ export default function Home() {
 <span className="leading-snug flex-1">Gottfried-Kinkel-Straße 21, 65187 Wiesbaden</span>
 </li>
 </ul>
-<a href="mailto:fabian@tepel-steuerberatung.de" className="bg-surface-bright text-on-surface px-8 py-4 rounded-xl font-headline font-bold text-lg border border-outline-variant/30 hover:border-primary transition-all flex items-center gap-3 w-fit">
+<a href="mailto:fabian@tepel-steuerberatung.de" className="bg-surface-bright text-on-surface px-8 py-4 rounded-xl font-headline font-bold text-lg border border-outline-variant/30 hover:border-primary transition-all flex items-center gap-3 w-fit mb-8">
 Jetzt Kontakt <span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
 </a>
+<div className="rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg relative h-[200px]">
+  <iframe
+    title="Standort Tepel Steuerberatung"
+    width="100%"
+    height="100%"
+    style={{ border: 0, filter: "grayscale(1) invert(1) brightness(0.55) hue-rotate(190deg) contrast(1.2)" }}
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+    src="https://www.openstreetmap.org/export/embed.html?bbox=8.2395%2C50.0607%2C8.2475%2C50.0627&layer=mapnik&marker=50.0617%2C8.2435"
+  ></iframe>
+</div>
 </div>
 <div className="bg-surface-container-highest p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-outline-variant/20 shadow-inner flex flex-col justify-center">
 <h4 className="font-headline text-2xl font-bold mb-8 text-on-surface">Schreib mir direkt</h4>
@@ -339,27 +350,6 @@ Jetzt Kontakt <span className="material-symbols-outlined" data-icon="arrow_forwa
 </div>
 </div>
 
-{/* OSM Map */}
-<div className="mt-12 rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-outline-variant/30 shadow-2xl relative">
-  <div className="absolute top-6 left-6 z-10 bg-surface-container/90 backdrop-blur-md px-5 py-3 rounded-xl border border-outline-variant/20 shadow-lg">
-    <div className="flex items-center gap-3">
-      <span className="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
-      <div>
-        <p className="font-headline font-bold text-sm text-on-surface">Tepel Steuerberatung</p>
-        <p className="text-xs text-on-surface-variant">Gottfried-Kinkel-Straße 21, 65187 Wiesbaden</p>
-      </div>
-    </div>
-  </div>
-  <iframe
-    title="Standort Tepel Steuerberatung"
-    width="100%"
-    height="350"
-    style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) saturate(0.3) brightness(0.8) contrast(1.1)" }}
-    loading="lazy"
-    referrerPolicy="no-referrer-when-downgrade"
-    src="https://www.openstreetmap.org/export/embed.html?bbox=8.2385%2C50.0597%2C8.2485%2C50.0637&layer=mapnik&marker=50.0617%2C8.2435"
-  ></iframe>
-</div>
 
 </div>
 </section>
