@@ -315,10 +315,9 @@ Jetzt Kontakt <span className="material-symbols-outlined" data-icon="arrow_forwa
     title="Standort Tepel Steuerberatung"
     width="100%"
     height="100%"
-    style={{ border: 0, filter: "grayscale(1) invert(1) brightness(0.55) hue-rotate(190deg) contrast(1.2)" }}
+    style={{ border: 0 }}
     loading="lazy"
-    referrerPolicy="no-referrer-when-downgrade"
-    src="https://www.openstreetmap.org/export/embed.html?bbox=8.2395%2C50.0607%2C8.2475%2C50.0627&layer=mapnik&marker=50.0617%2C8.2435"
+    src="/map.html"
   ></iframe>
 </div>
 </div>
