@@ -208,7 +208,7 @@ export default function Home() {
 </div>
 <h2 className="font-headline text-4xl md:text-5xl font-extrabold mb-8 leading-tight">BUCHHALTUNG 2.0.</h2>
 <p className="text-xl text-on-surface-variant mb-10 leading-relaxed">
-                        Vergiss Pendelordner und Schuhkartons voller Belege. Mit <strong>innovativen Werkzeugen</strong> digitalisieren wir deine Buchführung komplett. Du fotografierst Belege per App oder lädst sie hoch, das geht auch automatisiert &ndash; ich kümmere mich um den Rest.
+                        Vergiss Pendelordner und Schuhkartons voller Belege. Mit <strong>innovativen Werkzeugen</strong>{" "}digitalisieren wir deine Buchführung komplett. Du fotografierst Belege per App oder lädst sie hoch, das geht auch automatisiert &ndash; ich kümmere mich um den Rest.
                     </p>
 <ul className="space-y-4">
 <li className="flex items-start gap-3">
