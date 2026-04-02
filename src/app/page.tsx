@@ -211,7 +211,7 @@ export default function Home() {
 <div className="max-w-7xl mx-auto px-8 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
 <div className="relative order-last lg:order-first">
 <div className="relative z-10 p-4 glass-card rounded-[3rem] border border-outline-variant/20 shadow-2xl overflow-hidden animate-float">
-<img alt="Lohn & Gehalt" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-[2.5rem]" src="payroll_image_1774551236810.png"/>
+<img alt="Lohn & Gehalt" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-[2.5rem]" src="/lohn-gehalt.png"/>
 </div>
 <div className="absolute -bottom-12 -left-12 w-64 h-64 border-[40px] border-secondary/10 rounded-full animate-float-delayed"></div>
 </div>
