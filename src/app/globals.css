@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Self-hosted Material Symbols – DSGVO-konform, kein Google-CDN */
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url('/fonts/MaterialSymbolsOutlined.woff2') format('woff2');
+}
+
 @theme inline {
   --color-error: #ffb4ab;
   --color-on-tertiary: #003731;
@@ -79,6 +88,21 @@ body {
 }
 
 .material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'liga';
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
@@ -107,4 +131,75 @@ body {
 .animate-float-delayed {
   animation: float 6s ease-in-out infinite;
   animation-delay: -3s;
+}
+
+/* Legal content (Datenschutz, Impressum) */
+.legal-content h1 {
+  font-family: var(--font-headline);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-on-surface);
+  margin-bottom: 2rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.legal-content h2 {
+  font-family: var(--font-headline);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.legal-content h3 {
+  font-family: var(--font-headline);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.legal-content h4 {
+  font-family: var(--font-headline);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-on-surface-variant);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.legal-content p {
+  color: var(--color-on-surface-variant);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.legal-content a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+
+.legal-content a:hover {
+  color: var(--color-primary-container);
+}
+
+.legal-content ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.legal-content ul li {
+  color: var(--color-on-surface-variant);
+  line-height: 1.8;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
 }

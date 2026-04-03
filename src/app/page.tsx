@@ -470,18 +470,24 @@ Jetzt Kontakt <span className="material-symbols-outlined" data-icon="arrow_forwa
 <div>
 <h4 className="font-manrope text-xs font-bold uppercase tracking-widest text-slate-100 mb-6">Rechtliches</h4>
 <ul className="space-y-4">
-<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="#">Impressum</a></li>
-<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="#">Datenschutz</a></li>
+<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="/impressum">Impressum</a></li>
+<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="/datenschutz">Datenschutz</a></li>
 </ul>
 </div>
 <div>
 <h4 className="font-manrope text-xs font-bold uppercase tracking-widest text-slate-100 mb-6">Kontakt</h4>
 <ul className="space-y-4">
-<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="#">E-Mail</a></li>
-<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="#">LinkedIn</a></li>
+<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="mailto:fabian@tepel-steuerberatung.de">E-Mail</a></li>
+<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="#kontakt">Kontaktformular</a></li>
 </ul>
 </div>
 </div>
+</div>
+<div className="max-w-7xl mx-auto px-8 mt-12 pt-8 border-t border-slate-800 text-center">
+<p className="font-inter text-xs text-slate-500">
+  Made with ❤️ by{" "}
+  <a href="https://dudene-digital.de" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 transition-colors">Dudene Digital</a>
+</p>
 </div>
 </footer>
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Manrope, Great_Vibes } from "next/font/google";
 import "./globals.css";
+import CookieBanner from "@/components/CookieBanner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -92,10 +93,10 @@ export default function RootLayout({
       lang="de"
       className={`${inter.variable} ${manrope.variable} ${greatVibes.variable} dark antialiased scroll-smooth`}
     >
-      <head>
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-      </head>
-      <body className="antialiased selection:bg-primary selection:text-on-primary min-h-full flex flex-col overflow-x-hidden">{children}</body>
+      <body className="antialiased selection:bg-primary selection:text-on-primary min-h-full flex flex-col overflow-x-hidden">
+        {children}
+        <CookieBanner />
+      </body>
     </html>
   );
 }
