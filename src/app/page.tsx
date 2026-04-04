@@ -20,8 +20,8 @@ export default function Home() {
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 50.0617,
-      longitude: 8.2435,
+      latitude: 50.05882,
+      longitude: 8.23970,
     },
     description:
       "Digitale & agile Steuerberatung in Wiesbaden. Maßgeschneiderte Lösungen für Unternehmer, Start-ups und Freiberufler.",

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
-  title: "Impressum | Tepel Steuerberatung",
+  title: "Impressum",
   description:
     "Impressum der Tepel Steuerberatung – Fabian Tepel, Steuerberater in Wiesbaden. Angaben gemäß § 5 TMG.",
 };
