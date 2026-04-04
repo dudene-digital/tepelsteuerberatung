@@ -25,9 +25,9 @@ export default function Navbar() {
   }, [isOpen]);
 
   const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "Services", href: "#services" },
-    { name: "Kontakt", href: "#kontakt" },
+    { name: "Home", href: "/#home" },
+    { name: "Services", href: "/#services" },
+    { name: "Kontakt", href: "/#kontakt" },
   ];
 
   return (
@@ -67,7 +67,7 @@ export default function Navbar() {
 
           <div className="hidden md:block">
             <a
-              href="#kontakt"
+              href="/#kontakt"
               className="bg-primary-container text-on-primary-container font-headline font-bold px-6 py-2.5 rounded-lg scale-95 active:scale-90 transition-transform hover:shadow-[0_0_20px_rgba(0,210,255,0.3)] inline-block"
             >
               Erstgespräch
@@ -122,7 +122,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="#kontakt"
+            href="/#kontakt"
             onClick={() => setIsOpen(false)}
             className={`mt-8 bg-primary-container text-on-primary-container font-headline font-bold px-8 py-4 rounded-xl text-lg w-full text-center transition-all transform ${
               isOpen

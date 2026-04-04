@@ -4,8 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 
 type ConsentState = {
   essential: boolean;
-  analytics: boolean;
-  marketing: boolean;
+  externalMedia: boolean;
 };
 
 const CONSENT_KEY = "cookie-consent";
@@ -34,45 +33,60 @@ export function getCookieConsent(): ConsentState | null {
 export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
+  const [hasStored, setHasStored] = useState(true);
+  const [mounted, setMounted] = useState(false);
   const [consent, setConsent] = useState<ConsentState>({
     essential: true,
-    analytics: false,
-    marketing: false,
+    externalMedia: false,
   });
 
   useEffect(() => {
-    // Small delay so the page renders first, then the banner slides in
+    setMounted(true);
     const stored = getStoredConsent();
     if (!stored) {
+      setHasStored(false);
       const timer = setTimeout(() => setVisible(true), 800);
       return () => clearTimeout(timer);
+    } else {
+      setHasStored(true);
+      setConsent(stored);
     }
   }, []);
 
   const handleAcceptAll = useCallback(() => {
-    const full: ConsentState = { essential: true, analytics: true, marketing: true };
+    const full: ConsentState = { essential: true, externalMedia: true };
     storeConsent(full);
+    setConsent(full);
+    setHasStored(true);
     setVisible(false);
+    setShowDetails(false);
   }, []);
 
   const handleRejectOptional = useCallback(() => {
-    const minimal: ConsentState = { essential: true, analytics: false, marketing: false };
+    const minimal: ConsentState = { essential: true, externalMedia: false };
     storeConsent(minimal);
+    setConsent(minimal);
+    setHasStored(true);
     setVisible(false);
+    setShowDetails(false);
   }, []);
 
   const handleSaveSelection = useCallback(() => {
     storeConsent(consent);
+    setHasStored(true);
     setVisible(false);
+    setShowDetails(false);
   }, [consent]);
 
-  // Don't render at all if consent was already given
-  const [hasStored, setHasStored] = useState(true);
-  useEffect(() => {
-    setHasStored(!!getStoredConsent());
+  const handleReopen = useCallback(() => {
+    const stored = getStoredConsent();
+    if (stored) setConsent(stored);
+    setShowDetails(true);
+    setVisible(true);
   }, []);
 
-  if (hasStored && !visible) return null;
+  // Don't render on the server
+  if (!mounted) return null;
 
   return (
     <>
@@ -141,61 +155,30 @@ export default function CookieBanner() {
                   </div>
                 </label>
 
-                {/* Analytics */}
+                {/* External Media (OSM / Karten) */}
                 <label className="flex items-center justify-between p-4 rounded-xl bg-surface-container border border-outline-variant/10 cursor-pointer group hover:bg-surface-container-lowest transition-colors">
                   <div className="flex-1 mr-4">
                     <span className="font-headline font-bold text-sm text-on-surface">
-                      Analyse-Cookies
+                      Externe Medien
                     </span>
                     <p className="text-xs text-on-surface-variant mt-1">
-                      Helfen uns zu verstehen, wie du unsere Website nutzt, um sie zu verbessern.
+                      Inhalte von externen Anbietern (z.B. OpenStreetMap-Karten via CARTO). Bei Aktivierung werden Daten an Drittanbieter übermittelt.
                     </p>
                   </div>
                   <button
                     type="button"
                     role="switch"
-                    aria-checked={consent.analytics}
+                    aria-checked={consent.externalMedia}
                     onClick={() =>
-                      setConsent((prev) => ({ ...prev, analytics: !prev.analytics }))
+                      setConsent((prev) => ({ ...prev, externalMedia: !prev.externalMedia }))
                     }
                     className={`relative w-11 h-6 rounded-full transition-colors duration-300 ${
-                      consent.analytics ? "bg-primary/40" : "bg-outline-variant/40"
+                      consent.externalMedia ? "bg-primary/40" : "bg-outline-variant/40"
                     }`}
                   >
                     <div
                       className={`absolute top-0.5 w-5 h-5 rounded-full shadow-md transition-all duration-300 ${
-                        consent.analytics
-                          ? "left-[1.375rem] bg-primary"
-                          : "left-0.5 bg-on-surface-variant"
-                      }`}
-                    />
-                  </button>
-                </label>
-
-                {/* Marketing */}
-                <label className="flex items-center justify-between p-4 rounded-xl bg-surface-container border border-outline-variant/10 cursor-pointer group hover:bg-surface-container-lowest transition-colors">
-                  <div className="flex-1 mr-4">
-                    <span className="font-headline font-bold text-sm text-on-surface">
-                      Marketing-Cookies
-                    </span>
-                    <p className="text-xs text-on-surface-variant mt-1">
-                      Werden verwendet, um Werbung relevanter für dich zu gestalten.
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    role="switch"
-                    aria-checked={consent.marketing}
-                    onClick={() =>
-                      setConsent((prev) => ({ ...prev, marketing: !prev.marketing }))
-                    }
-                    className={`relative w-11 h-6 rounded-full transition-colors duration-300 ${
-                      consent.marketing ? "bg-primary/40" : "bg-outline-variant/40"
-                    }`}
-                  >
-                    <div
-                      className={`absolute top-0.5 w-5 h-5 rounded-full shadow-md transition-all duration-300 ${
-                        consent.marketing
+                        consent.externalMedia
                           ? "left-[1.375rem] bg-primary"
                           : "left-0.5 bg-on-surface-variant"
                       }`}
@@ -240,6 +223,18 @@ export default function CookieBanner() {
           </div>
         </div>
       </div>
+      {/* Persistent cookie settings button (bottom-left) */}
+      {hasStored && !visible && (
+        <button
+          onClick={handleReopen}
+          aria-label="Cookie-Einstellungen öffnen"
+          className="fixed bottom-5 left-5 z-[9997] w-11 h-11 rounded-full bg-surface-container-high/90 backdrop-blur-xl border border-outline-variant/20 shadow-lg flex items-center justify-center hover:scale-110 hover:bg-surface-container-highest transition-all duration-300 group"
+        >
+          <span className="material-symbols-outlined text-primary text-lg group-hover:rotate-12 transition-transform" data-icon="cookie">
+            cookie
+          </span>
+        </button>
+      )}
     </>
   );
 }

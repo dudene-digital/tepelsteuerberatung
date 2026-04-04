@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import ConsentMap from "@/components/ConsentMap";
 
 export default function Home() {
   const jsonLd = {
@@ -387,16 +388,7 @@ export default function Home() {
 <a href="mailto:fabian@tepel-steuerberatung.de" className="bg-surface-bright text-on-surface px-8 py-4 rounded-xl font-headline font-bold text-lg border border-outline-variant/30 hover:border-primary transition-all flex items-center gap-3 w-fit mb-8">
 Jetzt Kontakt <span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
 </a>
-<div className="rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg relative h-[200px]">
-  <iframe
-    title="Standort Tepel Steuerberatung"
-    width="100%"
-    height="100%"
-    style={{ border: 0 }}
-    loading="lazy"
-    src="/map.html"
-  ></iframe>
-</div>
+<ConsentMap />
 </div>
 <div className="bg-surface-container-highest p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-outline-variant/20 shadow-inner flex flex-col justify-center">
 <h4 className="font-headline text-2xl font-bold mb-8 text-on-surface">Schreib mir direkt</h4>
@@ -454,7 +446,7 @@ Jetzt Kontakt <span className="material-symbols-outlined" data-icon="arrow_forwa
 <span className="font-manrope font-bold text-slate-300 text-xl tracking-tighter">FABIAN TEPEL</span>
 </div>
 <p className="font-inter text-xs tracking-normal text-slate-500 leading-relaxed mb-6">
-                    © 2024 Fabian Tepel Steuerberatung. Digital &amp; Agil.<br/>
+                    © 2026 Fabian Tepel Steuerberatung. Digital &amp; Agil.<br/>
                     Moderne Steuerberatung für die digitale Wirtschaft.
                 </p>
 </div>
