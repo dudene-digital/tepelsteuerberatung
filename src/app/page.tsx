@@ -362,62 +362,52 @@ export default function Home() {
 <p className="text-2xl text-on-surface-variant font-medium">Innovative Lösungen für zeitgemäße Beratung.</p>
 </div>
 
-<div className="grid lg:grid-cols-2 gap-12 bg-surface-container-low/80 backdrop-blur-xl p-6 md:p-16 rounded-[2rem] md:rounded-[3rem] border border-outline-variant/30 shadow-2xl">
+<div className="grid lg:grid-cols-2 gap-8 bg-surface-container-low/80 backdrop-blur-xl p-6 md:p-12 rounded-[2rem] md:rounded-[3rem] border border-outline-variant/30 shadow-2xl">
+{/* Left: Contact Info */}
+<div className="flex flex-col justify-between">
 <div>
-<h3 className="font-headline text-4xl font-bold mb-8 text-primary">Kontakt</h3>
-<ul className="space-y-6 text-xl text-on-surface-variant mb-12">
-<li className="flex items-center gap-4 group">
-<div className="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-<span className="material-symbols-outlined text-tertiary text-lg" data-icon="phone">phone</span>
+<h3 className="font-headline text-4xl font-bold mb-10 text-primary">Kontakt</h3>
+<div className="space-y-4">
+  <a href="tel:+491723870104" className="flex items-center gap-5 p-5 rounded-2xl bg-surface-container/60 border border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container transition-all group">
+    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
+      <span className="material-symbols-outlined text-primary text-xl" data-icon="phone">phone</span>
+    </div>
+    <div>
+      <p className="text-xs uppercase tracking-widest text-on-surface-variant font-bold mb-1">Telefon</p>
+      <p className="text-lg text-on-surface font-medium">+ 49 172 3870104</p>
+    </div>
+  </a>
+  <a href="mailto:fabian@tepel-steuerberatung.de" className="flex items-center gap-5 p-5 rounded-2xl bg-surface-container/60 border border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container transition-all group">
+    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
+      <span className="material-symbols-outlined text-primary text-xl" data-icon="mail">mail</span>
+    </div>
+    <div>
+      <p className="text-xs uppercase tracking-widest text-on-surface-variant font-bold mb-1">E-Mail</p>
+      <p className="text-lg text-on-surface font-medium">fabian@tepel-steuerberatung.de</p>
+    </div>
+  </a>
+  <div className="flex items-center gap-5 p-5 rounded-2xl bg-surface-container/60 border border-outline-variant/10">
+    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+      <span className="material-symbols-outlined text-primary text-xl" data-icon="location_on">location_on</span>
+    </div>
+    <div>
+      <p className="text-xs uppercase tracking-widest text-on-surface-variant font-bold mb-1">Adresse</p>
+      <p className="text-lg text-on-surface font-medium">Gottfried-Kinkel-Straße 21<br/>65187 Wiesbaden</p>
+    </div>
+  </div>
 </div>
-<span>Telefon: + 49 172 3870104</span>
-</li>
-<li className="flex items-center gap-4 group">
-<div className="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-<span className="material-symbols-outlined text-tertiary text-lg" data-icon="mail">mail</span>
 </div>
-<span>E-Mail: fabian@tepel-steuerberatung.de</span>
-</li>
-<li className="flex items-center gap-4 group">
-<div className="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-<span className="material-symbols-outlined text-tertiary text-lg" data-icon="location_on">location_on</span>
-</div>
-<span className="leading-snug flex-1">Gottfried-Kinkel-Straße 21, 65187 Wiesbaden</span>
-</li>
-</ul>
-<a href="mailto:fabian@tepel-steuerberatung.de" className="bg-surface-bright text-on-surface px-8 py-4 rounded-xl font-headline font-bold text-lg border border-outline-variant/30 hover:border-primary transition-all flex items-center gap-3 w-fit mb-8">
-Jetzt Kontakt <span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+<a href="mailto:fabian@tepel-steuerberatung.de" className="mt-8 hero-gradient text-on-primary-container px-8 py-4 rounded-xl font-headline font-bold text-lg hover:shadow-[0_0_30px_rgba(0,210,255,0.2)] hover:scale-[1.02] transition-all flex justify-center items-center gap-3 w-full">
+Erstgespräch vereinbaren <span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
 </a>
-<ConsentMap />
 </div>
-<div className="bg-surface-container-highest p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-outline-variant/20 shadow-inner flex flex-col justify-center">
-<h4 className="font-headline text-2xl font-bold mb-8 text-on-surface">Schreib mir direkt</h4>
-<form className="flex flex-col gap-6" action="">
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div className="flex flex-col gap-2">
-      <label className="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold">Name</label>
-      <input type="text" className="bg-surface-container-lowest border border-outline-variant/20 rounded-xl px-4 py-3.5 text-on-surface focus:outline-none focus:border-primary transition-all focus:ring-1 focus:ring-primary placeholder-outline-variant/50" placeholder="Dein Name" />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold">E-Mail</label>
-      <input type="email" className="bg-surface-container-lowest border border-outline-variant/20 rounded-xl px-4 py-3.5 text-on-surface focus:outline-none focus:border-primary transition-all focus:ring-1 focus:ring-primary placeholder-outline-variant/50" placeholder="deine@email.de" />
-    </div>
-  </div>
-  <div className="flex flex-col gap-2">
-    <label className="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold">Thema (optional)</label>
-    <input type="text" className="bg-surface-container-lowest border border-outline-variant/20 rounded-xl px-4 py-3.5 text-on-surface focus:outline-none focus:border-primary transition-all focus:ring-1 focus:ring-primary placeholder-outline-variant/50" placeholder="Worum geht es?" />
-  </div>
-  <div className="flex flex-col gap-2">
-    <label className="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold">Nachricht</label>
-    <textarea rows={4} className="bg-surface-container-lowest border border-outline-variant/20 rounded-xl px-4 py-3.5 text-on-surface focus:outline-none focus:border-primary transition-all focus:ring-1 focus:ring-primary resize-none placeholder-outline-variant/50" placeholder="Wie kann ich dich unterstützen?"></textarea>
-  </div>
-  <button type="submit" className="mt-4 hero-gradient text-on-primary-container px-8 py-4 rounded-xl font-headline font-bold text-lg hover:shadow-[0_0_30px_rgba(0,210,255,0.2)] hover:scale-[1.02] transition-all flex justify-center items-center gap-3 w-full">
-    Nachricht senden <span className="material-symbols-outlined" data-icon="send">send</span>
-  </button>
-</form>
+{/* Right: Map */}
+<div className="flex flex-col">
+<div className="flex-1 min-h-[400px] rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg">
+  <ConsentMap />
 </div>
 </div>
-
+</div>
 
 </div>
 </section>

@@ -57,7 +57,7 @@ export default function ConsentMap() {
   if (!checked) {
     // SSR / loading state – show placeholder
     return (
-      <div className="rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg relative h-[200px] bg-surface-container flex items-center justify-center">
+      <div className="rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg relative h-full bg-surface-container flex items-center justify-center">
         <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
       </div>
     );
@@ -65,7 +65,7 @@ export default function ConsentMap() {
 
   if (allowed) {
     return (
-      <div className="rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg relative h-[200px]">
+      <div className="rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg relative h-full">
         <iframe
           title="Standort Tepel Steuerberatung"
           width="100%"
@@ -80,7 +80,7 @@ export default function ConsentMap() {
 
   // Consent not given – show placeholder with enable button
   return (
-    <div className="rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg relative h-[200px] bg-surface-container flex flex-col items-center justify-center gap-4 px-6 text-center">
+    <div className="rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg relative h-full bg-surface-container flex flex-col items-center justify-center gap-4 px-6 text-center">
       <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
         <span
           className="material-symbols-outlined text-primary text-2xl"
