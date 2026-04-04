@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#0a0f1e"/>
+  <rect x="16" y="16" width="480" height="480" rx="80" fill="none" stroke="#0891b2" stroke-width="3" opacity="0.3"/>
+  <!-- Stylized temple/columns icon representing Steuerberatung -->
+  <g transform="translate(256, 248)">
+    <!-- Roof/Triangle -->
+    <path d="M-120 -40 L0 -110 L120 -40 Z" fill="none" stroke="#67e8f9" stroke-width="10" stroke-linejoin="round"/>
+    <!-- Columns -->
+    <rect x="-90" y="-30" width="16" height="120" rx="4" fill="#67e8f9"/>
+    <rect x="-40" y="-30" width="16" height="120" rx="4" fill="#67e8f9"/>
+    <rect x="24" y="-30" width="16" height="120" rx="4" fill="#67e8f9"/>
+    <rect x="74" y="-30" width="16" height="120" rx="4" fill="#67e8f9"/>
+    <!-- Base -->
+    <rect x="-110" y="90" width="220" height="14" rx="4" fill="#67e8f9"/>
+    <!-- Top bar -->
+    <rect x="-110" y="-44" width="220" height="14" rx="4" fill="#67e8f9"/>
+  </g>
+</svg>
