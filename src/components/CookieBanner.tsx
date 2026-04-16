@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 type ConsentState = {
   essential: boolean;
@@ -39,6 +39,9 @@ export default function CookieBanner() {
     essential: true,
     externalMedia: false,
   });
+
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -85,6 +88,66 @@ export default function CookieBanner() {
     setVisible(true);
   }, []);
 
+  // Close on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && visible) {
+        handleRejectOptional();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [visible, handleRejectOptional]);
+
+  // Focus trap: keep Tab within the cookie banner while visible
+  useEffect(() => {
+    if (!visible || !dialogRef.current) return;
+
+    // Store the previously focused element to restore later
+    previousFocusRef.current = document.activeElement as HTMLElement;
+
+    const dialog = dialogRef.current;
+    const focusableSelector =
+      'a[href], button:not([disabled]), input:not([disabled]), [role="switch"], [tabindex]:not([tabindex="-1"])';
+
+    // Focus the first button after a small delay for the animation
+    const timer = setTimeout(() => {
+      const firstFocusable = dialog.querySelector<HTMLElement>(focusableSelector);
+      firstFocusable?.focus();
+    }, 200);
+
+    const trapFocus = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+
+      const focusableElements =
+        dialog.querySelectorAll<HTMLElement>(focusableSelector);
+      if (focusableElements.length === 0) return;
+
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", trapFocus);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("keydown", trapFocus);
+      // Restore focus when banner closes
+      previousFocusRef.current?.focus();
+    };
+  }, [visible]);
+
   // Don't render on the server
   if (!mounted) return null;
 
@@ -100,7 +163,9 @@ export default function CookieBanner() {
 
       {/* Banner */}
       <div
+        ref={dialogRef}
         role="dialog"
+        aria-modal="true"
         aria-label="Cookie-Einstellungen"
         className={`fixed bottom-0 left-0 right-0 z-[9999] transition-all duration-700 ease-out ${
           visible
@@ -113,7 +178,7 @@ export default function CookieBanner() {
             {/* Header */}
             <div className="flex items-start gap-4 mb-4">
               <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center shrink-0 mt-0.5">
-                <span className="material-symbols-outlined text-primary text-xl" data-icon="cookie">
+                <span className="material-symbols-outlined text-primary text-xl" data-icon="cookie" aria-hidden="true">
                   cookie
                 </span>
               </div>
@@ -139,7 +204,7 @@ export default function CookieBanner() {
             {showDetails && (
               <div className="mt-4 mb-6 space-y-3 animate-in">
                 {/* Essential - always on */}
-                <label className="flex items-center justify-between p-4 rounded-xl bg-surface-container border border-outline-variant/10">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-surface-container border border-outline-variant/10">
                   <div className="flex-1 mr-4">
                     <span className="font-headline font-bold text-sm text-on-surface">
                       Essenzielle Cookies
@@ -149,19 +214,26 @@ export default function CookieBanner() {
                     </p>
                   </div>
                   <div className="relative">
-                    <div className="w-11 h-6 bg-primary/40 rounded-full cursor-not-allowed">
+                    <div
+                      className="w-11 h-6 bg-primary/40 rounded-full"
+                      role="switch"
+                      aria-checked="true"
+                      aria-disabled="true"
+                      aria-label="Essenzielle Cookies – immer aktiv"
+                      tabIndex={0}
+                    >
                       <div className="absolute top-0.5 left-[1.375rem] w-5 h-5 bg-primary rounded-full shadow-md" />
                     </div>
                   </div>
-                </label>
+                </div>
 
                 {/* External Media (OSM / Karten) */}
-                <label className="flex items-center justify-between p-4 rounded-xl bg-surface-container border border-outline-variant/10 cursor-pointer group hover:bg-surface-container-lowest transition-colors">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-surface-container border border-outline-variant/10 cursor-pointer group hover:bg-surface-container-lowest transition-colors">
                   <div className="flex-1 mr-4">
-                    <span className="font-headline font-bold text-sm text-on-surface">
+                    <span id="external-media-label" className="font-headline font-bold text-sm text-on-surface">
                       Externe Medien
                     </span>
-                    <p className="text-xs text-on-surface-variant mt-1">
+                    <p id="external-media-desc" className="text-xs text-on-surface-variant mt-1">
                       Inhalte von externen Anbietern (z.B. OpenStreetMap-Karten via CARTO). Bei Aktivierung werden Daten an Drittanbieter übermittelt.
                     </p>
                   </div>
@@ -169,6 +241,8 @@ export default function CookieBanner() {
                     type="button"
                     role="switch"
                     aria-checked={consent.externalMedia}
+                    aria-labelledby="external-media-label"
+                    aria-describedby="external-media-desc"
                     onClick={() =>
                       setConsent((prev) => ({ ...prev, externalMedia: !prev.externalMedia }))
                     }
@@ -184,7 +258,7 @@ export default function CookieBanner() {
                       }`}
                     />
                   </button>
-                </label>
+                </div>
               </div>
             )}
 
@@ -230,7 +304,7 @@ export default function CookieBanner() {
           aria-label="Cookie-Einstellungen öffnen"
           className="fixed bottom-5 left-5 z-[9997] w-11 h-11 rounded-full bg-surface-container-high/90 backdrop-blur-xl border border-outline-variant/20 shadow-lg flex items-center justify-center hover:scale-110 hover:bg-surface-container-highest transition-all duration-300 group"
         >
-          <span className="material-symbols-outlined text-primary text-lg group-hover:rotate-12 transition-transform" data-icon="cookie">
+          <span className="material-symbols-outlined text-primary text-lg group-hover:rotate-12 transition-transform" data-icon="cookie" aria-hidden="true">
             cookie
           </span>
         </button>

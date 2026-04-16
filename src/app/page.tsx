@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import ConsentMap from "@/components/ConsentMap";
+import ContactForm from "@/components/ContactForm";
 
 export default function Home() {
   const jsonLd = {
@@ -82,10 +83,10 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Navbar />
-<main className="relative">
+<main id="main-content" className="relative">
 
 <section id="home" className="relative min-h-screen flex items-center pt-24 overflow-hidden">
-<div className="absolute inset-0 z-0">
+<div className="absolute inset-0 z-0" aria-hidden="true">
 <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px]"></div>
 <div className="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] bg-tertiary/10 rounded-full blur-[100px]"></div>
 </div>
@@ -109,14 +110,14 @@ export default function Home() {
 </div>
 <div className="lg:col-span-5 relative mt-16 lg:mt-0">
 <div className="relative w-full aspect-square rounded-[2rem] overflow-hidden shadow-2xl animate-float">
-<img alt="Fabian Tepel" className="w-full h-full object-cover" src="/fabian-tepel.png"/>
+<img alt="Portrait von Fabian Tepel, Steuerberater in Wiesbaden" className="w-full h-full object-cover" src="/fabian-tepel.png"/>
 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
 
 </div>
 
 <div className="absolute -bottom-6 -left-6 glass-card p-6 rounded-2xl border border-outline-variant/10 flex items-center gap-4">
 <div className="w-12 h-12 rounded-full bg-tertiary-container/20 flex items-center justify-center">
-<span className="material-symbols-outlined text-tertiary" data-icon="verified">verified</span>
+<span className="material-symbols-outlined text-tertiary" data-icon="verified" aria-hidden="true">verified</span>
 </div>
 <div>
 <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Status</p>
@@ -130,7 +131,7 @@ export default function Home() {
 </div>
 </section>
 
-<section className="py-24 bg-surface-container-low relative">
+<section className="py-24 bg-surface-container-low relative" aria-label="Kennzahlen">
 <div className="max-w-7xl mx-auto px-8">
 <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 <div className="text-center group">
@@ -149,16 +150,16 @@ export default function Home() {
 </div>
 </section>
 
-<section id="services" className="py-32 relative">
+<section id="services" className="py-32 relative" aria-labelledby="services-heading">
 <div className="max-w-7xl mx-auto px-8">
 <div className="mb-20 text-center max-w-3xl mx-auto">
-<h2 className="font-headline text-4xl font-bold mb-6">Werte, die den Unterschied machen</h2>
+<h2 id="services-heading" className="font-headline text-4xl font-bold mb-6">Werte, die den Unterschied machen</h2>
 <div className="w-24 h-1 bg-primary mx-auto rounded-full"></div>
 </div>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
 <div className="glass-card p-6 md:p-10 rounded-[2rem] border border-outline-variant/10 hover:bg-surface-variant/30 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,210,255,0.1)] transition-all duration-500 group">
-<span className="material-symbols-outlined text-4xl text-primary mb-8 block" data-icon="cloud_off">cloud_off</span>
+<span className="material-symbols-outlined text-4xl text-primary mb-8 block" data-icon="cloud_off" aria-hidden="true">cloud_off</span>
 <h3 className="font-headline text-2xl font-bold mb-4 text-on-surface">Kein Papierkram mehr</h3>
 <p className="text-on-surface-variant leading-relaxed mb-8">
                             Belege scannen statt abheften. Wir nutzen modernste digitale Schnittstellen und Automatisierungen, damit du dich nie wieder mit Pendelordnern herumschlagen musst.
@@ -167,7 +168,7 @@ export default function Home() {
 </div>
 
 <div className="glass-card p-6 md:p-10 rounded-[2rem] border border-outline-variant/10 hover:bg-surface-variant/30 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,210,255,0.1)] transition-all duration-500 group">
-<span className="material-symbols-outlined text-4xl text-tertiary mb-8 block" data-icon="bolt">bolt</span>
+<span className="material-symbols-outlined text-4xl text-tertiary mb-8 block" data-icon="bolt" aria-hidden="true">bolt</span>
 <h3 className="font-headline text-2xl font-bold mb-4 text-on-surface">Agilität statt Stillstand</h3>
 <p className="text-on-surface-variant leading-relaxed mb-8">
                             Das Steuerrecht ändert sich, dein Business wächst. Wir passen unsere Prozesse monatlich an deine Bedürfnisse an, statt in alten Strukturen zu verharren.
@@ -176,7 +177,7 @@ export default function Home() {
 </div>
 
 <div className="glass-card p-6 md:p-10 rounded-[2rem] border border-outline-variant/10 hover:bg-surface-variant/30 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,210,255,0.1)] transition-all duration-500 group">
-<span className="material-symbols-outlined text-4xl text-primary mb-8 block" data-icon="forum">forum</span>
+<span className="material-symbols-outlined text-4xl text-primary mb-8 block" data-icon="forum" aria-hidden="true">forum</span>
 <h3 className="font-headline text-2xl font-bold mb-4 text-on-surface">Echter Austausch statt Pflichttermin</h3>
 <p className="text-on-surface-variant leading-relaxed mb-8">
                             Wir telefonieren nicht nur, wenn die Frist abläuft. Regelmäßige Check-ins per Video-Call stellen sicher, dass wir proaktiv statt reaktiv handeln.
@@ -185,7 +186,7 @@ export default function Home() {
 </div>
 
 <div className="glass-card p-6 md:p-10 rounded-[2rem] border border-outline-variant/10 hover:bg-surface-variant/30 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,210,255,0.1)] transition-all duration-500 group">
-<span className="material-symbols-outlined text-4xl text-tertiary mb-8 block" data-icon="rocket_launch">rocket_launch</span>
+<span className="material-symbols-outlined text-4xl text-tertiary mb-8 block" data-icon="rocket_launch" aria-hidden="true">rocket_launch</span>
 <h3 className="font-headline text-2xl font-bold mb-4 text-on-surface">Du baust das Business, ich halte dir den Rücken frei.</h3>
 <p className="text-on-surface-variant leading-relaxed mb-8">
                             Konzentriere dich auf dein Produkt. Ich kümmere mich um die steuerliche Struktur, die Finanzplanung und die Kommunikation mit dem Finanzamt.
@@ -196,23 +197,23 @@ export default function Home() {
 </div>
 </section>
 
-<section id="start-up" className="py-32 bg-surface-container-lowest relative overflow-hidden">
-<div className="absolute right-0 top-0 w-1/2 h-full bg-primary/5 skew-x-12 translate-x-32"></div>
+<section id="start-up" className="py-32 bg-surface-container-lowest relative overflow-hidden" aria-labelledby="startup-heading">
+<div className="absolute right-0 top-0 w-1/2 h-full bg-primary/5 skew-x-12 translate-x-32" aria-hidden="true"></div>
 <div className="max-w-7xl mx-auto px-8 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
 <div>
 <div className="flex items-center gap-4 mb-8">
 <div className="w-12 h-12 rounded-xl bg-tertiary-container/30 flex items-center justify-center">
-<span className="material-symbols-outlined text-tertiary" data-icon="category">category</span>
+<span className="material-symbols-outlined text-tertiary" data-icon="category" aria-hidden="true">category</span>
 </div>
 <span className="font-label text-sm uppercase tracking-[0.2em] text-tertiary font-bold">Start-up Support</span>
 </div>
-<h2 className="font-headline text-4xl md:text-5xl font-extrabold mb-8 leading-tight">DEIN FUNDAMENT FÜR SKALIERUNG.</h2>
+<h2 id="startup-heading" className="font-headline text-4xl md:text-5xl font-extrabold mb-8 leading-tight">DEIN FUNDAMENT FÜR SKALIERUNG.</h2>
 <p className="text-xl text-on-surface-variant mb-10 leading-relaxed">
                         Du hast die Idee, ich die Struktur. Von der Gründung über die Wahl der richtigen Rechtsform bis hin zu komplexen Beteiligungsmodellen – ich bin dein strategischer Partner.
                     </p>
 <ul className="space-y-4 mb-12">
 <li className="flex items-start gap-3">
-<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
+<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle" aria-hidden="true">check_circle</span>
 <span className="text-on-surface">Gründungsberatung &amp; Rechtsformwahl</span>
 </li>
 <li className="flex items-start gap-3">
@@ -226,28 +227,21 @@ export default function Home() {
 </ul>
 
 </div>
-<div className="relative">
-<div className="relative z-10 p-4 glass-card rounded-[3rem] border border-outline-variant/20 shadow-2xl overflow-hidden animate-float">
-<img alt="Start-up Space" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-[2.5rem]" data-alt="Modern geometric architectural shot of a sleek glass and concrete building with futuristic lighting and abstract patterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1J4BFu_1Nlxvf6INKi7c68BRJeCCKFgeGVfhIGZOl-G92r-HFsDAj3c0e204KNDXt3UHFO8-OMGs7FZQNGwgVr07zOxsHRCArQlO3EiQuVsRvmUsUuqhYq0vPZKgk0ceyzzscFe8Mb7_my6jh1CP53gEPql0wzKBXRisDT9qxFyXXRDPMGg4erM6QG7YdWtRecuYSrvw8gcrkiT5WtcR_a5ptcxjJ8OVPIKjPNWzkQxVzgNlLIYwUwDwAv7fSOPfQ_PzVB6oyEuFF"/>
-</div>
-
-<div className="absolute -top-12 -right-12 w-64 h-64 border-[40px] border-primary/10 rounded-full animate-float-delayed"></div>
+<div>
+<img alt="Modernes Bürogebäude – symbolisiert den Start-up-Support" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-3xl shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1J4BFu_1Nlxvf6INKi7c68BRJeCCKFgeGVfhIGZOl-G92r-HFsDAj3c0e204KNDXt3UHFO8-OMGs7FZQNGwgVr07zOxsHRCArQlO3EiQuVsRvmUsUuqhYq0vPZKgk0ceyzzscFe8Mb7_my6jh1CP53gEPql0wzKBXRisDT9qxFyXXRDPMGg4erM6QG7YdWtRecuYSrvw8gcrkiT5WtcR_a5ptcxjJ8OVPIKjPNWzkQxVzgNlLIYwUwDwAv7fSOPfQ_PzVB6oyEuFF"/>
 </div>
 </div>
 </section>
 
 <section className="py-32 bg-surface-container-low relative overflow-hidden">
 <div className="max-w-7xl mx-auto px-8 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-<div className="relative order-last lg:order-first">
-<div className="relative z-10 p-4 glass-card rounded-[3rem] border border-outline-variant/20 shadow-2xl overflow-hidden animate-float-slow">
-<img alt="Strategische Beratung" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-[2.5rem]" src="strategy_consulting_image_1774551205403.png"/>
-</div>
-<div className="absolute -bottom-12 -left-12 w-64 h-64 border-[40px] border-tertiary/10 rounded-full animate-float"></div>
+<div className="order-last lg:order-first">
+<img alt="Zusammenarbeit bei der strategischen Steuerplanung" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-3xl shadow-2xl" src="strategy_consulting_image_1774551205403.png"/>
 </div>
 <div>
 <div className="flex items-center gap-4 mb-8">
 <div className="w-12 h-12 rounded-xl bg-tertiary-container/30 flex items-center justify-center">
-<span className="material-symbols-outlined text-tertiary" data-icon="insights">insights</span>
+<span className="material-symbols-outlined text-tertiary" data-icon="insights" aria-hidden="true">insights</span>
 </div>
 <span className="font-label text-sm uppercase tracking-[0.2em] text-tertiary font-bold">Strategische Beratung</span>
 </div>
@@ -275,12 +269,12 @@ export default function Home() {
 
 
 <section className="py-32 bg-surface-container-lowest relative overflow-hidden">
-<div className="absolute left-0 top-0 w-1/2 h-full bg-primary/5 -skew-x-12 -translate-x-32"></div>
+<div className="absolute left-0 top-0 w-1/2 h-full bg-primary/5 -skew-x-12 -translate-x-32" aria-hidden="true"></div>
 <div className="max-w-7xl mx-auto px-8 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
 <div>
 <div className="flex items-center gap-4 mb-8">
 <div className="w-12 h-12 rounded-xl bg-tertiary-container/30 flex items-center justify-center">
-<span className="material-symbols-outlined text-tertiary" data-icon="devices">devices</span>
+<span className="material-symbols-outlined text-tertiary" data-icon="devices" aria-hidden="true">devices</span>
 </div>
 <span className="font-label text-sm uppercase tracking-[0.2em] text-tertiary font-bold">Digitaler Workflow</span>
 </div>
@@ -303,11 +297,8 @@ export default function Home() {
 </li>
 </ul>
 </div>
-<div className="relative">
-<div className="relative z-10 p-4 glass-card rounded-[3rem] border border-outline-variant/20 shadow-2xl overflow-hidden animate-float-delayed">
-<img alt="Digitaler Workflow" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-[2.5rem]" src="digital_workflow_image_1774551221355.png"/>
-</div>
-<div className="absolute -top-12 -right-12 w-64 h-64 border-[40px] border-primary/10 rounded-full animate-float-slow"></div>
+<div>
+<img alt="Digitale Belegerfassung per App und Cloud" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-3xl shadow-2xl" src="digital_workflow_image_1774551221355.png"/>
 </div>
 </div>
 </section>
@@ -315,16 +306,13 @@ export default function Home() {
 
 <section className="py-32 bg-surface-container relative overflow-hidden">
 <div className="max-w-7xl mx-auto px-8 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-<div className="relative order-last lg:order-first">
-<div className="relative z-10 p-4 glass-card rounded-[3rem] border border-outline-variant/20 shadow-2xl overflow-hidden animate-float">
-<img alt="Lohn & Gehalt" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-[2.5rem]" src="/lohn-gehalt.png"/>
-</div>
-<div className="absolute -bottom-12 -left-12 w-64 h-64 border-[40px] border-secondary/10 rounded-full animate-float-delayed"></div>
+<div className="order-last lg:order-first">
+<img alt="Lohnabrechnung und Gehaltsauswertung digital" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-3xl shadow-2xl" src="/lohn-gehalt.png"/>
 </div>
 <div>
 <div className="flex items-center gap-4 mb-8">
 <div className="w-12 h-12 rounded-xl bg-tertiary-container/30 flex items-center justify-center">
-<span className="material-symbols-outlined text-tertiary" data-icon="payments">payments</span>
+<span className="material-symbols-outlined text-tertiary" data-icon="payments" aria-hidden="true">payments</span>
 </div>
 <span className="font-label text-sm uppercase tracking-[0.2em] text-tertiary font-bold">Lohn & Gehalt</span>
 </div>
@@ -351,59 +339,57 @@ export default function Home() {
 </section>
 
 
-<section id="kontakt" className="py-32 bg-surface-container relative overflow-hidden">
-<div className="absolute inset-0 opacity-10">
-<img src="support_contact_image_1774551249320.png" alt="Support Background" className="w-full h-full object-cover grayscale mix-blend-screen" />
+<section id="kontakt" className="py-32 bg-surface-container relative overflow-hidden" aria-labelledby="contact-heading">
+<div className="absolute inset-0 opacity-10" aria-hidden="true">
+<img src="support_contact_image_1774551249320.png" alt="" className="w-full h-full object-cover grayscale mix-blend-screen" />
 </div>
 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/90 to-transparent"></div>
 <div className="max-w-7xl mx-auto px-8 relative z-10">
 <div className="text-center max-w-4xl mx-auto mb-16">
-<h2 className="font-headline text-4xl md:text-6xl font-extrabold mb-6 text-on-surface">Effizient, agil und persönlich betreut</h2>
+<h2 id="contact-heading" className="font-headline text-4xl md:text-6xl font-extrabold mb-6 text-on-surface">Effizient, agil und persönlich betreut</h2>
 <p className="text-2xl text-on-surface-variant font-medium">Innovative Lösungen für zeitgemäße Beratung.</p>
 </div>
 
 <div className="grid lg:grid-cols-2 gap-8 bg-surface-container-low/80 backdrop-blur-xl p-6 md:p-12 rounded-[2rem] md:rounded-[3rem] border border-outline-variant/30 shadow-2xl">
-{/* Left: Contact Info */}
-<div className="flex flex-col justify-between">
+{/* Left: Contact Form */}
 <div>
-<h3 className="font-headline text-4xl font-bold mb-10 text-primary">Kontakt</h3>
-<div className="space-y-4">
-  <a href="tel:+491723870104" className="flex items-center gap-5 p-5 rounded-2xl bg-surface-container/60 border border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container transition-all group">
-    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
-      <span className="material-symbols-outlined text-primary text-xl" data-icon="phone">phone</span>
+  <ContactForm />
+</div>
+{/* Right: Contact Info + Map */}
+<div className="flex flex-col gap-6">
+<div>
+<h3 className="font-headline text-2xl font-bold mb-6 text-primary">Kontakt</h3>
+<div className="space-y-3">
+  <a href="tel:+491723870104" className="flex items-center gap-4 p-4 rounded-2xl bg-surface-container/60 border border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container transition-all group">
+    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
+      <span className="material-symbols-outlined text-primary text-lg" data-icon="phone" aria-hidden="true">phone</span>
     </div>
     <div>
-      <p className="text-xs uppercase tracking-widest text-on-surface-variant font-bold mb-1">Telefon</p>
-      <p className="text-lg text-on-surface font-medium">+ 49 172 3870104</p>
+      <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-0.5">Telefon</p>
+      <p className="text-sm text-on-surface font-medium">+ 49 172 3870104</p>
     </div>
   </a>
-  <a href="mailto:fabian@tepel-steuerberatung.de" className="flex items-center gap-5 p-5 rounded-2xl bg-surface-container/60 border border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container transition-all group">
-    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
-      <span className="material-symbols-outlined text-primary text-xl" data-icon="mail">mail</span>
+  <a href="mailto:fabian@tepel-steuerberatung.de" className="flex items-center gap-4 p-4 rounded-2xl bg-surface-container/60 border border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container transition-all group">
+    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
+      <span className="material-symbols-outlined text-primary text-lg" data-icon="mail" aria-hidden="true">mail</span>
     </div>
     <div>
-      <p className="text-xs uppercase tracking-widest text-on-surface-variant font-bold mb-1">E-Mail</p>
-      <p className="text-lg text-on-surface font-medium">fabian@tepel-steuerberatung.de</p>
+      <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-0.5">E-Mail</p>
+      <p className="text-sm text-on-surface font-medium">fabian@tepel-steuerberatung.de</p>
     </div>
   </a>
-  <div className="flex items-center gap-5 p-5 rounded-2xl bg-surface-container/60 border border-outline-variant/10">
-    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-      <span className="material-symbols-outlined text-primary text-xl" data-icon="location_on">location_on</span>
+  <div className="flex items-center gap-4 p-4 rounded-2xl bg-surface-container/60 border border-outline-variant/10">
+    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+      <span className="material-symbols-outlined text-primary text-lg" data-icon="location_on" aria-hidden="true">location_on</span>
     </div>
     <div>
-      <p className="text-xs uppercase tracking-widest text-on-surface-variant font-bold mb-1">Adresse</p>
-      <p className="text-lg text-on-surface font-medium">Gottfried-Kinkel-Straße 21<br/>65187 Wiesbaden</p>
+      <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-0.5">Adresse</p>
+      <p className="text-sm text-on-surface font-medium">Gottfried-Kinkel-Straße 21<br/>65187 Wiesbaden</p>
     </div>
   </div>
 </div>
 </div>
-<a href="mailto:fabian@tepel-steuerberatung.de" className="mt-8 hero-gradient text-on-primary-container px-8 py-4 rounded-xl font-headline font-bold text-lg hover:shadow-[0_0_30px_rgba(0,210,255,0.2)] hover:scale-[1.02] transition-all flex justify-center items-center gap-3 w-full">
-Erstgespräch vereinbaren <span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
-</a>
-</div>
-{/* Right: Map */}
-<div className="flex flex-col">
-<div className="flex-1 min-h-[400px] rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg">
+<div className="flex-1 min-h-[250px] rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg">
   <ConsentMap />
 </div>
 </div>
@@ -412,63 +398,50 @@ Erstgespräch vereinbaren <span className="material-symbols-outlined" data-icon=
 </div>
 </section>
 
-<section className="py-32">
-<div className="max-w-5xl mx-auto px-8">
-<div className="bg-gradient-to-br from-surface-container-high to-surface-container p-8 md:p-16 rounded-[2rem] md:rounded-[3rem] text-center border border-outline-variant/10 shadow-2xl relative overflow-hidden">
-<div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
-<h2 className="font-headline text-4xl md:text-5xl font-bold mb-8">Bereit für den digitalen Wechsel?</h2>
-<p className="text-xl text-on-surface-variant mb-12 max-w-2xl mx-auto">
-                        Lass uns in 15 Minuten klären, wie ich dich und dein Business unterstützen kann. Unverbindlich und direkt.
-                    </p>
-<a href="#kontakt" className="hero-gradient text-on-primary-container px-8 py-4 md:px-12 md:py-6 rounded-xl md:rounded-2xl font-headline font-bold text-lg md:text-xl hover:shadow-[0_0_50px_rgba(0,210,255,0.4)] hover:scale-105 transition-all inline-block w-full md:w-auto">
-                        Jetzt Erstgespräch buchen
-                    </a>
-</div>
-</div>
-</section>
 </main>
 
 <footer className="bg-slate-950 border-t border-slate-900 py-16">
 <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-start gap-12">
 <div className="max-w-sm">
 <div className="flex items-center gap-3 mb-6">
-<span className="material-symbols-outlined text-cyan-400 text-2xl" data-icon="account_balance">account_balance</span>
+<span className="material-symbols-outlined text-cyan-400 text-2xl" data-icon="account_balance" aria-hidden="true">account_balance</span>
 <span className="font-manrope font-bold text-slate-300 text-xl tracking-tighter">FABIAN TEPEL</span>
 </div>
-<p className="font-inter text-xs tracking-normal text-slate-500 leading-relaxed mb-6">
+<p className="font-inter text-xs tracking-normal text-slate-400 leading-relaxed mb-6">
                     © 2026 Fabian Tepel Steuerberatung. Digital &amp; Agil.<br/>
                     Moderne Steuerberatung für die digitale Wirtschaft.
                 </p>
 </div>
 <div className="grid grid-cols-2 sm:grid-cols-3 gap-12">
-<div>
-<h4 className="font-manrope text-xs font-bold uppercase tracking-widest text-slate-100 mb-6">Navigation</h4>
+<nav aria-label="Footer-Navigation">
+<p className="font-manrope text-xs font-bold uppercase tracking-widest text-slate-100 mb-6">Navigation</p>
 <ul className="space-y-4">
-<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="#">Home</a></li>
-<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="#">Services</a></li>
-<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="#">Start-up</a></li>
+<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/#home">Home</a></li>
+<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/#services">Services</a></li>
+<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/#kontakt">Kontakt</a></li>
 </ul>
-</div>
-<div>
-<h4 className="font-manrope text-xs font-bold uppercase tracking-widest text-slate-100 mb-6">Rechtliches</h4>
+</nav>
+<nav aria-label="Rechtliche Seiten">
+<p className="font-manrope text-xs font-bold uppercase tracking-widest text-slate-100 mb-6">Rechtliches</p>
 <ul className="space-y-4">
-<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="/impressum">Impressum</a></li>
-<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="/datenschutz">Datenschutz</a></li>
+<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/impressum">Impressum</a></li>
+<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/datenschutz">Datenschutz</a></li>
+<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/barrierefreiheit">Barrierefreiheit</a></li>
 </ul>
-</div>
+</nav>
 <div>
-<h4 className="font-manrope text-xs font-bold uppercase tracking-widest text-slate-100 mb-6">Kontakt</h4>
+<p className="font-manrope text-xs font-bold uppercase tracking-widest text-slate-100 mb-6">Kontakt</p>
 <ul className="space-y-4">
-<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="mailto:fabian@tepel-steuerberatung.de">E-Mail</a></li>
-<li><a className="text-slate-500 hover:text-cyan-300 transition-colors text-xs" href="#kontakt">Kontaktformular</a></li>
+<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="mailto:fabian@tepel-steuerberatung.de">E-Mail schreiben</a></li>
+<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/#kontakt">Kontakt aufnehmen</a></li>
 </ul>
 </div>
 </div>
 </div>
 <div className="max-w-7xl mx-auto px-8 mt-12 pt-8 border-t border-slate-800 text-center">
-<p className="font-inter text-xs text-slate-500">
+<p className="font-inter text-xs text-slate-400">
   Made with ❤️ by{" "}
-  <a href="https://dudene-digital.de" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 transition-colors">Dudene Digital</a>
+  <a href="https://dudene-digital.de" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 transition-colors underline underline-offset-2">Dudene Digital</a>
 </p>
 </div>
 </footer>

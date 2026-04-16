@@ -80,11 +80,12 @@ export default function ConsentMap() {
 
   // Consent not given – show placeholder with enable button
   return (
-    <div className="rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg relative h-full bg-surface-container flex flex-col items-center justify-center gap-4 px-6 text-center">
+    <div role="region" aria-label="Kartenbereich – Standort Tepel Steuerberatung" className="rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg relative h-full bg-surface-container flex flex-col items-center justify-center gap-4 px-6 text-center">
       <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
         <span
           className="material-symbols-outlined text-primary text-2xl"
           data-icon="map"
+          aria-hidden="true"
         >
           map
         </span>
@@ -105,6 +106,7 @@ export default function ConsentMap() {
       </div>
       <button
         onClick={handleAllow}
+        aria-label="OpenStreetMap-Karte laden – dabei werden Daten an CARTO übermittelt"
         className="bg-primary/15 hover:bg-primary/25 border border-primary/30 text-primary px-5 py-2 rounded-xl font-headline font-bold text-xs transition-all hover:scale-[1.02]"
       >
         Karte laden

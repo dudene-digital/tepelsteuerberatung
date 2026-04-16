@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Manrope, Great_Vibes } from "next/font/google";
+import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
 
@@ -13,11 +13,7 @@ const manrope = Manrope({
   subsets: ["latin"],
 });
 
-const greatVibes = Great_Vibes({
-  weight: "400",
-  variable: "--font-great-vibes",
-  subsets: ["latin"],
-});
+
 
 const siteUrl = "https://tepel-steuerberatung.de";
 
@@ -91,9 +87,12 @@ export default function RootLayout({
   return (
     <html
       lang="de"
-      className={`${inter.variable} ${manrope.variable} ${greatVibes.variable} dark antialiased scroll-smooth`}
+      className={`${inter.variable} ${manrope.variable} dark antialiased scroll-smooth`}
     >
-      <body className="antialiased selection:bg-primary selection:text-on-primary min-h-full flex flex-col overflow-x-hidden">
+      <body suppressHydrationWarning className="antialiased selection:bg-primary selection:text-on-primary min-h-full flex flex-col overflow-x-hidden">
+        <a href="#main-content" className="skip-to-content">
+          Zum Inhalt springen
+        </a>
         {children}
         <CookieBanner />
       </body>

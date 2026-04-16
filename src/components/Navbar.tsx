@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   // Handle scroll effect
   useEffect(() => {
@@ -24,6 +26,66 @@ export default function Navbar() {
     }
   }, [isOpen]);
 
+  // Close menu on Escape key
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        setIsOpen(false);
+        toggleRef.current?.focus();
+      }
+    },
+    [isOpen]
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
+
+  // Focus trap: keep Tab within the mobile menu while open
+  useEffect(() => {
+    if (!isOpen || !menuRef.current) return;
+
+    const menu = menuRef.current;
+    const focusableSelector =
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+    // Small delay to allow animation to complete
+    const timer = setTimeout(() => {
+      const firstFocusable = menu.querySelector<HTMLElement>(focusableSelector);
+      firstFocusable?.focus();
+    }, 100);
+
+    const trapFocus = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+
+      const focusableElements =
+        menu.querySelectorAll<HTMLElement>(focusableSelector);
+      if (focusableElements.length === 0) return;
+
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", trapFocus);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("keydown", trapFocus);
+    };
+  }, [isOpen]);
+
   const navLinks = [
     { name: "Home", href: "/#home" },
     { name: "Services", href: "/#services" },
@@ -33,6 +95,7 @@ export default function Navbar() {
   return (
     <>
       <nav
+        aria-label="Hauptnavigation"
         className={`fixed top-0 w-full z-[100] transition-all duration-300 ${
           scrolled || isOpen
             ? "bg-slate-950/80 backdrop-blur-xl shadow-[0_0_40px_rgba(165,231,255,0.06)] py-4"
@@ -40,9 +103,14 @@ export default function Navbar() {
         }`}
       >
         <div className="flex justify-between items-center max-w-7xl mx-auto px-6 md:px-8">
-          <div className="flex items-center gap-3 relative z-[110]">
+          <a
+            href="/"
+            aria-label="Fabian Tepel Steuerberatung – Startseite"
+            className="flex items-center gap-3 relative z-[110]"
+          >
             <span
               className="material-symbols-outlined text-cyan-400 text-2xl"
+              aria-hidden="true"
               data-icon="account_balance"
             >
               account_balance
@@ -50,7 +118,7 @@ export default function Navbar() {
             <span className="text-xl font-extrabold tracking-tighter text-slate-50 dark:text-white font-manrope uppercase">
               FABIAN TEPEL
             </span>
-          </div>
+          </a>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-10">
@@ -76,21 +144,27 @@ export default function Navbar() {
 
           {/* Mobile Menu Toggle Button */}
           <button
-            title="Toggle Menu"
+            ref={toggleRef}
+            aria-label={isOpen ? "Menü schließen" : "Menü öffnen"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
             className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 relative z-[110]"
             onClick={() => setIsOpen(!isOpen)}
           >
             <span
+              aria-hidden="true"
               className={`block w-6 h-0.5 bg-white transition-transform duration-300 rounded ${
                 isOpen ? "rotate-45 translate-y-2" : ""
               }`}
             ></span>
             <span
+              aria-hidden="true"
               className={`block w-6 h-0.5 bg-white transition-opacity duration-300 rounded ${
                 isOpen ? "opacity-0" : ""
               }`}
             ></span>
             <span
+              aria-hidden="true"
               className={`block w-6 h-0.5 bg-white transition-transform duration-300 rounded ${
                 isOpen ? "-rotate-45 -translate-y-2" : ""
               }`}
@@ -101,6 +175,11 @@ export default function Navbar() {
 
       {/* Mobile Menu Overlay */}
       <div
+        ref={menuRef}
+        id="mobile-menu"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation"
         className={`fixed inset-0 bg-slate-950/95 backdrop-blur-2xl z-[90] flex flex-col justify-center items-center transition-all duration-500 ease-in-out md:hidden ${
           isOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
