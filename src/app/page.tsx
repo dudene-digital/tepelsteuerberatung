@@ -110,7 +110,7 @@ export default function Home() {
 </div>
 <div className="lg:col-span-5 relative mt-16 lg:mt-0">
 <div className="relative w-full aspect-square rounded-[2rem] overflow-hidden shadow-2xl animate-float">
-<img alt="Portrait von Fabian Tepel, Steuerberater in Wiesbaden" className="w-full h-full object-cover" src="/fabian-tepel.png"/>
+<img alt="Portrait von Fabian Tepel, Steuerberater in Wiesbaden" className="w-full h-full object-cover" src="/berater_1.jpg"/>
 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
 
 </div>
@@ -228,7 +228,7 @@ export default function Home() {
 
 </div>
 <div>
-<img alt="Modernes Bürogebäude – symbolisiert den Start-up-Support" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-3xl shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1J4BFu_1Nlxvf6INKi7c68BRJeCCKFgeGVfhIGZOl-G92r-HFsDAj3c0e204KNDXt3UHFO8-OMGs7FZQNGwgVr07zOxsHRCArQlO3EiQuVsRvmUsUuqhYq0vPZKgk0ceyzzscFe8Mb7_my6jh1CP53gEPql0wzKBXRisDT9qxFyXXRDPMGg4erM6QG7YdWtRecuYSrvw8gcrkiT5WtcR_a5ptcxjJ8OVPIKjPNWzkQxVzgNlLIYwUwDwAv7fSOPfQ_PzVB6oyEuFF"/>
+<img alt="Fabian Tepel – Start-up Support" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-3xl shadow-2xl" src="/berater_2.jpg"/>
 </div>
 </div>
 </section>
