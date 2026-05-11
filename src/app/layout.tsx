@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
 
@@ -89,6 +90,13 @@ export default function RootLayout({
       lang="de"
       className={`${inter.variable} ${manrope.variable} dark antialiased scroll-smooth`}
     >
+      <head>
+        <Script
+          defer
+          data-domain="tepel-steuerberatung.de"
+          src="https://analytics.tepel-steuerberatung.de/js/script.js"
+        />
+      </head>
       <body suppressHydrationWarning className="antialiased selection:bg-primary selection:text-on-primary min-h-full flex flex-col overflow-x-hidden">
         <a href="#main-content" className="skip-to-content">
           Zum Inhalt springen

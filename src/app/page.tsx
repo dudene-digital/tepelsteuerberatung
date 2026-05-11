@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import ConsentMap from "@/components/ConsentMap";
 import ContactForm from "@/components/ContactForm";
+import FAQ, { FAQSchema } from "@/components/FAQ";
 
 export default function Home() {
   const jsonLd = {
@@ -27,10 +28,25 @@ export default function Home() {
     description:
       "Digitale & agile Steuerberatung in Wiesbaden. Maßgeschneiderte Lösungen für Unternehmer, Start-ups und Freiberufler.",
     priceRange: "$$",
-    areaServed: {
-      "@type": "City",
-      name: "Wiesbaden",
-    },
+    sameAs: [
+      "https://tepel-steuerberatung.de",
+      "https://www.linkedin.com/in/fabian-tepel-0925bb108",
+      "https://www.google.com/maps/place/Fabian+Tepel+Steuerberatung/@50.0588221,8.2396785",
+    ],
+    areaServed: [
+      { "@type": "City", name: "Wiesbaden" },
+      { "@type": "City", name: "Mainz" },
+      { "@type": "City", name: "Frankfurt am Main" },
+      { "@type": "State", name: "Hessen" },
+    ],
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "18:00",
+      },
+    ],
     founder: {
       "@type": "Person",
       name: "Fabian Tepel",
@@ -82,6 +98,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <FAQSchema />
       <Navbar />
 <main id="main-content" className="relative">
 
@@ -339,11 +356,19 @@ export default function Home() {
 </section>
 
 
+<FAQ />
+
 <section id="kontakt" className="py-32 bg-surface-container relative overflow-hidden" aria-labelledby="contact-heading">
-<div className="absolute inset-0 opacity-10" aria-hidden="true">
-<img src="support_contact_image_1774551249320.png" alt="" className="w-full h-full object-cover grayscale mix-blend-screen" />
+<div className="absolute inset-0" aria-hidden="true">
+  {/* Abstract gradient background */}
+  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-tertiary/5"></div>
+  {/* Subtle dot grid pattern */}
+  <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(var(--color-primary)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+  {/* Accent glow spots */}
+  <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-primary/8 rounded-full blur-[120px]"></div>
+  <div className="absolute bottom-0 left-1/4 w-[300px] h-[300px] bg-tertiary/6 rounded-full blur-[100px]"></div>
 </div>
-<div className="absolute inset-0 bg-gradient-to-t from-background via-background/90 to-transparent"></div>
+<div className="absolute inset-0 bg-gradient-to-t from-surface-container via-surface-container/80 to-surface-container/60"></div>
 <div className="max-w-7xl mx-auto px-8 relative z-10">
 <div className="text-center max-w-4xl mx-auto mb-16">
 <h2 id="contact-heading" className="font-headline text-4xl md:text-6xl font-extrabold mb-6 text-on-surface">Effizient, agil und persönlich betreut</h2>
@@ -418,6 +443,7 @@ export default function Home() {
 <ul className="space-y-4">
 <li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/#home">Home</a></li>
 <li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/#services">Services</a></li>
+<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/#faq">FAQ</a></li>
 <li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/#kontakt">Kontakt</a></li>
 </ul>
 </nav>

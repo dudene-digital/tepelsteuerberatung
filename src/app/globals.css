@@ -80,6 +80,7 @@ body {
 
 .glass-card {
   background: rgba(47, 52, 69, 0.4);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 

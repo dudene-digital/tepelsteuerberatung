@@ -66,8 +66,18 @@ Deutschland</p>
 `;
 
 export default function ImpressumPage() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://tepel-steuerberatung.de" },
+      { "@type": "ListItem", position: 2, name: "Impressum", item: "https://tepel-steuerberatung.de/impressum" },
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Navbar />
       <main className="relative pt-32 pb-24">
         <div className="max-w-4xl mx-auto px-8">

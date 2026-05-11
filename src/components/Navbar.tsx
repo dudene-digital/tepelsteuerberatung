@@ -89,6 +89,7 @@ export default function Navbar() {
   const navLinks = [
     { name: "Home", href: "/#home" },
     { name: "Services", href: "/#services" },
+    { name: "FAQ", href: "/#faq" },
     { name: "Kontakt", href: "/#kontakt" },
   ];
 
@@ -190,12 +191,11 @@ export default function Navbar() {
               key={link.name}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className={`font-headline text-3xl font-bold uppercase tracking-widest text-white hover:text-cyan-400 transition-all transform ${
+              className={`font-headline text-3xl font-bold uppercase tracking-widest text-white hover:text-cyan-400 transition-all transform duration-300 ${
                 isOpen
-                  ? "translate-y-0 opacity-100 delay-" + (index * 100)
-                  : "translate-y-8 opacity-0"
+                  ? `translate-y-0 opacity-100 ${index === 0 ? "delay-0" : index === 1 ? "delay-[100ms]" : "delay-[200ms]"}`
+                  : "translate-y-8 opacity-0 delay-0"
               }`}
-              style={{ transitionDelay: isOpen ? `${index * 100}ms` : "0ms" }}
             >
               {link.name}
             </a>
@@ -203,12 +203,11 @@ export default function Navbar() {
           <a
             href="/#kontakt"
             onClick={() => setIsOpen(false)}
-            className={`mt-8 bg-primary-container text-on-primary-container font-headline font-bold px-8 py-4 rounded-xl text-lg w-full text-center transition-all transform ${
+            className={`mt-8 bg-primary-container text-on-primary-container font-headline font-bold px-8 py-4 rounded-xl text-lg w-full text-center transition-all transform duration-300 ${
               isOpen
-                ? "translate-y-0 opacity-100 delay-400 shadow-[0_0_30px_rgba(0,210,255,0.2)]"
-                : "translate-y-8 opacity-0"
+                ? "translate-y-0 opacity-100 delay-[400ms] shadow-[0_0_30px_rgba(0,210,255,0.2)]"
+                : "translate-y-8 opacity-0 delay-0"
             }`}
-             style={{ transitionDelay: isOpen ? "400ms" : "0ms" }}
           >
             Erstgespräch Buchen
           </a>

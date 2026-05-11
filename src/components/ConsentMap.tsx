@@ -70,7 +70,7 @@ export default function ConsentMap() {
           title="Standort Tepel Steuerberatung"
           width="100%"
           height="100%"
-          style={{ border: 0 }}
+          className="border-none"
           loading="lazy"
           src="/map.html"
         ></iframe>
