@@ -1,0 +1,29 @@
+# Dependabot: wöchentliche Update-PRs für npm-Pakete und das Node-Image im Dockerfile.
+# Major-Sprünge (z. B. Next 16 -> 17, Node 22 -> 24) kommen NICHT automatisch.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 5
+    groups:
+      kleine-updates:
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Berlin"
+    ignore:
+      - dependency-name: "node"
+        update-types: ["version-update:semver-major"]
