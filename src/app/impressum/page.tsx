@@ -4,7 +4,8 @@ import Navbar from "@/components/Navbar";
 export const metadata: Metadata = {
   title: "Impressum",
   description:
-    "Impressum der Tepel Steuerberatung – Fabian Tepel, Steuerberater in Wiesbaden. Angaben gemäß § 5 TMG.",
+    "Impressum der Tepel Steuerberatung – Fabian Tepel, Steuerberater in Wiesbaden. Angaben gemäß § 5 DDG.",
+  alternates: { canonical: "/impressum" },
 };
 
 const imprintHtml = `
@@ -16,8 +17,10 @@ Gottfried-Kinkel-Stra&szlig;e 21<br />
 65187 Wiesbaden</p>
 
 <h2>Kontakt</h2>
-<p>Telefon: + 49 172 3870104<br />
+<p>Telefon: 0611 / 15756 0<br />
+Mobil: + 49 172 3870104<br />
 E-Mail: fabian@tepel-steuerberatung.de</p>
+<p>Erreichbarkeit: Montag bis Donnerstag 9&ndash;16 Uhr, Freitag 9&ndash;13 Uhr</p>
 
 <h2>Aufsichtsbeh&ouml;rde</h2>
 <p>Steuerberaterkammer Hessen<br />
@@ -42,11 +45,12 @@ Deutschland</p>
 
 <p>Es gelten folgende berufsrechtliche Regelungen:</p>
 <ul>
-<li>Steuerberatungsgesetz (StBerG) &ndash; einsehbar unter: <a href="https://www.bstbk.de/de/" target="_blank" rel="noopener noreferrer">https://www.bstbk.de/de/</a></li>
-<li>Durchf&uuml;hrungsverordnung zum Steuerberatungsgesetz (DVStB) &ndash; einsehbar unter: <a href="https://www.bstbk.de/de/" target="_blank" rel="noopener noreferrer">https://www.bstbk.de/de/</a></li>
-<li>Berufsordnung f&uuml;r Steuerberater (BOStB) &ndash; einsehbar unter: <a href="https://www.bstbk.de/de/" target="_blank" rel="noopener noreferrer">https://www.bstbk.de/de/</a></li>
-<li>Steuerberatergeb&uuml;hrenverordnung (StBGebV) &ndash; einsehbar unter: <a href="https://www.bstbk.de/de/" target="_blank" rel="noopener noreferrer">https://www.bstbk.de/de/</a></li>
+<li>Steuerberatungsgesetz (StBerG) &ndash; einsehbar unter: <a href="https://www.bstbk.de/de/themen/berufsrecht" target="_blank" rel="noopener noreferrer">https://www.bstbk.de/de/themen/berufsrecht</a></li>
+<li>Durchf&uuml;hrungsverordnung zum Steuerberatungsgesetz (DVStB) &ndash; einsehbar unter: <a href="https://www.bstbk.de/de/themen/berufsrecht" target="_blank" rel="noopener noreferrer">https://www.bstbk.de/de/themen/berufsrecht</a></li>
+<li>Berufsordnung f&uuml;r Steuerberater (BOStB) &ndash; einsehbar unter: <a href="https://www.bstbk.de/de/themen/berufsrecht" target="_blank" rel="noopener noreferrer">https://www.bstbk.de/de/themen/berufsrecht</a></li>
+<li>Steuerberaterverg&uuml;tungsverordnung (StBVV) &ndash; einsehbar unter: <a href="https://www.bstbk.de/de/themen/berufsrecht/steuerberaterverguetungsverordnung" target="_blank" rel="noopener noreferrer">https://www.bstbk.de/de/themen/berufsrecht/steuerberaterverguetungsverordnung</a></li>
 </ul>
+<p>Die Berufsregeln stellt die Bundessteuerberaterkammer bereit: <a href="https://www.bstbk.de/de/themen/berufsrecht" target="_blank" rel="noopener noreferrer">bstbk.de</a></p>
 
 <h2>Angaben zur Berufshaftpflichtversicherung</h2>
 

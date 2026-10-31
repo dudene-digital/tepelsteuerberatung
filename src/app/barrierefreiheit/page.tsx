@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Barrierefreiheitserklärung",
   description:
     "Erklärung zur Barrierefreiheit der Tepel Steuerberatung gemäß Barrierefreiheitsstärkungsgesetz (BFSG).",
+  alternates: { canonical: "/barrierefreiheit" },
 };
 
 const accessibilityHtml = `
@@ -16,12 +17,13 @@ const accessibilityHtml = `
 Gottfried-Kinkel-Straße 21<br />
 65187 Wiesbaden</p>
 <p>E-Mail: fabian@tepel-steuerberatung.de<br />
-Telefon: + 49 172 3870104</p>
+Telefon: 0611 / 15756 0<br />
+Mobil: + 49 172 3870104</p>
 <p>Link zur Website: <a href="https://tepel-steuerberatung.de">https://tepel-steuerberatung.de</a><br />
 Link zum Impressum: <a href="https://tepel-steuerberatung.de/impressum">https://tepel-steuerberatung.de/impressum</a></p>
 
 <h2>Allgemeine Beschreibung der Dienstleistung</h2>
-<p>Die Dienstleistung umfasst die geschäftsmäßige Hilfeleistung in Steuersachen sowie die umfassende betriebswirtschaftliche und strategische Beratung. Neben den klassischen Tätigkeiten wie der Erstellung von Steuererklärungen und Jahresabschlüssen liegt der Schwerpunkt auf der vollumfänglichen, digitalen Finanz- und Lohnbuchhaltung. Besondere Kernkompetenzen bilden zudem die ganzheitliche Start-up-Betreuung (inkl. Gründungsberatung, Rechtsformwahl und Begleitung bei Finanzierungsrunden) sowie die Implementierung automatisierter, papierloser Finanzprozesse und KPI-Reportings für Unternehmen.</p>
+<p>Die Dienstleistung umfasst die geschäftsmäßige Hilfeleistung in Steuersachen sowie die umfassende betriebswirtschaftliche und strategische Beratung. Neben den klassischen Tätigkeiten wie der Erstellung von Steuererklärungen und Jahresabschlüssen liegt der Schwerpunkt auf der vollumfänglichen, digitalen Finanz- und Lohnbuchhaltung. Besondere Kernkompetenzen bilden zudem die ganzheitliche Start-up-Betreuung (inkl. Gründungsberatung und Rechtsformwahl) sowie die Implementierung automatisierter, papierloser Finanzprozesse und KPI-Reportings für Unternehmen.</p>
 
 <h2>Erläuterungen zur Durchführung der Dienstleistung</h2>
 <p>Die Dienstleistungserbringung erfolgt zu 100 % digital, papierlos und agil. Der Fokus liegt darauf, die steuerlichen und betriebswirtschaftlichen Prozesse so in den Alltag der Mandanten zu integrieren, dass sie maximal entlastet werden.</p>
@@ -40,7 +42,7 @@ Link zum Impressum: <a href="https://tepel-steuerberatung.de/impressum">https://
 <p>Wir setzen uns für digitale Barrierefreiheit ein und verfolgen das Ziel, unsere Website so zu gestalten, dass sie für alle Nutzerinnen und Nutzer uneingeschränkt zugänglich ist. Daher arbeiten wir kontinuierlich daran, die Anforderungen des Barrierefreiheitsstärkungsgesetzes (BFSG) und der Verordnung zum Barrierefreiheitsstärkungsgesetz (BFSGV) vollständig umzusetzen.</p>
 <p>Unsere Webseite setzt die Vorgaben gemäß Web Content Accessibility Guidelines (WCAG) um:</p>
 
-<p><strong>Tastaturbedienbarkeit:</strong> Alle Inhalte und Funktionen unserer Website sind vollständig über die Tastatur zugänglich. Die Navigation, das Kontaktformular, das Cookie-Banner sowie das mobile Menü können ohne Maus bedient werden. Ein &bdquo;Zum Inhalt springen&ldquo;-Link ermöglicht es Tastaturnutzern, direkt zum Hauptinhalt zu gelangen. Fokus-Fallen in Dialogen (Cookie-Banner, mobiles Menü) werden korrekt verwaltet und können jederzeit per Escape-Taste geschlossen werden.</p>
+<p><strong>Tastaturbedienbarkeit:</strong> Alle Inhalte und Funktionen unserer Website sind vollständig über die Tastatur zugänglich. Die Navigation, das Kontaktformular sowie das mobile Menü können ohne Maus bedient werden. Ein &bdquo;Zum Inhalt springen&ldquo;-Link ermöglicht es Tastaturnutzern, direkt zum Hauptinhalt zu gelangen. Der Fokus wird im geöffneten mobilen Menü korrekt geführt, das Menü lässt sich jederzeit per Escape-Taste schließen.</p>
 
 <p><strong>Vorlesefunktion und ARIA-Attribute:</strong> Unsere Website ist mit ARIA-Attributen versehen, um die Nutzung mit Screenreadern zu erleichtern. Alle interaktiven Elemente verfügen über aussagekräftige Labels (aria-label, aria-labelledby). Dekorative Elemente sind als solche gekennzeichnet (aria-hidden) und werden von Screenreadern übersprungen. Dialoge sind mit role=&quot;dialog&quot; und aria-modal ausgezeichnet. Alle Bilder besitzen beschreibende Alternativtexte.</p>
 
@@ -55,7 +57,8 @@ Link zum Impressum: <a href="https://tepel-steuerberatung.de/impressum">https://
 <h2>Feedbackmöglichkeit zur Meldung von Barrieren</h2>
 <p>Wenn Ihnen Barrieren beim Zugang zu Inhalten auf unserer Website aufgefallen sind, können Sie uns gern einen Hinweis geben:</p>
 <p>E-Mail: fabian@tepel-steuerberatung.de<br />
-Telefon: + 49 172 3870104</p>
+Telefon: 0611 / 15756 0<br />
+Mobil: + 49 172 3870104</p>
 
 <h2>Zuständige Marktüberwachungsbehörde</h2>
 <p>Marktüberwachungsstelle der Länder für die Barrierefreiheit von Produkten und Dienstleistungen (MLBF)<br />

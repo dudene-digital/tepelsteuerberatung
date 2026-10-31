@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import CookieBanner from "@/components/CookieBanner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -75,9 +74,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: {
-    canonical: siteUrl,
-  },
 };
 
 export default function RootLayout({
@@ -102,7 +98,6 @@ export default function RootLayout({
           Zum Inhalt springen
         </a>
         {children}
-        <CookieBanner />
       </body>
     </html>
   );

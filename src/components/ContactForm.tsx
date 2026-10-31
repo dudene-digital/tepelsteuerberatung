@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useRef, useEffect } from "react";
+import { startTransition, useActionState, useRef, useEffect } from "react";
 import { sendContactEmail, type ContactFormState } from "@/app/actions/contact";
 
 const ANLIEGEN_OPTIONS = [
@@ -24,7 +24,15 @@ export default function ContactForm() {
     if (state.success) {
       formRef.current?.reset();
     }
-  }, [state.success]);
+  }, [state]);
+
+  // React leert ein Formular mit action nach jedem Aufruf. Der Handler verhindert
+  // das, damit Eingaben bei einer Fehlermeldung erhalten bleiben.
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    startTransition(() => formAction(formData));
+  };
 
   const inputClasses =
     "w-full bg-surface-container/80 border border-outline-variant/20 rounded-xl px-4 py-3.5 text-on-surface font-body text-sm placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/40 transition-all";
@@ -86,7 +94,13 @@ export default function ContactForm() {
         </div>
       )}
 
-      <form ref={formRef} action={formAction} className="space-y-5" noValidate>
+      <form ref={formRef} action={formAction} onSubmit={handleSubmit} className="space-y-5" noValidate>
+        {/* Fangfeld für Bots: für Menschen unsichtbar und nicht per Tab erreichbar. */}
+        <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
+          <label htmlFor="contact-website">Website</label>
+          <input type="text" id="contact-website" name="website" tabIndex={-1} autoComplete="off" />
+        </div>
+
         {/* Name */}
         <div>
           <label htmlFor="contact-name" className={labelClasses}>
@@ -96,6 +110,7 @@ export default function ContactForm() {
             type="text"
             id="contact-name"
             name="name"
+            maxLength={120}
             required
             autoComplete="name"
             placeholder="Max Mustermann"
@@ -113,6 +128,7 @@ export default function ContactForm() {
               type="email"
               id="contact-email"
               name="email"
+            maxLength={254}
               required
               autoComplete="email"
               placeholder="max@beispiel.de"
@@ -127,6 +143,7 @@ export default function ContactForm() {
               type="tel"
               id="contact-phone"
               name="phone"
+            maxLength={40}
               autoComplete="tel"
               placeholder="+49 123 456789"
               className={inputClasses}
@@ -161,6 +178,7 @@ export default function ContactForm() {
           <textarea
             id="contact-message"
             name="message"
+            maxLength={5000}
             required
             rows={5}
             placeholder="Wie kann Fabian dir helfen?"

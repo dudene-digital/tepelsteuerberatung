@@ -1,7 +1,11 @@
 import Navbar from "@/components/Navbar";
-import ConsentMap from "@/components/ConsentMap";
 import ContactForm from "@/components/ContactForm";
 import FAQ, { FAQSchema } from "@/components/FAQ";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   const jsonLd = {
@@ -10,7 +14,7 @@ export default function Home() {
     name: "Tepel Steuerberatung",
     alternateName: "Fabian Tepel Steuerberatung",
     url: "https://tepel-steuerberatung.de",
-    telephone: "+491723870104",
+    telephone: "+49611157560",
     email: "fabian@tepel-steuerberatung.de",
     address: {
       "@type": "PostalAddress",
@@ -42,9 +46,15 @@ export default function Home() {
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday"],
         opens: "09:00",
-        closes: "18:00",
+        closes: "16:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: "Friday",
+        opens: "09:00",
+        closes: "13:00",
       },
     ],
     founder: {
@@ -140,7 +150,7 @@ export default function Home() {
 <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Status</p>
 <div className="flex items-center gap-2">
 <div className="w-2 h-2 rounded-full bg-tertiary animate-pulse shadow-[0_0_8px_#32d7c2]"></div>
-<span className="font-headline font-bold">100% Digital</span>
+<span className="font-headline font-bold">100&nbsp;% digital</span>
 </div>
 </div>
 </div>
@@ -152,12 +162,12 @@ export default function Home() {
 <div className="max-w-7xl mx-auto px-8">
 <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 <div className="text-center group">
-<div className="font-headline text-6xl md:text-8xl font-black text-primary mb-4 tracking-tighter transition-transform group-hover:scale-110">100%</div>
-<p className="font-label text-sm uppercase tracking-[0.3em] text-on-surface-variant">Mandanten mit digitaler Beratung</p>
+<div className="font-headline text-6xl md:text-8xl font-black text-primary mb-4 tracking-tighter transition-transform group-hover:scale-110">100&nbsp;%</div>
+<p className="font-label text-sm uppercase tracking-[0.3em] text-on-surface-variant">digital</p>
 </div>
 <div className="text-center group">
-<div className="font-headline text-6xl md:text-8xl font-black text-tertiary mb-4 tracking-tighter transition-transform group-hover:scale-110">30%</div>
-<p className="font-label text-sm uppercase tracking-[0.3em] text-on-surface-variant">Zeiteinsparung durch agile Prozesse</p>
+<div className="font-headline text-6xl md:text-8xl font-black text-tertiary mb-4 tracking-tighter transition-transform group-hover:scale-110">24&nbsp;h</div>
+<p className="font-label text-sm uppercase tracking-[0.3em] text-on-surface-variant">Antwort innerhalb von 24 Stunden</p>
 </div>
 <div className="text-center group">
 <div className="font-headline text-6xl md:text-8xl font-black text-on-surface mb-4 tracking-tighter transition-transform group-hover:scale-110">1:1</div>
@@ -275,10 +285,6 @@ export default function Home() {
 <span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
 <span className="text-on-surface">Betriebswirtschaftliche Analyse &amp; KPI-Reporting</span>
 </li>
-<li className="flex items-start gap-3">
-<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span className="text-on-surface">Begleitung bei Finanzierungsrunden &amp; Exits</span>
-</li>
 </ul>
 </div>
 </div>
@@ -385,12 +391,21 @@ export default function Home() {
 <div>
 <h3 className="font-headline text-2xl font-bold mb-6 text-primary">Kontakt</h3>
 <div className="space-y-3">
-  <a href="tel:+491723870104" className="flex items-center gap-4 p-4 rounded-2xl bg-surface-container/60 border border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container transition-all group">
+  <a href="tel:+49611157560" className="flex items-center gap-4 p-4 rounded-2xl bg-surface-container/60 border border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container transition-all group">
     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
-      <span className="material-symbols-outlined text-primary text-lg" data-icon="phone" aria-hidden="true">phone</span>
+      <span className="material-symbols-outlined text-primary text-lg" data-icon="call" aria-hidden="true">call</span>
     </div>
     <div>
       <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-0.5">Telefon</p>
+      <p className="text-sm text-on-surface font-medium">0611 / 15756 0</p>
+    </div>
+  </a>
+  <a href="tel:+491723870104" className="flex items-center gap-4 p-4 rounded-2xl bg-surface-container/60 border border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container transition-all group">
+    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
+      <span className="material-symbols-outlined text-primary text-lg" data-icon="smartphone" aria-hidden="true">smartphone</span>
+    </div>
+    <div>
+      <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-0.5">Mobil</p>
       <p className="text-sm text-on-surface font-medium">+ 49 172 3870104</p>
     </div>
   </a>
@@ -412,11 +427,43 @@ export default function Home() {
       <p className="text-sm text-on-surface font-medium">Gottfried-Kinkel-Straße 21<br/>65187 Wiesbaden</p>
     </div>
   </div>
+  <div className="flex items-center gap-4 p-4 rounded-2xl bg-surface-container/60 border border-outline-variant/10">
+    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+      <span className="material-symbols-outlined text-primary text-lg" data-icon="schedule" aria-hidden="true">schedule</span>
+    </div>
+    <div>
+      <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-0.5">Erreichbarkeit</p>
+      <p className="text-sm text-on-surface font-medium">Mo–Do 9–16 Uhr, Fr 9–13 Uhr</p>
+    </div>
+  </div>
 </div>
 </div>
-<div className="flex-1 min-h-[250px] rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg">
-  <ConsentMap />
-</div>
+{/* Statisches Kartenbild vom eigenen Server: Erst der Klick auf den Link verlässt die Website. */}
+<figure className="flex-1 flex flex-col min-h-[250px] rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg bg-surface-container">
+  <a
+    href="https://www.google.com/maps/place/Fabian+Tepel+Steuerberatung/@50.0588221,8.2396785"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="relative block flex-1 min-h-[210px] group focus-visible:outline-offset-[-5px]!"
+  >
+    <img
+      src="/standort-karte.webp"
+      alt="Kartenausschnitt mit dem Kanzleistandort Gottfried-Kinkel-Straße 21 in Wiesbaden"
+      width={820}
+      height={560}
+      loading="lazy"
+      className="absolute inset-0 w-full h-full object-cover"
+    />
+    <span className="absolute bottom-3 left-3 inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-container text-primary text-xs font-headline font-bold border border-outline-variant/30 group-hover:border-primary/40 transition-colors">
+      <span className="material-symbols-outlined text-base" data-icon="directions" aria-hidden="true">directions</span>
+      Route in Google Maps öffnen
+    </span>
+  </a>
+  <figcaption className="px-3 py-2 text-[10px] text-on-surface-variant">
+    Kartendaten ©{" "}
+    <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">OpenStreetMap-Mitwirkende</a>
+  </figcaption>
+</figure>
 </div>
 </div>
 
@@ -458,8 +505,11 @@ export default function Home() {
 <div>
 <p className="font-manrope text-xs font-bold uppercase tracking-widest text-slate-100 mb-6">Kontakt</p>
 <ul className="space-y-4">
+<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="tel:+49611157560">0611 / 15756 0</a></li>
+<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="tel:+491723870104">+ 49 172 3870104</a></li>
 <li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="mailto:fabian@tepel-steuerberatung.de">E-Mail schreiben</a></li>
 <li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/#kontakt">Kontakt aufnehmen</a></li>
+<li className="text-slate-400 text-xs">Mo–Do 9–16 Uhr<br/>Fr 9–13 Uhr</li>
 </ul>
 </div>
 </div>

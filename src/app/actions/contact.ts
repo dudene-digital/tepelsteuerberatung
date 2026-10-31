@@ -1,23 +1,119 @@
 "use server";
 
 import { Resend } from "resend";
+import { writeFile, readFile, mkdir } from "fs/promises";
+import { existsSync } from "fs";
+import path from "path";
+import { headers } from "next/headers";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Fallback log file path – /tmp survives within a container session,
+// but the real safety net is the console.error log visible in Coolify.
+const FALLBACK_DIR = path.join(process.cwd(), "data");
+const FALLBACK_FILE = path.join(FALLBACK_DIR, "contact-fallback.jsonl");
+
+interface ContactSubmission {
+  timestamp: string;
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+  error: string;
+  status: "failed" | "success";
+}
+
+/**
+ * Persist a contact form submission to a JSONL fallback file AND console.
+ * This ensures no inquiry is ever lost, even if Resend is down or misconfigured.
+ */
+async function saveToFallbackLog(submission: ContactSubmission): Promise<void> {
+  const jsonLine = JSON.stringify(submission);
+
+  // Always log to console (visible in Coolify container logs)
+  console.error(
+    `[CONTACT-FALLBACK] ${submission.status.toUpperCase()} submission:`,
+    jsonLine
+  );
+
+  // Also try to persist to file
+  try {
+    if (!existsSync(FALLBACK_DIR)) {
+      await mkdir(FALLBACK_DIR, { recursive: true });
+    }
+    await writeFile(FALLBACK_FILE, jsonLine + "\n", { flag: "a" });
+  } catch (fileError) {
+    console.error("[CONTACT-FALLBACK] Could not write to fallback file:", fileError);
+    // Console log above is the safety net – file write failure is non-critical
+  }
+}
+
+/**
+ * Retrieve all fallback-logged submissions (for admin/debug purposes).
+ */
+export async function getFallbackSubmissions(): Promise<ContactSubmission[]> {
+  try {
+    if (!existsSync(FALLBACK_FILE)) return [];
+    const content = await readFile(FALLBACK_FILE, "utf-8");
+    return content
+      .split("\n")
+      .filter((line) => line.trim())
+      .map((line) => JSON.parse(line) as ContactSubmission);
+  } catch {
+    return [];
+  }
+}
 
 export type ContactFormState = {
   success: boolean;
   error?: string;
 };
 
+// Warn at startup if the API key is missing
+if (!process.env.RESEND_API_KEY) {
+  console.warn(
+    "[CONTACT] ⚠️  RESEND_API_KEY is not set! All email sends will fail. " +
+    "Submissions will be saved to fallback log."
+  );
+}
+
+/* Schlichtes Limit je IP. Der Zähler liegt im Speicher, das reicht für eine einzelne Instanz. */
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const recentRequests = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  for (const [key, times] of recentRequests) {
+    if (times.every((t) => now - t >= RATE_LIMIT_WINDOW_MS)) recentRequests.delete(key);
+  }
+  const times = (recentRequests.get(ip) ?? []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+  if (times.length >= RATE_LIMIT_MAX) {
+    recentRequests.set(ip, times);
+    return true;
+  }
+  recentRequests.set(ip, [...times, now]);
+  return false;
+}
+
+function textField(formData: FormData, key: string): string {
+  const value = formData.get(key);
+  return typeof value === "string" ? value.trim() : "";
+}
+
 export async function sendContactEmail(
   _prevState: ContactFormState,
   formData: FormData
 ): Promise<ContactFormState> {
-  const name = formData.get("name") as string;
-  const email = formData.get("email") as string;
-  const phone = (formData.get("phone") as string) || "–";
-  const subject = formData.get("subject") as string;
-  const message = formData.get("message") as string;
+  // Fangfeld ausgefüllt: Bot. Erfolg vortäuschen, nichts senden.
+  if (textField(formData, "website")) {
+    return { success: true };
+  }
+
+  const name = textField(formData, "name");
+  const email = textField(formData, "email");
+  const phone = textField(formData, "phone") || "–";
+  const subject = textField(formData, "subject").replace(/[\r\n]+/g, " ");
+  const message = textField(formData, "message").replace(/\r\n/g, "\n");
   const privacy = formData.get("privacy");
 
   // Server-side validation
@@ -32,12 +128,38 @@ export async function sendContactEmail(
     };
   }
 
+  if (
+    name.length > 120 ||
+    email.length > 254 ||
+    phone.length > 40 ||
+    subject.length > 80 ||
+    message.length > 5000
+  ) {
+    return { success: false, error: "Eine deiner Eingaben ist zu lang." };
+  }
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     return { success: false, error: "Bitte gib eine gültige E-Mail-Adresse ein." };
   }
 
+  const requestHeaders = await headers();
+  // Vorne in x-forwarded-for kann der Client selbst etwas eintragen, verlässlich ist nur der Proxy-Eintrag.
+  const ip =
+    requestHeaders.get("x-real-ip")?.trim() ||
+    requestHeaders.get("x-forwarded-for")?.split(",").pop()?.trim() ||
+    "unbekannt";
+  if (isRateLimited(ip)) {
+    return {
+      success: false,
+      error: "Zu viele Anfragen in kurzer Zeit. Bitte versuche es später erneut oder ruf uns an.",
+    };
+  }
+
   try {
+    // Hier statt auf Modulebene: Ohne Key wirft der Konstruktor, und das soll der catch-Zweig abfangen.
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
     // 1. Notification email to Fabian (MUST succeed)
     const notificationResult = await resend.emails.send({
       from: "Kontaktformular <no-reply@tepel-steuerberatung.de>",
@@ -80,6 +202,9 @@ export async function sendContactEmail(
         </div>
       `,
     });
+    if (notificationResult.error) {
+      throw new Error(notificationResult.error.message);
+    }
     console.log("Notification email sent:", JSON.stringify(notificationResult));
 
     // 2. Confirmation email to sender (fire-and-forget, must not block success)
@@ -95,17 +220,11 @@ export async function sendContactEmail(
           </div>
           <div style="padding: 32px 40px;">
             <p style="color: #1e293b; font-size: 15px; line-height: 1.7; margin: 0 0 20px;">
-              Hallo ${escapeHtml(name)},
+              Hallo,
             </p>
             <p style="color: #475569; font-size: 15px; line-height: 1.7; margin: 0 0 24px;">
-              deine Anfrage ist bei mir eingegangen. Ich melde mich in der Regel innerhalb von 24 Stunden bei dir.
+              deine Anfrage ist bei uns eingegangen. Du bekommst an Werktagen innerhalb von 24 Stunden eine Antwort.
             </p>
-            <div style="background: #f1f5f9; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px;">
-              <p style="color: #64748b; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px;">Dein Anliegen</p>
-              <p style="color: #1e293b; font-size: 14px; font-weight: 600; margin: 0 0 16px;">${escapeHtml(subject)}</p>
-              <p style="color: #64748b; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px;">Deine Nachricht</p>
-              <p style="color: #475569; font-size: 14px; line-height: 1.6; white-space: pre-wrap; margin: 0;">${escapeHtml(message)}</p>
-            </div>
             <p style="color: #475569; font-size: 15px; line-height: 1.7; margin: 0 0 6px;">
               Viele Grüße,
             </p>
@@ -118,13 +237,17 @@ export async function sendContactEmail(
           </div>
           <div style="background: #f1f5f9; padding: 20px 40px; text-align: center; border-top: 1px solid #e2e8f0;">
             <p style="color: #94a3b8; font-size: 12px; margin: 0;">
-              Tepel Steuerberatung · Gottfried-Kinkel-Straße 21 · 65187 Wiesbaden<br/>
+              Tepel Steuerberatung · Gottfried-Kinkel-Straße 21 · 65187 Wiesbaden · 0611 / 15756 0<br/>
               <a href="https://tepel-steuerberatung.de" style="color: #0891b2; text-decoration: none;">tepel-steuerberatung.de</a> · <a href="mailto:fabian@tepel-steuerberatung.de" style="color: #0891b2; text-decoration: none;">fabian@tepel-steuerberatung.de</a>
             </p>
           </div>
         </div>
       `,
     }).then((result) => {
+      if (result.error) {
+        console.error("Confirmation email failed (non-blocking):", result.error);
+        return;
+      }
       console.log("Confirmation email sent:", JSON.stringify(result));
     }).catch((err) => {
       console.error("Confirmation email failed (non-blocking):", err);
@@ -132,7 +255,18 @@ export async function sendContactEmail(
 
     return { success: true };
   } catch (error) {
-    console.error("Resend notification error:", error);
+    // ── Fallback: Save the full submission so nothing is lost ──
+    await saveToFallbackLog({
+      timestamp: new Date().toISOString(),
+      name,
+      email,
+      phone,
+      subject,
+      message,
+      error: error instanceof Error ? error.message : String(error),
+      status: "failed",
+    });
+
     return {
       success: false,
       error: "Beim Senden ist ein Fehler aufgetreten. Bitte versuche es erneut oder kontaktiere uns direkt per E-Mail.",
