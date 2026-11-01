@@ -1,67 +1,7 @@
 "use server";
 
 import { Resend } from "resend";
-import { writeFile, readFile, mkdir } from "fs/promises";
-import { existsSync } from "fs";
-import path from "path";
 import { headers } from "next/headers";
-
-// Fallback log file path – /tmp survives within a container session,
-// but the real safety net is the console.error log visible in Coolify.
-const FALLBACK_DIR = path.join(process.cwd(), "data");
-const FALLBACK_FILE = path.join(FALLBACK_DIR, "contact-fallback.jsonl");
-
-interface ContactSubmission {
-  timestamp: string;
-  name: string;
-  email: string;
-  phone: string;
-  subject: string;
-  message: string;
-  error: string;
-  status: "failed" | "success";
-}
-
-/**
- * Persist a contact form submission to a JSONL fallback file AND console.
- * This ensures no inquiry is ever lost, even if Resend is down or misconfigured.
- */
-async function saveToFallbackLog(submission: ContactSubmission): Promise<void> {
-  const jsonLine = JSON.stringify(submission);
-
-  // Always log to console (visible in Coolify container logs)
-  console.error(
-    `[CONTACT-FALLBACK] ${submission.status.toUpperCase()} submission:`,
-    jsonLine
-  );
-
-  // Also try to persist to file
-  try {
-    if (!existsSync(FALLBACK_DIR)) {
-      await mkdir(FALLBACK_DIR, { recursive: true });
-    }
-    await writeFile(FALLBACK_FILE, jsonLine + "\n", { flag: "a" });
-  } catch (fileError) {
-    console.error("[CONTACT-FALLBACK] Could not write to fallback file:", fileError);
-    // Console log above is the safety net – file write failure is non-critical
-  }
-}
-
-/**
- * Retrieve all fallback-logged submissions (for admin/debug purposes).
- */
-export async function getFallbackSubmissions(): Promise<ContactSubmission[]> {
-  try {
-    if (!existsSync(FALLBACK_FILE)) return [];
-    const content = await readFile(FALLBACK_FILE, "utf-8");
-    return content
-      .split("\n")
-      .filter((line) => line.trim())
-      .map((line) => JSON.parse(line) as ContactSubmission);
-  } catch {
-    return [];
-  }
-}
 
 export type ContactFormState = {
   success: boolean;
@@ -71,8 +11,7 @@ export type ContactFormState = {
 // Warn at startup if the API key is missing
 if (!process.env.RESEND_API_KEY) {
   console.warn(
-    "[CONTACT] ⚠️  RESEND_API_KEY is not set! All email sends will fail. " +
-    "Submissions will be saved to fallback log."
+    "[CONTACT] ⚠️  RESEND_API_KEY is not set! All email sends will fail."
   );
 }
 
@@ -255,17 +194,11 @@ export async function sendContactEmail(
 
     return { success: true };
   } catch (error) {
-    // ── Fallback: Save the full submission so nothing is lost ──
-    await saveToFallbackLog({
-      timestamp: new Date().toISOString(),
-      name,
-      email,
-      phone,
-      subject,
-      message,
-      error: error instanceof Error ? error.message : String(error),
-      status: "failed",
-    });
+    // Bewusst ohne Formularinhalte: Anfragen an eine Steuerkanzlei gehören nicht in Logs.
+    console.error(
+      "[CONTACT] Versand fehlgeschlagen:",
+      error instanceof Error ? error.message : "Unbekannter Fehler"
+    );
 
     return {
       success: false,
