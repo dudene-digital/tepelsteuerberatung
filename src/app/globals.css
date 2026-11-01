@@ -138,6 +138,11 @@ body {
 }
 
 /* Legal content (Datenschutz, Impressum) */
+.legal-content {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
 .legal-content h1 {
   font-family: var(--font-headline);
   font-size: 2.5rem;
@@ -185,6 +190,7 @@ body {
 }
 
 .legal-content a {
+  overflow-wrap: anywhere;
   color: var(--color-primary);
   text-decoration: underline;
   text-underline-offset: 2px;
