@@ -1,527 +1,268 @@
-import Navbar from "@/components/Navbar";
-import ContactForm from "@/components/ContactForm";
-import FAQ, { FAQSchema } from "@/components/FAQ";
+import { zielgruppen } from "@/content/zielgruppen";
 import type { Metadata } from "next";
+import Image from "next/image";
+import HashRedirect from "@/components/HashRedirect";
+import JsonLd from "@/components/JsonLd";
+import {
+  Badge,
+  BookingLink,
+  Card,
+  CtaBand,
+  Icon,
+  LinkCard,
+  SecondaryLink,
+  Section,
+  SectionHeading,
+  TextLink,
+} from "@/components/ui";
+import { leistungenNav, site } from "@/lib/site";
 
 export const metadata: Metadata = {
+  title: { absolute: "Steuerberater Wiesbaden für Online-Händler & Unternehmer | Tepel" },
+  description:
+    "Digitale Steuerberatung in Wiesbaden: Buchhaltung, Lohn, Jahresabschluss und Steuern für E-Commerce, GmbH, Freiberufler und Vermieter. Fester Ansprechpartner, Antwort in 24 Stunden.",
   alternates: { canonical: "/" },
 };
 
-export default function Home() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "AccountingService",
-    name: "Tepel Steuerberatung",
-    alternateName: "Fabian Tepel Steuerberatung",
-    url: "https://tepel-steuerberatung.de",
-    telephone: "+49611157560",
-    email: "fabian@tepel-steuerberatung.de",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Gottfried-Kinkel-Straße 21",
-      addressLocality: "Wiesbaden",
-      postalCode: "65187",
-      addressCountry: "DE",
-      addressRegion: "Hessen",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 50.05882,
-      longitude: 8.23970,
-    },
-    description:
-      "Digitale & agile Steuerberatung in Wiesbaden. Maßgeschneiderte Lösungen für Unternehmer, Start-ups und Freiberufler.",
-    priceRange: "$$",
-    sameAs: [
-      "https://tepel-steuerberatung.de",
-      "https://www.linkedin.com/in/fabian-tepel-0925bb108",
-      "https://www.google.com/maps/place/Fabian+Tepel+Steuerberatung/@50.0588221,8.2396785",
-    ],
-    areaServed: [
-      { "@type": "City", name: "Wiesbaden" },
-      { "@type": "City", name: "Mainz" },
-      { "@type": "City", name: "Frankfurt am Main" },
-      { "@type": "State", name: "Hessen" },
-    ],
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday"],
-        opens: "09:00",
-        closes: "16:00",
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: "Friday",
-        opens: "09:00",
-        closes: "13:00",
-      },
-    ],
-    founder: {
-      "@type": "Person",
-      name: "Fabian Tepel",
-      jobTitle: "Steuerberater",
-    },
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: "Steuerberatungsleistungen",
-      itemListElement: [
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Finanzbuchhaltung",
-            description: "Digitale Buchhaltung – 100% papierlos & ortsunabhängig",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Lohn & Gehalt",
-            description: "Komplette Lohnabrechnung inkl. Meldungen an Sozialversicherungsträger und Finanzamt",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Jahresabschlüsse & Steuererklärungen",
-            description: "Erstellung von Jahresabschlüssen und Steuererklärungen",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Strategische Steuerberatung",
-            description: "Proaktive Steuergestaltung, Belastungsvergleich und betriebswirtschaftliche Analyse",
-          },
-        },
-      ],
-    },
-  };
+const trustItems: readonly { icon: string; label: string }[] = [
+  { icon: "verified", label: "Steuerberater seit 2021" },
+  { icon: "person", label: "Inhabergeführt" },
+  { icon: "schedule", label: "Antwort innerhalb von 24 Stunden" },
+  { icon: "location_on", label: "Büro in Wiesbaden" },
+];
 
+/* Die erste Kachel läuft mobil über zwei Spalten, die Texte stehen in content/zielgruppen.ts. */
+const kachelLayout = ["md:col-span-2 lg:col-span-3", "lg:col-span-3", "lg:col-span-2", "lg:col-span-2", "lg:col-span-2"];
+
+const versprechen: readonly { title: string; text: string; icon: string }[] = [
+  {
+    title: "Direkter Draht zum Inhaber",
+    text: "Du sprichst mit Fabian, nicht mit einer Hotline. Antwort innerhalb von 24 Stunden an Werktagen.",
+    icon: "forum",
+  },
+  {
+    title: "Planbare Kosten",
+    text: "Nach dem Erstgespräch bekommst du ein Festangebot mit Monatspauschale. Zusatzaufwand nur nach Absprache.",
+    icon: "receipt_long",
+  },
+  {
+    title: "Digital, aber nicht anonym",
+    text: "Belege per App, Auswertungen online, Besprechung per Video oder bei uns im Büro.",
+    icon: "devices",
+  },
+];
+
+const kanzleiJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AccountingService",
+  "@id": `${site.url}/#kanzlei`,
+  name: site.name,
+  alternateName: site.legalName,
+  url: site.url,
+  telephone: site.phone.schema,
+  email: site.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    postalCode: site.address.postalCode,
+    addressRegion: site.address.region,
+    addressCountry: site.address.country,
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: site.geo.latitude,
+    longitude: site.geo.longitude,
+  },
+  description:
+    "Steuerberatung für Online-Händler, Unternehmer und Vermieter im Rhein-Main-Gebiet – digital im Alltag, persönlich, wenn es darauf ankommt.",
+  sameAs: [site.linkedin, site.googleProfile],
+  areaServed: [
+    { "@type": "City", name: "Wiesbaden" },
+    { "@type": "City", name: "Mainz" },
+    { "@type": "City", name: "Frankfurt am Main" },
+    { "@type": "State", name: "Hessen" },
+  ],
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+      opens: "09:00",
+      closes: "16:00",
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: "Friday",
+      opens: "09:00",
+      closes: "13:00",
+    },
+  ],
+  founder: {
+    "@type": "Person",
+    name: "Fabian Tepel",
+    jobTitle: "Steuerberater",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Steuerberatungsleistungen",
+    itemListElement: leistungenNav.map((leistung) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: leistung.label,
+        url: `${site.url}${leistung.href}`,
+      },
+    })),
+  },
+};
+
+export default function Home() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <FAQSchema />
-      <Navbar />
-<main id="main-content" className="relative">
+      <JsonLd data={kanzleiJsonLd} />
+      <HashRedirect />
 
-<section id="home" className="relative min-h-screen flex items-center pt-24 overflow-hidden">
-<div className="absolute inset-0 z-0" aria-hidden="true">
-<div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px]"></div>
-<div className="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] bg-tertiary/10 rounded-full blur-[100px]"></div>
-</div>
-<div className="relative z-10 max-w-7xl mx-auto px-8 grid lg:grid-cols-12 gap-12 items-center">
-<div className="lg:col-span-7">
-<span className="inline-block py-1 px-3 mb-6 bg-surface-container-high rounded-full border border-outline-variant/20 text-tertiary text-[10px] font-bold tracking-[0.2em] uppercase">Digital &amp; Agil</span>
-<h1 className="font-headline text-4xl md:text-5xl lg:text-7xl font-extrabold text-on-surface leading-[1.1] tracking-tighter mb-8">
-                        STEUERBERATUNG, DIE SICH DEINEM BUSINESS ANPASST
-                    </h1>
-<p className="font-body text-lg md:text-xl text-on-surface-variant max-w-2xl mb-10 leading-relaxed">
-                        Hi, ich bin Fabian. Ich helfe Unternehmern und Start-ups dabei, ihre Finanzen stressfrei im Griff zu behalten. Vergiss Pendelordner und kompliziertes Behördendeutsch – wir arbeiten smart, voll digital mit digitalen Tools und sprechen eine Sprache, die du verstehst.
-                    </p>
-<div className="flex flex-col sm:flex-row flex-wrap gap-4">
-<a href="#kontakt" className="inline-block text-center hero-gradient text-on-primary-container px-6 py-4 md:px-10 md:py-5 rounded-xl font-headline font-bold text-base md:text-lg shadow-[0_0_40px_rgba(165,231,255,0.15)] hover:scale-[1.02] transition-transform">
-                            Kostenloses Erstgespräch
-                        </a>
-<a href="#services" className="inline-block text-center bg-surface-variant/20 backdrop-blur-md border border-outline-variant/15 text-on-surface px-6 py-4 md:px-10 md:py-5 rounded-xl font-headline font-bold text-base md:text-lg hover:bg-surface-variant/30 transition-all">
-                            Mein Ansatz
-                        </a>
-</div>
-</div>
-<div className="lg:col-span-5 relative mt-16 lg:mt-0">
-<div className="relative w-full aspect-square rounded-[2rem] overflow-hidden shadow-2xl animate-float">
-<img alt="Portrait von Fabian Tepel, Steuerberater in Wiesbaden" className="w-full h-full object-cover" src="/berater_1.jpg"/>
-<div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+      {/* Hero */}
+      <section className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden">
+        <div className="absolute inset-0 z-0" aria-hidden="true">
+          <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px]" />
+          <div className="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] bg-tertiary/10 rounded-full blur-[100px]" />
+        </div>
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-8">
+          <div className="grid lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-7">
+              <Badge>Digital, aber nicht anonym</Badge>
+              <h1 className="font-headline text-[2rem] min-[390px]:text-4xl md:text-5xl xl:text-6xl font-extrabold text-on-surface leading-[1.1] tracking-tighter mb-8 text-balance">
+                Steuerberatung für <span className="whitespace-nowrap">Online-Händler,</span> Unternehmer und Vermieter in
+                Wiesbaden
+              </h1>
+              <p className="font-body text-lg md:text-xl text-on-surface-variant max-w-2xl mb-10 leading-relaxed">
+                Digital im Alltag, persönlich, wenn es darauf ankommt. Wir kümmern uns um Buchhaltung, Lohn, Abschluss und
+                Steuern – du um dein Business.
+              </p>
+              <div className="flex flex-col sm:flex-row flex-wrap gap-4">
+                <BookingLink>Kostenloses Erstgespräch buchen</BookingLink>
+                <SecondaryLink href="/so-arbeiten-wir">So arbeiten wir</SecondaryLink>
+              </div>
+            </div>
+            <div className="lg:col-span-5 relative w-full max-w-md mx-auto lg:max-w-none">
+              <div className="relative w-full aspect-square rounded-[2rem] overflow-hidden shadow-2xl animate-float">
+                <Image
+                  src="/berater_1.jpg"
+                  alt="Porträt von Fabian Tepel, Steuerberater in Wiesbaden"
+                  fill
+                  sizes="(min-width: 1280px) 480px, (min-width: 1024px) 372px, (min-width: 496px) 448px, calc(100vw - 48px)"
+                  loading="eager"
+                  fetchPriority="high"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+              </div>
+              <div className="absolute -bottom-6 left-4 lg:-left-6 glass-card px-5 py-4 md:p-6 rounded-2xl border border-outline-variant/10 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-tertiary-container/20 flex items-center justify-center shrink-0">
+                  <Icon name="verified" className="text-tertiary" />
+                </div>
+                <div>
+                  <p className="font-headline font-bold text-on-surface">Fabian Tepel</p>
+                  <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">
+                    Steuerberater &amp; Inhaber
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-</div>
+          <ul className="mt-16 lg:mt-20 pt-8 border-t border-outline-variant/20 flex flex-wrap lg:justify-between gap-x-6 gap-y-3 text-sm text-on-surface-variant">
+            {trustItems.map((item) => (
+              <li key={item.label} className="flex items-center gap-2">
+                <Icon name={item.icon} className="text-primary text-lg shrink-0" />
+                {item.label}
+              </li>
+            ))}
+            <li className="flex items-center gap-2">
+              <Icon name="call" className="text-primary text-lg shrink-0" />
+              <a href={site.phone.href} className="whitespace-nowrap hover:text-primary transition-colors">
+                {site.phone.label}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
 
-<div className="absolute -bottom-6 -left-6 glass-card p-6 rounded-2xl border border-outline-variant/10 flex items-center gap-4">
-<div className="w-12 h-12 rounded-full bg-tertiary-container/20 flex items-center justify-center">
-<span className="material-symbols-outlined text-tertiary" data-icon="verified" aria-hidden="true">verified</span>
-</div>
-<div>
-<p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Status</p>
-<div className="flex items-center gap-2">
-<div className="w-2 h-2 rounded-full bg-tertiary animate-pulse shadow-[0_0_8px_#32d7c2]"></div>
-<span className="font-headline font-bold">100&nbsp;% digital</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
+      {/* Zielgruppen */}
+      <Section tone="low" labelledBy="zielgruppen-heading">
+        <SectionHeading id="zielgruppen-heading">Für wen wir arbeiten</SectionHeading>
+        <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-6">
+          {zielgruppen.map((gruppe, index) => (
+            <div key={gruppe.href} className={`grid ${kachelLayout[index]}`}>
+              <LinkCard href={gruppe.href} title={gruppe.kachel.titel} text={gruppe.kachel.teaser} icon={gruppe.icon} />
+            </div>
+          ))}
+        </div>
+      </Section>
 
-<section className="py-24 bg-surface-container-low relative" aria-label="Kennzahlen">
-<div className="max-w-7xl mx-auto px-8">
-<div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-<div className="text-center group">
-<div className="font-headline text-6xl md:text-8xl font-black text-primary mb-4 tracking-tighter transition-transform group-hover:scale-110">100&nbsp;%</div>
-<p className="font-label text-sm uppercase tracking-[0.3em] text-on-surface-variant">digital</p>
-</div>
-<div className="text-center group">
-<div className="font-headline text-6xl md:text-8xl font-black text-tertiary mb-4 tracking-tighter transition-transform group-hover:scale-110">24&nbsp;h</div>
-<p className="font-label text-sm uppercase tracking-[0.3em] text-on-surface-variant">Antwort innerhalb von 24 Stunden</p>
-</div>
-<div className="text-center group">
-<div className="font-headline text-6xl md:text-8xl font-black text-on-surface mb-4 tracking-tighter transition-transform group-hover:scale-110">1:1</div>
-<p className="font-label text-sm uppercase tracking-[0.3em] text-on-surface-variant">Persönliche Mandantenbetreuung</p>
-</div>
-</div>
-</div>
-</section>
+      {/* Drei Versprechen */}
+      <Section labelledBy="versprechen-heading">
+        <SectionHeading id="versprechen-heading">Drei Versprechen</SectionHeading>
+        <div className="grid md:grid-cols-3 gap-6">
+          {versprechen.map((eintrag) => (
+            <Card key={eintrag.title}>
+              <Icon name={eintrag.icon} className="text-4xl text-tertiary mb-6 block" />
+              <h3 className="font-headline text-xl md:text-2xl font-bold mb-3 text-on-surface">{eintrag.title}</h3>
+              <p className="text-on-surface-variant leading-relaxed">{eintrag.text}</p>
+            </Card>
+          ))}
+        </div>
+      </Section>
 
-<section id="services" className="py-32 relative" aria-labelledby="services-heading">
-<div className="max-w-7xl mx-auto px-8">
-<div className="mb-20 text-center max-w-3xl mx-auto">
-<h2 id="services-heading" className="font-headline text-4xl font-bold mb-6">Werte, die den Unterschied machen</h2>
-<div className="w-24 h-1 bg-primary mx-auto rounded-full"></div>
-</div>
-<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* Team-Teaser */}
+      <Section tone="lowest" labelledBy="team-heading">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div>
+            <SectionHeading
+              id="team-heading"
+              intro="Für dich heißt das: Inhaber als Ansprechpartner, dazu Kapazität und Vertretung im Urlaub."
+            >
+              Seit September 2026 sind wir zu viert: Fabian Tepel und drei erfahrene Kolleginnen.
+            </SectionHeading>
+            <TextLink href="/team">Team kennenlernen</TextLink>
+          </div>
+          <div className="relative w-full aspect-[3/2] rounded-3xl overflow-hidden shadow-2xl">
+            <Image
+              src="/berater_2.jpg"
+              alt="Fabian Tepel steht in der Tür seines Büros"
+              fill
+              sizes="(min-width: 1280px) 576px, (min-width: 1024px) calc(50vw - 56px), (min-width: 768px) calc(100vw - 64px), calc(100vw - 48px)"
+              className="object-cover"
+            />
+          </div>
+        </div>
+      </Section>
 
-<div className="glass-card p-6 md:p-10 rounded-[2rem] border border-outline-variant/10 hover:bg-surface-variant/30 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,210,255,0.1)] transition-all duration-500 group">
-<span className="material-symbols-outlined text-4xl text-primary mb-8 block" data-icon="cloud_off" aria-hidden="true">cloud_off</span>
-<h3 className="font-headline text-2xl font-bold mb-4 text-on-surface">Kein Papierkram mehr</h3>
-<p className="text-on-surface-variant leading-relaxed mb-8">
-                            Belege scannen statt abheften. Wir nutzen modernste digitale Schnittstellen und Automatisierungen, damit du dich nie wieder mit Pendelordnern herumschlagen musst.
-                        </p>
+      {/* Google-Bewertungen: nur Verweis auf das Profil, ohne Zitate und ohne Einbindung von Google. */}
+      <Section size="narrow" labelledBy="bewertungen-heading">
+        <SectionHeading
+          id="bewertungen-heading"
+          center
+          intro="Was Mandanten über die Zusammenarbeit mit uns schreiben, liest du in unserem Google-Unternehmensprofil."
+        >
+          Google-Bewertungen
+        </SectionHeading>
+        <p className="text-center">
+          <a
+            href={site.googleProfile}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 font-headline font-bold text-primary underline underline-offset-4 hover:text-primary-container transition-colors"
+          >
+            Bewertungen bei Google ansehen
+            <Icon name="open_in_new" className="text-lg" />
+            <span className="sr-only">(öffnet in einem neuen Tab)</span>
+          </a>
+        </p>
+      </Section>
 
-</div>
-
-<div className="glass-card p-6 md:p-10 rounded-[2rem] border border-outline-variant/10 hover:bg-surface-variant/30 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,210,255,0.1)] transition-all duration-500 group">
-<span className="material-symbols-outlined text-4xl text-tertiary mb-8 block" data-icon="bolt" aria-hidden="true">bolt</span>
-<h3 className="font-headline text-2xl font-bold mb-4 text-on-surface">Agilität statt Stillstand</h3>
-<p className="text-on-surface-variant leading-relaxed mb-8">
-                            Das Steuerrecht ändert sich, dein Business wächst. Wir passen unsere Prozesse monatlich an deine Bedürfnisse an, statt in alten Strukturen zu verharren.
-                        </p>
-
-</div>
-
-<div className="glass-card p-6 md:p-10 rounded-[2rem] border border-outline-variant/10 hover:bg-surface-variant/30 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,210,255,0.1)] transition-all duration-500 group">
-<span className="material-symbols-outlined text-4xl text-primary mb-8 block" data-icon="forum" aria-hidden="true">forum</span>
-<h3 className="font-headline text-2xl font-bold mb-4 text-on-surface">Echter Austausch statt Pflichttermin</h3>
-<p className="text-on-surface-variant leading-relaxed mb-8">
-                            Wir telefonieren nicht nur, wenn die Frist abläuft. Regelmäßige Check-ins per Video-Call stellen sicher, dass wir proaktiv statt reaktiv handeln.
-                        </p>
-
-</div>
-
-<div className="glass-card p-6 md:p-10 rounded-[2rem] border border-outline-variant/10 hover:bg-surface-variant/30 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,210,255,0.1)] transition-all duration-500 group">
-<span className="material-symbols-outlined text-4xl text-tertiary mb-8 block" data-icon="rocket_launch" aria-hidden="true">rocket_launch</span>
-<h3 className="font-headline text-2xl font-bold mb-4 text-on-surface">Du baust das Business, ich halte dir den Rücken frei.</h3>
-<p className="text-on-surface-variant leading-relaxed mb-8">
-                            Konzentriere dich auf dein Produkt. Ich kümmere mich um die steuerliche Struktur, die Finanzplanung und die Kommunikation mit dem Finanzamt.
-                        </p>
-
-</div>
-</div>
-</div>
-</section>
-
-<section id="start-up" className="py-32 bg-surface-container-lowest relative overflow-hidden" aria-labelledby="startup-heading">
-<div className="absolute right-0 top-0 w-1/2 h-full bg-primary/5 skew-x-12 translate-x-32" aria-hidden="true"></div>
-<div className="max-w-7xl mx-auto px-8 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-<div>
-<div className="flex items-center gap-4 mb-8">
-<div className="w-12 h-12 rounded-xl bg-tertiary-container/30 flex items-center justify-center">
-<span className="material-symbols-outlined text-tertiary" data-icon="category" aria-hidden="true">category</span>
-</div>
-<span className="font-label text-sm uppercase tracking-[0.2em] text-tertiary font-bold">Start-up Support</span>
-</div>
-<h2 id="startup-heading" className="font-headline text-4xl md:text-5xl font-extrabold mb-8 leading-tight">DEIN FUNDAMENT FÜR SKALIERUNG.</h2>
-<p className="text-xl text-on-surface-variant mb-10 leading-relaxed">
-                        Du hast die Idee, ich die Struktur. Von der Gründung über die Wahl der richtigen Rechtsform bis hin zu komplexen Beteiligungsmodellen – ich bin dein strategischer Partner.
-                    </p>
-<ul className="space-y-4 mb-12">
-<li className="flex items-start gap-3">
-<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle" aria-hidden="true">check_circle</span>
-<span className="text-on-surface">Gründungsberatung &amp; Rechtsformwahl</span>
-</li>
-<li className="flex items-start gap-3">
-<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span className="text-on-surface">Digitale Buchhaltung ab Tag 1</span>
-</li>
-<li className="flex items-start gap-3">
-<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span className="text-on-surface">Cashflow-Monitoring &amp; Finanzplanung</span>
-</li>
-</ul>
-
-</div>
-<div>
-<img alt="Fabian Tepel – Start-up Support" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-3xl shadow-2xl" src="/berater_2.jpg"/>
-</div>
-</div>
-</section>
-
-<section className="py-32 bg-surface-container-low relative overflow-hidden">
-<div className="max-w-7xl mx-auto px-8 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-<div className="order-last lg:order-first">
-<img alt="Zusammenarbeit bei der strategischen Steuerplanung" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-3xl shadow-2xl" src="strategy_consulting_image_1774551205403.png"/>
-</div>
-<div>
-<div className="flex items-center gap-4 mb-8">
-<div className="w-12 h-12 rounded-xl bg-tertiary-container/30 flex items-center justify-center">
-<span className="material-symbols-outlined text-tertiary" data-icon="insights" aria-hidden="true">insights</span>
-</div>
-<span className="font-label text-sm uppercase tracking-[0.2em] text-tertiary font-bold">Strategische Beratung</span>
-</div>
-<h2 className="font-headline text-4xl md:text-5xl font-extrabold mb-8 leading-tight">WEITER ALS DAS FINANZAMT DENKT.</h2>
-<p className="text-xl text-on-surface-variant mb-10 leading-relaxed">
-                        Steuerberatung heißt für mich nicht nur, die Vergangenheit zu verwalten, sondern deine Zukunft zu gestalten. Wir optimieren deine Steuerlast proaktiv und passen die Strategie an, wenn dein Business skaliert.
-                    </p>
-<ul className="space-y-4">
-<li className="flex items-start gap-3">
-<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span className="text-on-surface">Proaktive Steuergestaltung &amp; Belastungsvergleich</span>
-</li>
-<li className="flex items-start gap-3">
-<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span className="text-on-surface">Betriebswirtschaftliche Analyse &amp; KPI-Reporting</span>
-</li>
-</ul>
-</div>
-</div>
-</section>
-
-
-<section className="py-32 bg-surface-container-lowest relative overflow-hidden">
-<div className="absolute left-0 top-0 w-1/2 h-full bg-primary/5 -skew-x-12 -translate-x-32" aria-hidden="true"></div>
-<div className="max-w-7xl mx-auto px-8 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-<div>
-<div className="flex items-center gap-4 mb-8">
-<div className="w-12 h-12 rounded-xl bg-tertiary-container/30 flex items-center justify-center">
-<span className="material-symbols-outlined text-tertiary" data-icon="devices" aria-hidden="true">devices</span>
-</div>
-<span className="font-label text-sm uppercase tracking-[0.2em] text-tertiary font-bold">Digitaler Workflow</span>
-</div>
-<h2 className="font-headline text-4xl md:text-5xl font-extrabold mb-8 leading-tight">BUCHHALTUNG 2.0</h2>
-<p className="text-xl text-on-surface-variant mb-10 leading-relaxed">
-                        Vergiss Pendelordner und Schuhkartons voller Belege. Mit <strong>innovativen Werkzeugen</strong>{" "}digitalisieren wir deine Buchführung komplett. Du fotografierst Belege per App oder lädst sie hoch, das geht auch automatisiert &ndash; ich kümmere mich um den Rest.
-                    </p>
-<ul className="space-y-4">
-<li className="flex items-start gap-3">
-<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span className="text-on-surface">100% papierlos &amp; ortsunabhängig</span>
-</li>
-<li className="flex items-start gap-3">
-<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span className="text-on-surface">Digitaler Einblick in deine Unternehmenskennzahlen</span>
-</li>
-<li className="flex items-start gap-3">
-<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span className="text-on-surface">Automatisierte Schnittstellen zu Bank &amp; Bezahlsystemen</span>
-</li>
-</ul>
-</div>
-<div>
-<img alt="Digitale Belegerfassung per App und Cloud" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-3xl shadow-2xl" src="digital_workflow_image_1774551221355.png"/>
-</div>
-</div>
-</section>
-
-
-<section className="py-32 bg-surface-container relative overflow-hidden">
-<div className="max-w-7xl mx-auto px-8 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-<div className="order-last lg:order-first">
-<img alt="Lohnabrechnung und Gehaltsauswertung digital" className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-3xl shadow-2xl" src="/lohn-gehalt.png"/>
-</div>
-<div>
-<div className="flex items-center gap-4 mb-8">
-<div className="w-12 h-12 rounded-xl bg-tertiary-container/30 flex items-center justify-center">
-<span className="material-symbols-outlined text-tertiary" data-icon="payments" aria-hidden="true">payments</span>
-</div>
-<span className="font-label text-sm uppercase tracking-[0.2em] text-tertiary font-bold">Lohn & Gehalt</span>
-</div>
-<h2 className="font-headline text-4xl md:text-5xl font-extrabold mb-8 leading-tight">EINFACH FÜR DICH UND DEIN TEAM.</h2>
-<p className="text-xl text-on-surface-variant mb-10 leading-relaxed">
-                        Dein Team wächst? Ich übernehme die komplette Lohnabrechnung, inklusive aller Meldungen an Sozialversicherungsträger und Finanzamt. Digitaler Abruf der Abrechnungen für deine Mitarbeiter inklusive.
-                    </p>
-<ul className="space-y-4">
-<li className="flex items-start gap-3">
-<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span className="text-on-surface">Digitale Lohnauswertungen via App</span>
-</li>
-<li className="flex items-start gap-3">
-<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span className="text-on-surface">Rechtssichere Abrechnung von Benefits &amp; Sachbezügen</span>
-</li>
-<li className="flex items-start gap-3">
-<span className="material-symbols-outlined text-primary mt-1" data-icon="check_circle">check_circle</span>
-<span className="text-on-surface">Volle Übernahme der Melde- und Bescheinigungswesen</span>
-</li>
-</ul>
-</div>
-</div>
-</section>
-
-
-<FAQ />
-
-<section id="kontakt" className="py-32 bg-surface-container relative overflow-hidden" aria-labelledby="contact-heading">
-<div className="absolute inset-0" aria-hidden="true">
-  {/* Abstract gradient background */}
-  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-tertiary/5"></div>
-  {/* Subtle dot grid pattern */}
-  <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(var(--color-primary)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
-  {/* Accent glow spots */}
-  <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-primary/8 rounded-full blur-[120px]"></div>
-  <div className="absolute bottom-0 left-1/4 w-[300px] h-[300px] bg-tertiary/6 rounded-full blur-[100px]"></div>
-</div>
-<div className="absolute inset-0 bg-gradient-to-t from-surface-container via-surface-container/80 to-surface-container/60"></div>
-<div className="max-w-7xl mx-auto px-8 relative z-10">
-<div className="text-center max-w-4xl mx-auto mb-16">
-<h2 id="contact-heading" className="font-headline text-4xl md:text-6xl font-extrabold mb-6 text-on-surface">Effizient, agil und persönlich betreut</h2>
-<p className="text-2xl text-on-surface-variant font-medium">Innovative Lösungen für zeitgemäße Beratung.</p>
-</div>
-
-<div className="grid lg:grid-cols-2 gap-8 bg-surface-container-low/80 backdrop-blur-xl p-6 md:p-12 rounded-[2rem] md:rounded-[3rem] border border-outline-variant/30 shadow-2xl">
-{/* Left: Contact Form */}
-<div>
-  <ContactForm />
-</div>
-{/* Right: Contact Info + Map */}
-<div className="flex flex-col gap-6">
-<div>
-<h3 className="font-headline text-2xl font-bold mb-6 text-primary">Kontakt</h3>
-<div className="space-y-3">
-  <a href="tel:+49611157560" className="flex items-center gap-4 p-4 rounded-2xl bg-surface-container/60 border border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container transition-all group">
-    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
-      <span className="material-symbols-outlined text-primary text-lg" data-icon="call" aria-hidden="true">call</span>
-    </div>
-    <div>
-      <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-0.5">Telefon</p>
-      <p className="text-sm text-on-surface font-medium">0611 / 15756 0</p>
-    </div>
-  </a>
-  <a href="tel:+491723870104" className="flex items-center gap-4 p-4 rounded-2xl bg-surface-container/60 border border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container transition-all group">
-    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
-      <span className="material-symbols-outlined text-primary text-lg" data-icon="smartphone" aria-hidden="true">smartphone</span>
-    </div>
-    <div>
-      <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-0.5">Mobil</p>
-      <p className="text-sm text-on-surface font-medium">+ 49 172 3870104</p>
-    </div>
-  </a>
-  <a href="mailto:fabian@tepel-steuerberatung.de" className="flex items-center gap-4 p-4 rounded-2xl bg-surface-container/60 border border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container transition-all group">
-    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
-      <span className="material-symbols-outlined text-primary text-lg" data-icon="mail" aria-hidden="true">mail</span>
-    </div>
-    <div>
-      <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-0.5">E-Mail</p>
-      <p className="text-sm text-on-surface font-medium">fabian@tepel-steuerberatung.de</p>
-    </div>
-  </a>
-  <div className="flex items-center gap-4 p-4 rounded-2xl bg-surface-container/60 border border-outline-variant/10">
-    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-      <span className="material-symbols-outlined text-primary text-lg" data-icon="location_on" aria-hidden="true">location_on</span>
-    </div>
-    <div>
-      <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-0.5">Adresse</p>
-      <p className="text-sm text-on-surface font-medium">Gottfried-Kinkel-Straße 21<br/>65187 Wiesbaden</p>
-    </div>
-  </div>
-  <div className="flex items-center gap-4 p-4 rounded-2xl bg-surface-container/60 border border-outline-variant/10">
-    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-      <span className="material-symbols-outlined text-primary text-lg" data-icon="schedule" aria-hidden="true">schedule</span>
-    </div>
-    <div>
-      <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-0.5">Erreichbarkeit</p>
-      <p className="text-sm text-on-surface font-medium">Mo–Do 9–16 Uhr, Fr 9–13 Uhr</p>
-    </div>
-  </div>
-</div>
-</div>
-{/* Statisches Kartenbild vom eigenen Server: Erst der Klick auf den Link verlässt die Website. */}
-<figure className="flex-1 flex flex-col min-h-[250px] rounded-2xl overflow-hidden border border-outline-variant/20 shadow-lg bg-surface-container">
-  <a
-    href="https://www.google.com/maps/place/Fabian+Tepel+Steuerberatung/@50.0588221,8.2396785"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="relative block flex-1 min-h-[210px] group focus-visible:outline-offset-[-5px]!"
-  >
-    <img
-      src="/standort-karte.webp"
-      alt="Kartenausschnitt mit dem Kanzleistandort Gottfried-Kinkel-Straße 21 in Wiesbaden"
-      width={820}
-      height={560}
-      loading="lazy"
-      className="absolute inset-0 w-full h-full object-cover"
-    />
-    <span className="absolute bottom-3 left-3 inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-container text-primary text-xs font-headline font-bold border border-outline-variant/30 group-hover:border-primary/40 transition-colors">
-      <span className="material-symbols-outlined text-base" data-icon="directions" aria-hidden="true">directions</span>
-      Route in Google Maps öffnen
-    </span>
-  </a>
-  <figcaption className="px-3 py-2 text-[10px] text-on-surface-variant">
-    Kartendaten ©{" "}
-    <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">OpenStreetMap-Mitwirkende</a>
-  </figcaption>
-</figure>
-</div>
-</div>
-
-</div>
-</section>
-
-</main>
-
-<footer className="bg-slate-950 border-t border-slate-900 py-16">
-<div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-start gap-12">
-<div className="max-w-sm">
-<div className="flex items-center gap-3 mb-6">
-<span className="material-symbols-outlined text-cyan-400 text-2xl" data-icon="account_balance" aria-hidden="true">account_balance</span>
-<span className="font-manrope font-bold text-slate-300 text-xl tracking-tighter">FABIAN TEPEL</span>
-</div>
-<p className="font-inter text-xs tracking-normal text-slate-400 leading-relaxed mb-6">
-                    © 2026 Fabian Tepel Steuerberatung. Digital &amp; Agil.<br/>
-                    Moderne Steuerberatung für die digitale Wirtschaft.
-                </p>
-</div>
-<div className="grid grid-cols-2 sm:grid-cols-3 gap-12">
-<nav aria-label="Footer-Navigation">
-<p className="font-manrope text-xs font-bold uppercase tracking-widest text-slate-100 mb-6">Navigation</p>
-<ul className="space-y-4">
-<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/#home">Home</a></li>
-<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/#services">Services</a></li>
-<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/#faq">FAQ</a></li>
-<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/#kontakt">Kontakt</a></li>
-</ul>
-</nav>
-<nav aria-label="Rechtliche Seiten">
-<p className="font-manrope text-xs font-bold uppercase tracking-widest text-slate-100 mb-6">Rechtliches</p>
-<ul className="space-y-4">
-<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/impressum">Impressum</a></li>
-<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/datenschutz">Datenschutz</a></li>
-<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/barrierefreiheit">Barrierefreiheit</a></li>
-</ul>
-</nav>
-<div>
-<p className="font-manrope text-xs font-bold uppercase tracking-widest text-slate-100 mb-6">Kontakt</p>
-<ul className="space-y-4">
-<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="tel:+49611157560">0611 / 15756 0</a></li>
-<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="tel:+491723870104">+ 49 172 3870104</a></li>
-<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="mailto:fabian@tepel-steuerberatung.de">E-Mail schreiben</a></li>
-<li><a className="text-slate-400 hover:text-cyan-300 transition-colors text-xs" href="/#kontakt">Kontakt aufnehmen</a></li>
-<li className="text-slate-400 text-xs">Mo–Do 9–16 Uhr<br/>Fr 9–13 Uhr</li>
-</ul>
-</div>
-</div>
-</div>
-<div className="max-w-7xl mx-auto px-8 mt-12 pt-8 border-t border-slate-800 text-center">
-<p className="font-inter text-xs text-slate-400">
-  Made with ❤️ by{" "}
-  <a href="https://dudene-digital.de" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 transition-colors underline underline-offset-2">Dudene Digital</a>
-</p>
-</div>
-</footer>
-
+      <CtaBand />
     </>
   );
 }

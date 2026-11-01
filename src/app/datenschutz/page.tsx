@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
+import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   title: "Datenschutzerklärung",
@@ -50,33 +50,28 @@ E-Mail: fabian@tepel-steuerberatung.de</p>
 <h3>Anfrage per E-Mail, Telefon oder Telefax</h3> <p>Wenn Sie uns per E-Mail, Telefon oder Telefax kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten (Name, Anfrage) zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p> <p>Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erf&uuml;llung eines Vertrags zusammenh&auml;ngt oder zur Durchf&uuml;hrung vorvertraglicher Ma&szlig;nahmen erforderlich ist. In allen &uuml;brigen F&auml;llen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sofern diese abgefragt wurde; die Einwilligung ist jederzeit widerrufbar.</p> <p>Die von Ihnen an uns per Kontaktanfragen &uuml;bersandten Daten verbleiben bei uns, bis Sie uns zur L&ouml;schung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck f&uuml;r die Datenspeicherung entf&auml;llt (z.&nbsp;B. nach abgeschlossener Bearbeitung Ihres Anliegens). Zwingende gesetzliche Bestimmungen &ndash; insbesondere gesetzliche Aufbewahrungsfristen &ndash; bleiben unber&uuml;hrt.</p>
 <h2>5. Plugins und Tools</h2>
 <h3>Google Fonts (lokales Hosting)</h3> <p>Diese Seite nutzt zur einheitlichen Darstellung von Schriftarten so genannte Google Fonts, die von Google bereitgestellt werden. Die Google Fonts sind lokal installiert. Eine Verbindung zu Servern von Google findet dabei nicht statt.</p> <p>Weitere Informationen zu Google Fonts finden Sie unter <a href="https://developers.google.com/fonts/faq" target="_blank" rel="noopener noreferrer">https://developers.google.com/fonts/faq</a> und in der Datenschutzerkl&auml;rung von Google: <a href="https://policies.google.com/privacy?hl=de" target="_blank" rel="noopener noreferrer">https://policies.google.com/privacy?hl=de</a>.</p>
-<h3>Kartenausschnitt und Link zu Google Maps</h3> <p>Auf der Startseite zeigen wir einen statischen Kartenausschnitt auf Grundlage von OpenStreetMap-Daten (&copy; OpenStreetMap-Mitwirkende). Das Bild liegt auf unserem eigenen Server. Beim Anzeigen werden keine Daten an OpenStreetMap oder andere Kartendienste &uuml;bermittelt.</p> <p>Der Kartenausschnitt verlinkt auf Google Maps. Erst wenn Sie diesem Link folgen, verlassen Sie unsere Website und rufen eine Seite der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland, auf. F&uuml;r die dortige Datenverarbeitung gilt die <a href="https://policies.google.com/privacy?hl=de" target="_blank" rel="noopener noreferrer">Datenschutzerkl&auml;rung von Google</a>.</p>
+<h3>Kartenausschnitt und Link zu Google Maps</h3> <p>Auf der Kontaktseite zeigen wir einen statischen Kartenausschnitt auf Grundlage von OpenStreetMap-Daten (&copy; OpenStreetMap-Mitwirkende). Das Bild liegt auf unserem eigenen Server. Beim Anzeigen werden keine Daten an OpenStreetMap oder andere Kartendienste &uuml;bermittelt.</p> <p>Der Kartenausschnitt verlinkt auf Google Maps. Erst wenn Sie diesem Link folgen, verlassen Sie unsere Website und rufen eine Seite der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland, auf. F&uuml;r die dortige Datenverarbeitung gilt die <a href="https://policies.google.com/privacy?hl=de" target="_blank" rel="noopener noreferrer">Datenschutzerkl&auml;rung von Google</a>.</p>
 <h3>Reichweitenmessung (Plausible Analytics)</h3> <p>Zur statistischen Auswertung der Websitenutzung setzen wir die Open-Source-Software Plausible Analytics ein. Die Software l&auml;uft auf einer eigenen Instanz unter analytics.tepel-steuerberatung.de auf einem von unserem in Abschnitt 2 genannten Dienstleister betriebenen Server. Eine &Uuml;bermittlung an die Plausible Insights O&Uuml; oder andere Dritte findet nicht statt.</p> <p>Bei jedem Seitenaufruf verarbeitet die Software Ihre IP-Adresse und die Browserkennung, um daraus eine Kennung zu bilden, die sich t&auml;glich &auml;ndert, sowie Browsertyp, Betriebssystem und das ungef&auml;hre Herkunftsland abzuleiten. IP-Adresse und Browserkennung werden nicht im Klartext gespeichert. Erfasst werden au&szlig;erdem die aufgerufene Seite, die verweisende Seite, Kampagnen-Parameter in der Adresse, der Ger&auml;tetyp sowie Scrolltiefe und Verweildauer. Cookies setzen wir daf&uuml;r nicht ein.</p> <p>Die Verarbeitung erfolgt auf Grundlage unseres berechtigten Interesses an einer datensparsamen Auswertung und Verbesserung unseres Angebots (Art. 6 Abs. 1 lit. f DSGVO). Sie k&ouml;nnen dieser Verarbeitung aus Gr&uuml;nden, die sich aus Ihrer besonderen Situation ergeben, widersprechen.</p>
 <h3>Versand von E-Mails (Resend)</h3> <p>Benachrichtigungen &uuml;ber Ihre Anfrage per Kontaktformular und die Eingangsbest&auml;tigung an Sie versenden wir &uuml;ber den Dienst Resend der Plus Five Five, Inc., 2261 Market Street #5039, San Francisco, CA 94114, USA. Dabei werden Ihr Name, Ihre E-Mail-Adresse, Ihre Telefonnummer (falls angegeben), das gew&auml;hlte Anliegen und Ihre Nachricht an den Anbieter &uuml;bermittelt und dort zur Zustellung verarbeitet, vorrangig in den USA.</p> <p>Mit dem Anbieter besteht ein Vertrag &uuml;ber Auftragsverarbeitung einschlie&szlig;lich der EU-Standardvertragsklauseln. Nach eigenen Angaben ist der Anbieter au&szlig;erdem nach dem EU-U.S. Data Privacy Framework zertifiziert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, soweit Ihre Anfrage mit einem Vertrag oder vorvertraglichen Ma&szlig;nahmen zusammenh&auml;ngt, im &Uuml;brigen Art. 6 Abs. 1 lit. f DSGVO.</p>
 `;
 
-export default function DatenschutzPage() {
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://tepel-steuerberatung.de" },
-      { "@type": "ListItem", position: 2, name: "Datenschutz", item: "https://tepel-steuerberatung.de/datenschutz" },
-    ],
-  };
+const breadcrumbs = [
+  { name: "Startseite", href: "/" },
+  { name: "Datenschutz", href: "/datenschutz" },
+];
 
+export default function DatenschutzPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
-      <Navbar />
-      <main className="relative pt-32 pb-24">
+      <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
+      <div className="relative pt-32 pb-24">
         <div className="max-w-4xl mx-auto px-8">
           <div
             className="legal-content"
             dangerouslySetInnerHTML={{ __html: privacyHtml }}
           />
         </div>
-      </main>
+      </div>
     </>
   );
 }

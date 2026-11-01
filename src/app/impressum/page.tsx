@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
+import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   title: "Impressum",
@@ -69,28 +69,23 @@ Deutschland</p>
 <p>An einem Verfahren zur Streitbeilegung bei einer Verbraucherschlichtungsstelle nehmen wir nicht teil. Gem. &sect; 76 Abs. 2 Nr. 3 StBerG vermittelt unsere Steuerberaterkammer auf Antrag bei Streitigkeiten, z.&nbsp;B. anl&auml;sslich einer Honorarrechnung oder der Nichtherausgabe von Unterlagen, zwischen Mitgliedern der Kammer und ihren Auftraggebern. Es handelt sich in diesem Fall um ein Mediationsverfahren. An anderen Vermittlungsverfahren nehmen wir nicht teil.</p>
 `;
 
-export default function ImpressumPage() {
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://tepel-steuerberatung.de" },
-      { "@type": "ListItem", position: 2, name: "Impressum", item: "https://tepel-steuerberatung.de/impressum" },
-    ],
-  };
+const breadcrumbs = [
+  { name: "Startseite", href: "/" },
+  { name: "Impressum", href: "/impressum" },
+];
 
+export default function ImpressumPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
-      <Navbar />
-      <main className="relative pt-32 pb-24">
+      <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
+      <div className="relative pt-32 pb-24">
         <div className="max-w-4xl mx-auto px-8">
           <div
             className="legal-content"
             dangerouslySetInnerHTML={{ __html: imprintHtml }}
           />
         </div>
-      </main>
+      </div>
     </>
   );
 }

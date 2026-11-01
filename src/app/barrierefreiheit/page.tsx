@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
+import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   title: "Barrierefreiheitserklärung",
@@ -69,28 +69,23 @@ Postfach 39 11 55<br />
 E-Mail: mlbf@ms.sachsen-anhalt.de</p>
 `;
 
-export default function BarrierefreiheitPage() {
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://tepel-steuerberatung.de" },
-      { "@type": "ListItem", position: 2, name: "Barrierefreiheit", item: "https://tepel-steuerberatung.de/barrierefreiheit" },
-    ],
-  };
+const breadcrumbs = [
+  { name: "Startseite", href: "/" },
+  { name: "Barrierefreiheit", href: "/barrierefreiheit" },
+];
 
+export default function BarrierefreiheitPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
-      <Navbar />
-      <main className="relative pt-32 pb-24">
+      <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
+      <div className="relative pt-32 pb-24">
         <div className="max-w-4xl mx-auto px-8">
           <div
             className="legal-content"
             dangerouslySetInnerHTML={{ __html: accessibilityHtml }}
           />
         </div>
-      </main>
+      </div>
     </>
   );
 }

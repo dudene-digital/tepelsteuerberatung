@@ -5,11 +5,13 @@ import { sendContactEmail, type ContactFormState } from "@/app/actions/contact";
 
 const ANLIEGEN_OPTIONS = [
   { value: "", label: "Bitte wählen…" },
-  { value: "Gründungsberatung", label: "Gründungsberatung" },
   { value: "Finanzbuchhaltung", label: "Finanzbuchhaltung" },
   { value: "Lohn & Gehalt", label: "Lohn & Gehalt" },
   { value: "Jahresabschluss & Steuererklärung", label: "Jahresabschluss & Steuererklärung" },
-  { value: "Strategische Beratung", label: "Strategische Beratung" },
+  { value: "Gründung", label: "Gründung" },
+  { value: "Steuergestaltung & Beratung", label: "Steuergestaltung & Beratung" },
+  { value: "E-Commerce", label: "E-Commerce" },
+  { value: "Immobilien/Vermietung", label: "Immobilien/Vermietung" },
   { value: "Sonstiges", label: "Sonstiges" },
 ];
 
@@ -42,9 +44,9 @@ export default function ContactForm() {
 
   return (
     <div>
-      <h3 className="font-headline text-4xl font-bold mb-8 text-primary">
+      <h2 className="font-headline text-4xl font-bold mb-8 text-primary">
         Nachricht senden
-      </h3>
+      </h2>
 
       {/* Success message */}
       {state.success && (
@@ -181,7 +183,7 @@ export default function ContactForm() {
             maxLength={5000}
             required
             rows={5}
-            placeholder="Wie kann Fabian dir helfen?"
+            placeholder="Wie können wir dir helfen?"
             className={`${inputClasses} resize-y min-h-[120px]`}
           />
         </div>

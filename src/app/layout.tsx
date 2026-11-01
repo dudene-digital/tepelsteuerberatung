@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -20,18 +22,18 @@ const siteUrl = "https://tepel-steuerberatung.de";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Fabian Tepel | Steuerberatung in Wiesbaden",
+    default: "Steuerberater Wiesbaden für Online-Händler & Unternehmer | Tepel",
     template: "%s | Tepel Steuerberatung",
   },
   description:
-    "Digitale & agile Steuerberatung in Wiesbaden. Fabian Tepel bietet maßgeschneiderte Lösungen für Unternehmer, Start-ups und Freiberufler – von Buchhaltung über Lohn & Gehalt bis zur strategischen Steuergestaltung.",
+    "Digitale Steuerberatung in Wiesbaden: Buchhaltung, Lohn, Jahresabschluss und Steuern für E-Commerce, GmbH, Freiberufler und Vermieter. Fester Ansprechpartner, Antwort in 24 Stunden.",
   keywords: [
     "Steuerberater Wiesbaden",
     "Steuerberatung Wiesbaden",
     "digitale Steuerberatung",
     "Buchhaltung Wiesbaden",
     "Lohnabrechnung Wiesbaden",
-    "Steuerberater für Start-ups",
+    "Steuerberater für Online-Händler",
     "Fabian Tepel",
     "Tepel Steuerberatung",
     "Steuergestaltung",
@@ -42,25 +44,11 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "de_DE",
-    url: siteUrl,
     siteName: "Tepel Steuerberatung",
-    title: "Fabian Tepel | Digitale Steuerberatung in Wiesbaden",
-    description:
-      "Maßgeschneiderte Steuerberatung für Unternehmer, Start-ups und Freiberufler. Digital, agil und persönlich betreut.",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Tepel Steuerberatung – Digitale & Agile Steuerberatung in Wiesbaden",
-      },
-    ],
+    images: [{ url: "/og-image.png", width: 1024, height: 1024, alt: "Tepel Steuerberatung in Wiesbaden" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fabian Tepel | Digitale Steuerberatung in Wiesbaden",
-    description:
-      "Maßgeschneiderte Steuerberatung für Unternehmer, Start-ups und Freiberufler. Digital, agil und persönlich betreut.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -97,7 +85,11 @@ export default function RootLayout({
         <a href="#main-content" className="skip-to-content">
           Zum Inhalt springen
         </a>
-        {children}
+        <Navbar />
+        <main id="main-content" className="relative flex-1">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
