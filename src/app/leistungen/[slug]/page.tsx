@@ -1,15 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
-import {
-  CheckList,
-  CtaBand,
-  PageHero,
-  Section,
-  SectionHeading,
-  TextLink,
-  type Crumb,
-} from "@/components/ui";
+import { CtaBand, PageHero, QuietLink, RuleList, Section, SectionHeading, TwoColumns, type Crumb } from "@/components/ui";
 import { getLeistung, leistungen } from "@/content/leistungen";
 import { site } from "@/lib/site";
 
@@ -64,14 +56,19 @@ export default async function LeistungPage({ params }: Props) {
       />
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
       <PageHero title={leistung.h1} intro={leistung.intro} breadcrumbs={breadcrumbs} />
-      <Section tone="low" labelledBy="enthalten-heading">
-        <SectionHeading id="enthalten-heading">Das ist enthalten</SectionHeading>
-        <div className="max-w-3xl">
-          <CheckList items={leistung.enthalten} />
-          <div className="mt-10">
-            <TextLink href="/so-arbeiten-wir">So arbeiten wir</TextLink>
-          </div>
-        </div>
+      <Section labelledBy="enthalten-heading">
+        <TwoColumns
+          heading={
+            <>
+              <SectionHeading id="enthalten-heading">Das ist enthalten</SectionHeading>
+              <div className="mt-1">
+                <QuietLink href="/so-arbeiten-wir">So arbeiten wir</QuietLink>
+              </div>
+            </>
+          }
+        >
+          <RuleList items={leistung.enthalten} />
+        </TwoColumns>
       </Section>
       <CtaBand />
     </>

@@ -34,12 +34,16 @@ export default function FaqPage() {
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
       <JsonLd data={faqJsonLd} />
       <PageHero title={faqIntro.title} intro={faqIntro.intro} breadcrumbs={breadcrumbs} />
-      <Section tone="low" size="narrow" labelledBy="faq-fragen">
+      <Section labelledBy="faq-fragen">
         {/* Das Akkordeon rendert h3. Das h2 hält die Überschriftenfolge ohne Sprung. */}
         <h2 id="faq-fragen" className="sr-only">
           Fragen und Antworten
         </h2>
-        <Accordion items={faqItems} />
+        <div className="grid-12">
+          <div className="col-content min-w-0">
+            <Accordion items={faqItems} />
+          </div>
+        </div>
       </Section>
       <CtaBand />
     </>

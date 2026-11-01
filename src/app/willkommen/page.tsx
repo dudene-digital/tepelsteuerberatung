@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Accordion, { type AccordionItem } from "@/components/Accordion";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
-import { BookingLink, Card, CheckList, Icon, PageHero, Section, SectionHeading } from "@/components/ui";
+import { BookingLink, InfoRows, PageHero, RuleList, Section, SectionHeading, TwoColumns } from "@/components/ui";
 import { willkommen as content } from "@/content/kanzlei";
 import { site } from "@/lib/site";
 
@@ -25,49 +25,48 @@ export default function WillkommenPage() {
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
       <PageHero title={content.h1} intro={content.intro} breadcrumbs={breadcrumbs} />
 
-      <Section>
-        <div className="grid md:grid-cols-2 gap-6">
-          <Card>
-            <h2 className="font-headline text-2xl font-bold mb-6 text-on-surface">{content.aendertHeading}</h2>
-            <CheckList items={content.aendert} />
-          </Card>
-          <Card>
-            <h2 className="font-headline text-2xl font-bold mb-6 text-on-surface">{content.bleibtHeading}</h2>
-            <CheckList items={content.bleibt} />
-          </Card>
-        </div>
+      <Section labelledBy="aendert-heading">
+        <TwoColumns heading={<SectionHeading id="aendert-heading">{content.aendertHeading}</SectionHeading>}>
+          <RuleList items={content.aendert} />
+        </TwoColumns>
+      </Section>
+
+      <Section labelledBy="bleibt-heading">
+        <TwoColumns heading={<SectionHeading id="bleibt-heading">{content.bleibtHeading}</SectionHeading>}>
+          <RuleList items={content.bleibt} />
+        </TwoColumns>
       </Section>
 
       {faq.length > 0 && (
-        <Section tone="low" size="narrow" labelledBy="faq-heading">
-          <SectionHeading id="faq-heading">{content.faqHeading}</SectionHeading>
-          <Accordion items={faq} />
+        <Section labelledBy="faq-heading">
+          <TwoColumns heading={<SectionHeading id="faq-heading">{content.faqHeading}</SectionHeading>}>
+            <Accordion items={faq} />
+          </TwoColumns>
         </Section>
       )}
 
-      <Section tone="container" size="narrow" labelledBy="erreichbarkeit-heading">
-        <SectionHeading id="erreichbarkeit-heading" center>
-          {content.erreichbarkeitHeading}
-        </SectionHeading>
-        <div className="flex flex-col items-center gap-10 text-center">
-          <ul role="list" className="space-y-3 text-lg text-on-surface">
-            <li className="flex items-center justify-center gap-3">
-              <Icon name="call" className="text-primary shrink-0" />
-              <a href={site.phone.href} className="hover:text-primary transition-colors">
-                {site.phone.label}
-              </a>
-            </li>
-            <li className="flex items-center justify-center gap-3">
-              <Icon name="schedule" className="text-primary shrink-0" />
-              <span>{site.hoursShort}</span>
-            </li>
-          </ul>
-          <BookingLink>
-            {content.cta}
-            <Icon name="arrow_forward" />
-          </BookingLink>
-        </div>
-      </Section>
+      <section aria-labelledby="erreichbarkeit-heading" className="wrap section pb-[clamp(3.5rem,2rem+5vw,9rem)]">
+        <TwoColumns heading={<SectionHeading id="erreichbarkeit-heading">{content.erreichbarkeitHeading}</SectionHeading>}>
+          <div>
+            <InfoRows
+              rows={[
+                {
+                  label: "Telefon",
+                  content: (
+                    <a href={site.phone.href} className="inline-link tap">
+                      {site.phone.label}
+                    </a>
+                  ),
+                },
+                { label: "Zeiten", content: site.hoursShort },
+              ]}
+            />
+            <div className="mt-6">
+              <BookingLink>{content.cta}</BookingLink>
+            </div>
+          </div>
+        </TwoColumns>
+      </section>
     </>
   );
 }

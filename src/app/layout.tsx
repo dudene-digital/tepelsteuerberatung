@@ -1,23 +1,26 @@
-import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Gloock, Schibsted_Grotesk } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const inter = Inter({
-  variable: "--font-inter",
+const gloock = Gloock({
+  variable: "--font-gloock",
+  weight: "400",
   subsets: ["latin"],
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const schibsted = Schibsted_Grotesk({
+  variable: "--font-schibsted",
   subsets: ["latin"],
 });
-
-
 
 const siteUrl = "https://tepel-steuerberatung.de";
+
+export const viewport: Viewport = {
+  themeColor: "#0c0c0b",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -45,7 +48,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "de_DE",
     siteName: "Tepel Steuerberatung",
-    images: [{ url: "/og-image.png", width: 1024, height: 1024, alt: "Tepel Steuerberatung in Wiesbaden" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Fabian Tepel Steuerberatung in Wiesbaden" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -72,7 +75,7 @@ export default function RootLayout({
   return (
     <html
       lang="de"
-      className={`${inter.variable} ${manrope.variable} dark antialiased scroll-smooth`}
+      className={`${gloock.variable} ${schibsted.variable} antialiased scroll-smooth`}
     >
       <head>
         <Script
@@ -81,12 +84,12 @@ export default function RootLayout({
           src="https://analytics.tepel-steuerberatung.de/js/script.js"
         />
       </head>
-      <body suppressHydrationWarning className="antialiased selection:bg-primary selection:text-on-primary min-h-full flex flex-col overflow-x-hidden">
+      <body suppressHydrationWarning className="flex flex-col">
         <a href="#main-content" className="skip-to-content">
           Zum Inhalt springen
         </a>
         <Navbar />
-        <main id="main-content" className="relative flex-1">
+        <main id="main-content" className="frame flex-1">
           {children}
         </main>
         <Footer />

@@ -1,15 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
-import {
-  CheckList,
-  CtaBand,
-  PageHero,
-  Section,
-  SectionHeading,
-  TextLink,
-  type Crumb,
-} from "@/components/ui";
+import { CtaBand, PageHero, QuietLink, RuleList, Section, SectionHeading, TwoColumns, type Crumb } from "@/components/ui";
 import { getZielgruppeSeite, punkteHeading, zielgruppenSeiten } from "@/content/zielgruppen";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -48,16 +40,21 @@ export default async function ZielgruppePage({ params }: Props) {
     <>
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
       <PageHero title={zielgruppe.h1} intro={zielgruppe.intro} breadcrumbs={breadcrumbs} />
-      <Section tone="low" labelledBy="punkte-heading">
-        <SectionHeading id="punkte-heading">{punkteHeading}</SectionHeading>
-        <div className="max-w-3xl">
-          <CheckList items={zielgruppe.punkte} />
-          {zielgruppe.weiterLink && (
-            <div className="mt-10">
-              <TextLink href={zielgruppe.weiterLink.href}>{zielgruppe.weiterLink.label}</TextLink>
-            </div>
-          )}
-        </div>
+      <Section labelledBy="punkte-heading">
+        <TwoColumns
+          heading={
+            <>
+              <SectionHeading id="punkte-heading">{punkteHeading}</SectionHeading>
+              {zielgruppe.weiterLink && (
+                <div className="mt-1">
+                  <QuietLink href={zielgruppe.weiterLink.href}>{zielgruppe.weiterLink.label}</QuietLink>
+                </div>
+              )}
+            </>
+          }
+        >
+          <RuleList items={zielgruppe.punkte} />
+        </TwoColumns>
       </Section>
       <CtaBand />
     </>

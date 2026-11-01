@@ -12,20 +12,13 @@ export default function Accordion({ items }: { items: readonly AccordionItem[] }
   const baseId = useId();
 
   return (
-    <div className="space-y-3">
+    <div className="border-t border-rule">
       {items.map((item, index) => {
         const isOpen = openIndex === index;
         const triggerId = `${baseId}-trigger-${index}`;
         const panelId = `${baseId}-panel-${index}`;
         return (
-          <div
-            key={item.question}
-            className={`rounded-2xl border transition-all duration-300 ${
-              isOpen
-                ? "bg-surface-container border-primary/20 shadow-[0_4px_24px_rgba(165,231,255,0.08)]"
-                : "bg-surface-container/50 border-outline-variant/10 hover:bg-surface-container/80 hover:border-outline-variant/20"
-            }`}
-          >
+          <div key={item.question} className="border-b border-rule">
             <h3>
               <button
                 type="button"
@@ -33,23 +26,13 @@ export default function Accordion({ items }: { items: readonly AccordionItem[] }
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => setOpenIndex(isOpen ? null : index)}
-                className="w-full flex items-start gap-4 p-5 md:p-6 text-left cursor-pointer group"
+                className="group flex w-full cursor-pointer items-baseline justify-between gap-5 py-4 text-left lg:py-5"
               >
-                <span
-                  className={`material-symbols-outlined text-lg mt-0.5 shrink-0 transition-all duration-300 ${
-                    isOpen ? "text-primary rotate-0" : "text-on-surface-variant -rotate-90"
-                  }`}
-                  aria-hidden="true"
-                  data-icon="expand_more"
-                >
-                  expand_more
-                </span>
-                <span
-                  className={`font-headline text-sm md:text-base font-bold transition-colors duration-200 ${
-                    isOpen ? "text-primary" : "text-on-surface group-hover:text-primary/80"
-                  }`}
-                >
+                <span className="font-display text-h2 text-pretty decoration-1 underline-offset-[0.14em] group-hover:underline">
                   {item.question}
+                </span>
+                <span aria-hidden="true" className="w-5 shrink-0 text-center text-2xl leading-none">
+                  {isOpen ? "−" : "+"}
                 </span>
               </button>
             </h3>
@@ -57,14 +40,12 @@ export default function Accordion({ items }: { items: readonly AccordionItem[] }
               id={panelId}
               role="region"
               aria-labelledby={triggerId}
-              className={`grid transition-all duration-300 ease-in-out ${
-                isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 invisible"
+              className={`grid transition-all duration-200 ease-out ${
+                isOpen ? "grid-rows-[1fr] opacity-100" : "invisible grid-rows-[0fr] opacity-0"
               }`}
             >
               <div className="overflow-hidden">
-                <p className="px-5 md:px-6 pb-5 md:pb-6 pl-[3.25rem] md:pl-[3.5rem] text-sm md:text-[0.95rem] text-on-surface-variant leading-relaxed">
-                  {item.answer}
-                </p>
+                <p className="max-w-[46rem] pb-6 text-muted text-pretty">{item.answer}</p>
               </div>
             </div>
           </div>

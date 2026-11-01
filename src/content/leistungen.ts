@@ -13,8 +13,6 @@ export interface Leistung {
   h1: string;
   intro: string;
   enthalten: readonly string[];
-  /** Material-Symbols-Name für die Kachel auf der Übersicht. */
-  icon: string;
 }
 
 export const leistungen: readonly Leistung[] = [
@@ -31,7 +29,6 @@ export const leistungen: readonly Leistung[] = [
       "Monatliche BWA online einsehbar",
       "Offene-Posten-Liste auf Wunsch",
     ],
-    icon: "devices",
   },
   {
     slug: "lohn",
@@ -46,7 +43,6 @@ export const leistungen: readonly Leistung[] = [
       "Digitale Lohnunterlagen und Bescheinigungen",
       "Begleitung von Lohnsteuer-Außenprüfungen und Betriebsprüfungen der Rentenversicherung",
     ],
-    icon: "payments",
   },
   {
     slug: "jahresabschluss",
@@ -62,7 +58,6 @@ export const leistungen: readonly Leistung[] = [
       "Bescheidprüfung und Einspruch",
       "Abschlussgespräch mit Steuerprognose",
     ],
-    icon: "description",
   },
   {
     slug: "gruendung",
@@ -77,7 +72,6 @@ export const leistungen: readonly Leistung[] = [
       "Digitale Buchhaltung ab Tag 1",
       "Umwandlung Einzelunternehmen in GmbH, wenn es sich lohnt",
     ],
-    icon: "category",
   },
   {
     slug: "steuergestaltung",
@@ -93,7 +87,6 @@ export const leistungen: readonly Leistung[] = [
       "Unterjährige Steuerprognosen und Kennzahlen-Reporting",
       "Begleitung von Betriebsprüfungen",
     ],
-    icon: "insights",
   },
 ];
 

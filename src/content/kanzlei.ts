@@ -19,10 +19,10 @@ export interface FaqEntry {
 }
 
 export const fabianPortrait: Photo = {
-  src: "/berater_1.jpg",
+  src: "/fabian-portrait.jpg",
   alt: "Porträt von Fabian Tepel, Steuerberater in Wiesbaden",
-  width: 5472,
-  height: 3648,
+  width: 2600,
+  height: 2400,
 };
 
 export const fabianImBuero: Photo = {
@@ -42,7 +42,6 @@ export interface AblaufSchritt {
 export interface Tool {
   name: string;
   text: string;
-  icon: string;
 }
 
 export const soArbeitenWir: {
@@ -80,12 +79,11 @@ export const soArbeitenWir: {
   ],
   toolsHeading: "Unsere Tools",
   tools: [
-    { name: "ADDISON Direkt", text: "für Belege und Auswertungen", icon: "receipt_long" },
-    { name: "ADDISON Lohn Online", text: "für die Lohnabrechnung", icon: "payments" },
+    { name: "ADDISON Direkt", text: "für Belege und Auswertungen" },
+    { name: "ADDISON Lohn Online", text: "für die Lohnabrechnung" },
     {
       name: "Datenaustausch",
       text: "über ein verschlüsseltes Mandantenportal statt per E-Mail",
-      icon: "lock",
     },
   ],
   beraterwechselHeading: "Beraterwechsel",
@@ -95,11 +93,6 @@ export const soArbeitenWir: {
 
 /* ── /honorar ── */
 
-export interface Preisfaktor {
-  text: string;
-  icon: string;
-}
-
 export const honorar: {
   seo: Seo;
   h1: string;
@@ -107,7 +100,7 @@ export const honorar: {
   angebotHeading: string;
   angebot: readonly string[];
   preisHeading: string;
-  preisfaktoren: readonly Preisfaktor[];
+  preisfaktoren: readonly string[];
 } = {
   seo: {
     title: "Honorar",
@@ -126,10 +119,10 @@ export const honorar: {
   ],
   preisHeading: "Was den Preis bestimmt",
   preisfaktoren: [
-    { text: "Anzahl der Buchungen und Belege", icon: "receipt_long" },
-    { text: "Zahl der Mitarbeitenden", icon: "groups" },
-    { text: "Rechtsform und Bilanzierungspflicht", icon: "account_balance" },
-    { text: "Zahl der Shops, Marktplätze und EU-Länder", icon: "storefront" },
+    "Anzahl der Buchungen und Belege",
+    "Zahl der Mitarbeitenden",
+    "Rechtsform und Bilanzierungspflicht",
+    "Zahl der Shops, Marktplätze und EU-Länder",
   ],
 };
 
@@ -143,7 +136,6 @@ export interface WerdegangEintrag {
 export interface Wert {
   title: string;
   text: string;
-  icon: string;
 }
 
 export interface TeamMember {
@@ -209,9 +201,9 @@ export const team: {
     "Seit September 2026 sind wir zu viert: Fabian Tepel und drei erfahrene Kolleginnen. Für dich heißt das: Inhaber als Ansprechpartner, dazu Kapazität und Vertretung im Urlaub.",
   werteHeading: "Werte",
   werte: [
-    { title: "Klarheit", text: "verständliche Sprache", icon: "translate" },
-    { title: "Verlässlichkeit", text: "Fristen, Rückmeldung in 24 Stunden", icon: "event_available" },
-    { title: "Weitblick", text: "Gestaltung statt Verwaltung", icon: "explore" },
+    { title: "Klarheit", text: "verständliche Sprache" },
+    { title: "Verlässlichkeit", text: "Fristen, Rückmeldung in 24 Stunden" },
+    { title: "Weitblick", text: "Gestaltung statt Verwaltung" },
   ],
   bueroHeading: "Büro & Erreichbarkeit",
   telefonLabel: "Telefon",

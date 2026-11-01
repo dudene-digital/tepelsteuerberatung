@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { fuerWenNav, legalNav, leistungenNav, site } from "@/lib/site";
 
-const linkClass = "text-slate-400 hover:text-cyan-300 transition-colors text-xs";
-const headingClass = "font-manrope text-xs font-bold uppercase tracking-widest text-slate-100 mb-6";
+const linkClass =
+  "inline-flex min-h-11 items-center py-0.5 text-base leading-snug text-muted decoration-1 underline-offset-[0.25em] hover:text-ink hover:underline lg:min-h-8";
 
 const kanzleiLinks = [
   { label: "So arbeiten wir", href: "/so-arbeiten-wir" },
@@ -12,23 +12,28 @@ const kanzleiLinks = [
   { label: "Kontakt", href: "/kontakt" },
 ];
 
+const footerNav = [
+  { label: "Leistungen", links: leistungenNav },
+  { label: "Für wen", links: fuerWenNav },
+  { label: "Kanzlei", links: kanzleiLinks },
+  { label: "Rechtliches", links: legalNav },
+];
+
 export default function Footer() {
   return (
-    <footer className="bg-slate-950 border-t border-slate-900 py-16">
-      <div className="max-w-7xl mx-auto px-6 md:px-8 grid gap-12 lg:grid-cols-[1.4fr_3fr]">
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <span className="material-symbols-outlined text-cyan-400 text-2xl" data-icon="account_balance" aria-hidden="true">
-              account_balance
-            </span>
-            <span className="font-manrope font-bold text-slate-300 text-xl tracking-tighter">FABIAN TEPEL</span>
-          </div>
-          <address className="not-italic font-inter text-xs text-slate-400 leading-relaxed mb-4">
+    <footer className="frame wrap">
+      <div className="grid-12 gap-y-10 border-t border-ink pt-5 pb-10 lg:pt-6">
+        <div className="col-aside">
+          <p className="flex flex-wrap items-baseline gap-x-2">
+            <span className="font-display text-2xl leading-tight">Fabian Tepel</span>
+            <span className="text-base text-muted">Steuerberatung</span>
+          </p>
+          <address className="mt-3 text-base leading-relaxed text-muted not-italic">
             {site.address.street}
             <br />
             {site.address.postalCode} {site.address.city}
           </address>
-          <ul className="space-y-2 mb-6">
+          <ul className="mt-2">
             <li>
               <a className={linkClass} href={site.phone.href}>
                 {site.phone.label}
@@ -40,69 +45,39 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a className={linkClass} href={`mailto:${site.email}`}>
+              <a className={`${linkClass} break-all`} href={`mailto:${site.email}`}>
                 {site.email}
               </a>
             </li>
-            <li className="text-slate-400 text-xs">{site.hoursShort}</li>
+            <li className="mt-1 text-base text-muted lg:mt-0">{site.hoursShort}</li>
           </ul>
-          <p className="font-inter text-xs text-slate-400">© {new Date().getFullYear()} {site.legalName}</p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
-          <nav aria-label="Leistungen">
-            <p className={headingClass}>Leistungen</p>
-            <ul className="space-y-4">
-              {leistungenNav.map((link) => (
-                <li key={link.href}>
-                  <Link className={linkClass} href={link.href}>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <nav aria-label="Für wen">
-            <p className={headingClass}>Für wen</p>
-            <ul className="space-y-4">
-              {fuerWenNav.map((link) => (
-                <li key={link.href}>
-                  <Link className={linkClass} href={link.href}>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <nav aria-label="Kanzlei">
-            <p className={headingClass}>Kanzlei</p>
-            <ul className="space-y-4">
-              {kanzleiLinks.map((link) => (
-                <li key={link.href}>
-                  <Link className={linkClass} href={link.href}>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <nav aria-label="Rechtliches">
-            <p className={headingClass}>Rechtliches</p>
-            <ul className="space-y-4">
-              {legalNav.map((link) => (
-                <li key={link.href}>
-                  <Link className={linkClass} href={link.href}>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+        <div className="col-content min-w-0">
+          <div className="grid grid-cols-1 gap-x-[var(--col-gap)] gap-y-8 min-[22.5rem]:grid-cols-2 min-[56rem]:grid-cols-4 lg:grid-cols-[4fr_3fr_2fr_2fr]">
+            {footerNav.map((group) => (
+              <nav key={group.label} aria-label={group.label}>
+                <p className="mb-1 text-base font-medium lg:mb-2">{group.label}</p>
+                <ul>
+                  {group.links.map((link) => (
+                    <li key={link.href}>
+                      <Link className={linkClass} href={link.href}>
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
+          </div>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto px-6 md:px-8 mt-12 pt-8 border-t border-slate-800 text-center">
-        <p className="font-inter text-xs text-slate-400">
+      <div className="flex flex-col justify-between gap-x-6 gap-y-2 border-t border-rule py-5 text-base text-muted sm:flex-row">
+        <p>
+          © {new Date().getFullYear()} {site.legalName}
+        </p>
+        <p>
           Made with ❤️ by{" "}
-          <a href="https://dudene-digital.de" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 transition-colors underline underline-offset-2">
+          <a href="https://dudene-digital.de" target="_blank" rel="noopener noreferrer" className="inline-link text-ink">
             Dudene Digital
           </a>
         </p>

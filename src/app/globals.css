@@ -1,252 +1,328 @@
 @import "tailwindcss";
 
-/* Self-hosted Material Symbols – DSGVO-konform, kein Google-CDN */
-@font-face {
-  font-family: 'Material Symbols Outlined';
-  font-style: normal;
-  font-weight: 100 700;
-  font-display: block;
-  src: url('/fonts/MaterialSymbolsOutlined.woff2') format('woff2');
-}
+/* Touch-Geräte kennen kein Hover: Dort zeigt die Unterstreichung von vornherein, was ein Link ist. */
+@custom-variant touch (@media (hover: none));
 
 @theme inline {
-  --color-error: #ffb4ab;
-  --color-on-tertiary: #003731;
-  --color-surface-bright: #33394a;
-  --color-surface-variant: #2f3445;
-  --color-tertiary-fixed-dim: #3cddc7;
-  --color-primary-fixed-dim: #47d6ff;
-  --color-outline-variant: #3c494e;
-  --color-primary: #a5e7ff;
-  --color-on-primary-fixed-variant: #004e60;
-  --color-surface-container-high: #242a3a;
-  --color-secondary-fixed: #d8e3fb;
-  --color-on-primary-fixed: #001f28;
-  --color-on-background: #dde2f8;
-  --color-background: #0d1322;
-  --color-secondary-fixed-dim: #bcc7de;
-  --color-secondary: #bcc7de;
-  --color-tertiary-fixed: #62fae3;
-  --color-surface-container-lowest: #080e1d;
-  --color-surface-container: #191f2f;
-  --color-surface: #0d1322;
-  --color-tertiary-container: #32d7c2;
-  --color-on-primary: #003543;
-  --color-on-secondary-container: #aeb9d0;
-  --color-on-surface-variant: #bbc9cf;
-  --color-surface-tint: #47d6ff;
-  --color-secondary-container: #3e495d;
-  --color-on-surface: #dde2f8;
-  --color-primary-fixed: #b6ebff;
-  --color-outline: #859399;
-  --color-inverse-on-surface: #2a3040;
-  --color-primary-container: #00d2ff;
-  --color-on-tertiary-container: #00594f;
-  --color-tertiary: #5bf4de;
-  --color-on-error: #690005;
-  --color-surface-dim: #0d1322;
-  --color-on-secondary-fixed-variant: #3c475a;
-  --color-on-secondary: #263143;
-  --color-inverse-surface: #dde2f8;
-  --color-surface-container-low: #151b2b;
-  --color-surface-container-highest: #2f3445;
-  --color-on-tertiary-fixed-variant: #005047;
-  --color-on-error-container: #ffdad6;
-  --color-on-primary-container: #00566a;
-  --color-on-tertiary-fixed: #00201c;
-  --color-error-container: #93000a;
-  --color-on-secondary-fixed: #111c2d;
-  --color-inverse-primary: #00677f;
+  /* Schwarz-weiß wie das Porträt. Farbe kommt nur aus dem Foto des Büros und aus Fehlermeldungen. */
+  --color-bg: #0c0c0b;
+  --color-ink: #f3f2ee;
+  --color-muted: #aeada7;
+  --color-rule: #3b3a37;
+  --color-control: #7d7c76;
+  --color-alert: #ffb4a8;
 
-  --font-headline: "Manrope", sans-serif;
-  --font-body: "Inter", sans-serif;
-  --font-label: "Inter", sans-serif;
-  --font-signature: var(--font-great-vibes), cursive;
+  --font-display: var(--font-gloock), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-schibsted), "Helvetica Neue", Arial, sans-serif;
 
-  --radius-DEFAULT: 0.125rem;
-  --radius-lg: 0.25rem;
-  --radius-xl: 0.5rem;
-  --radius-full: 0.75rem;
+  /* Eine Skala für alle Seiten. Jede Stufe wächst linear von 320 bis 1920 px. */
+  --text-title: clamp(1.875rem, 0.85rem + 5.125vw, 7rem);
+  --text-title--line-height: 1.04;
+  --text-title--letter-spacing: -0.012em;
+  --text-closing: clamp(2.25rem, 1.06rem + 6.6vw, 9rem);
+  --text-closing--line-height: 1.02;
+  --text-closing--letter-spacing: -0.02em;
+  --text-statement: clamp(1.5rem, 0.84rem + 3.37vw, 5.25rem);
+  --text-statement--line-height: 1.16;
+  --text-h2: clamp(1.625rem, 1.2rem + 1.1vw, 2.5rem);
+  --text-h2--line-height: 1.15;
+  --text-lead: clamp(1.1875rem, 1rem + 0.9vw, 1.875rem);
+  --text-lead--line-height: 1.36;
+}
+
+:root {
+  --gutter: clamp(1rem, 3.4vw, 4.5rem);
+  --col-gap: clamp(1rem, 1.5vw, 1.75rem);
+  --section-space: clamp(4rem, 2.5rem + 7.5vw, 11rem);
+  color-scheme: dark;
+  scroll-padding-top: 4.5rem;
 }
 
 body {
-  background-color: var(--color-background);
-  color: var(--color-on-background);
-  font-family: var(--font-body);
-  overflow-x: hidden;
-  min-height: max(884px, 100dvh);
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  font-synthesis: none;
+  line-height: 1.45;
+  min-height: 100dvh;
 }
 
-
-.glass-card {
-  background: rgba(47, 52, 69, 0.4);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+::selection {
+  background: var(--color-ink);
+  color: var(--color-bg);
 }
 
-.tonal-depth-transition {
-  transition: background 0.4s ease;
+@layer components {
+  /* Seitenrand */
+  .wrap {
+    padding-inline: var(--gutter);
+  }
+
+  /* Rahmen: Ab 1920 px wächst die Seite nicht weiter. */
+  .frame {
+    width: 100%;
+    max-width: 120rem;
+    margin-inline: auto;
+  }
+
+  /* Raster: Überschrift in den ersten drei Spalten, Inhalt in den übrigen neun. */
+  .grid-12 {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: var(--col-gap);
+  }
+
+  .section {
+    padding-top: var(--section-space);
+  }
+
+  /* Text, der exakt von Rand zu Rand läuft. Die Teiler sind am Schriftbild von Gloock gemessen,
+     der Einzug nimmt den Leerraum vor dem ersten Buchstaben weg. */
+  .fit-box {
+    container-type: inline-size;
+  }
+
+  .fit-name,
+  .fit-lead {
+    display: block;
+    width: max-content;
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+
+  .fit-name {
+    font-size: calc(100cqw / 5.495);
+    line-height: 1.13;
+  }
+
+  /* Handy quer: Der Name darf nicht den ganzen Bildschirm füllen. */
+  @media (max-height: 31rem) {
+    .fit-name {
+      font-size: 18svh;
+    }
+  }
+
+  .fit-lead {
+    font-size: calc(100cqw / 7.06);
+    line-height: 1.02;
+    margin-left: -0.006em;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25rem;
+    padding: 0.5rem 1.3rem;
+    border: 1px solid var(--color-ink);
+    background: var(--color-ink);
+    color: var(--color-bg);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
+    transition:
+      background-color 0.12s linear,
+      color 0.12s linear;
+  }
+
+  .btn-small {
+    min-height: 2.5rem;
+    padding: 0.25rem 0.9rem;
+  }
+
+  @media (hover: hover) {
+    .btn:hover {
+      background: transparent;
+      color: var(--color-ink);
+    }
+
+    .quiet-link:hover,
+    .inline-link:hover {
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  .btn:active {
+    background: transparent;
+    color: var(--color-ink);
+  }
+
+  .quiet-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.35em;
+  }
+
+  .inline-link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  /* Größere Trefferfläche für Links, die allein in einer Zeile stehen. Das Layout bleibt gleich. */
+  .tap {
+    display: inline-block;
+    padding-block: 0.7rem;
+    margin-block: -0.7rem;
+  }
+
+  /* Zeilenweise Listen: Ab lg sitzen die Zeilen auf dem Raster der Seite. */
+  @media (min-width: 64rem) {
+    .grid-12 {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+
+    .col-full {
+      grid-column: 1 / -1;
+    }
+
+    .col-aside {
+      grid-column: 1 / span 3;
+    }
+
+    .col-content,
+    .col-sub {
+      display: grid;
+      grid-template-columns: subgrid;
+    }
+
+    .col-content {
+      grid-column: 4 / -1;
+    }
+
+    .col-content > * {
+      grid-column: 1 / -1;
+    }
+
+    .col-sub {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Rechtstexte */
+  .legal-content {
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+
+  .legal-content h1 {
+    margin-bottom: 0.7em;
+    font-family: var(--font-display);
+    font-size: var(--text-title);
+    letter-spacing: var(--text-title--letter-spacing);
+    line-height: var(--text-title--line-height);
+    hyphens: manual;
+    overflow-wrap: normal;
+  }
+
+  .legal-content h2 {
+    margin-top: 2.2em;
+    margin-bottom: 0.6em;
+    padding-top: 0.7em;
+    border-top: 1px solid var(--color-rule);
+    font-family: var(--font-display);
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+  }
+
+  .legal-content h3 {
+    margin-top: 1.8em;
+    margin-bottom: 0.4em;
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    line-height: 1.2;
+  }
+
+  .legal-content h4 {
+    margin-top: 1.4em;
+    margin-bottom: 0.3em;
+    font-weight: 600;
+  }
+
+  .legal-content p,
+  .legal-content li {
+    margin-bottom: 0.8em;
+    color: var(--color-muted);
+  }
+
+  .legal-content strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  .legal-content code {
+    font-size: 0.9em;
+  }
+
+  .legal-content a {
+    padding-block: 0.2em;
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .legal-content ul {
+    list-style: disc;
+    margin-bottom: 0.8em;
+    padding-left: 1.25em;
+  }
+
+  /* Der Titel läuft über die volle Breite, der Text ab der vierten Spalte. */
+  @media (min-width: 64rem) {
+    .legal-content > * {
+      margin-left: calc((100% + var(--col-gap)) / 4);
+      max-width: 46rem;
+    }
+
+    .legal-content > h1 {
+      margin-left: 0;
+      max-width: none;
+    }
+  }
 }
 
-.material-symbols-outlined {
-  font-family: 'Material Symbols Outlined';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-feature-settings: 'liga';
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-  overflow: hidden;
-  width: 1em;
-  height: 1em;
+/* Lange deutsche Wörter brechen in schmalen Spalten sonst weit vor dem Rand um. */
+@media (max-width: 47.99rem) {
+  main p,
+  main li {
+    hyphens: auto;
+    hyphenate-limit-chars: 10 4 4;
+  }
 }
 
-.hero-gradient {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-container) 100%);
-}
+/* ── Barrierefreiheit ── */
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-12px) rotate(0.5deg); }
-}
-
-@keyframes float-slow {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-float-slow {
-  animation: float-slow 8s ease-in-out infinite;
-}
-
-.animate-float-delayed {
-  animation: float 6s ease-in-out infinite;
-  animation-delay: -3s;
-}
-
-/* Legal content (Datenschutz, Impressum) */
-.legal-content {
-  overflow-wrap: anywhere;
-  hyphens: auto;
-}
-
-.legal-content h1 {
-  font-family: var(--font-headline);
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: var(--color-on-surface);
-  margin-bottom: 2rem;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-
-.legal-content h2 {
-  font-family: var(--font-headline);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-primary);
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--color-outline-variant);
-}
-
-.legal-content h3 {
-  font-family: var(--font-headline);
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--color-on-surface);
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
-}
-
-.legal-content h4 {
-  font-family: var(--font-headline);
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--color-on-surface-variant);
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.legal-content p {
-  color: var(--color-on-surface-variant);
-  line-height: 1.8;
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
-}
-
-.legal-content a {
-  overflow-wrap: anywhere;
-  color: var(--color-primary);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  transition: color 0.2s;
-}
-
-.legal-content a:hover {
-  color: var(--color-primary-container);
-}
-
-.legal-content ul {
-  list-style: disc;
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.legal-content ul li {
-  color: var(--color-on-surface-variant);
-  line-height: 1.8;
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
-}
-
-/* ── Accessibility ── */
-
-/* Skip-to-content link: hidden until focused via Tab */
 .skip-to-content {
   position: absolute;
   top: -100%;
-  left: 16px;
-  z-index: 10000;
-  padding: 12px 24px;
-  background: var(--color-primary-container);
-  color: var(--color-on-primary-container);
-  font-family: var(--font-headline);
-  font-weight: 700;
-  font-size: 0.875rem;
-  border-radius: 0 0 12px 12px;
+  left: 1rem;
+  z-index: 200;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-ink);
+  color: var(--color-bg);
+  font-size: 1rem;
+  font-weight: 600;
   text-decoration: none;
-  transition: top 0.2s ease;
 }
 
 .skip-to-content:focus {
   top: 0;
-  outline: 3px solid var(--color-primary);
-  outline-offset: 2px;
 }
 
-/* Global focus-visible ring – never remove outlines without replacement */
 :focus-visible {
-  outline: 3px solid var(--color-primary);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
 }
 
-/* Respect reduced-motion preference (epilepsy, vestibular disorders) */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -255,11 +331,5 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-
-  .animate-float,
-  .animate-float-slow,
-  .animate-float-delayed {
-    animation: none !important;
   }
 }

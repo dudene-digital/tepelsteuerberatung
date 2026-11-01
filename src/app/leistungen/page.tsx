@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
-import { CtaBand, LinkCard, PageHero, Section, type Crumb } from "@/components/ui";
+import { CtaBand, EntryList, PageHero, Section, type Crumb } from "@/components/ui";
 import { leistungen, leistungenUebersicht } from "@/content/leistungen";
 
 export const metadata: Metadata = {
@@ -19,18 +19,18 @@ export default function LeistungenPage() {
     <>
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
       <PageHero title={leistungenUebersicht.h1} breadcrumbs={breadcrumbs} />
-      <Section tone="low">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {leistungen.map((leistung) => (
-            <LinkCard
-              key={leistung.slug}
-              href={`/leistungen/${leistung.slug}`}
-              title={leistung.h1}
-              text={leistung.intro}
-              icon={leistung.icon}
+      <Section>
+        <div className="grid-12">
+          <div className="col-content">
+            <EntryList
               headingLevel={2}
+              items={leistungen.map((leistung) => ({
+                title: leistung.h1,
+                text: leistung.intro,
+                href: `/leistungen/${leistung.slug}`,
+              }))}
             />
-          ))}
+          </div>
         </div>
       </Section>
       <CtaBand />

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
-import { Card, CheckList, CtaBand, Icon, PageHero, Section, SectionHeading } from "@/components/ui";
+import { CtaBand, PageHero, RuleList, Section, SectionHeading, TwoColumns } from "@/components/ui";
 import { honorar as content } from "@/content/kanzlei";
 
 export const metadata: Metadata = {
@@ -22,24 +22,15 @@ export default function HonorarPage() {
       <PageHero title={content.h1} intro={content.intro} breadcrumbs={breadcrumbs} />
 
       <Section labelledBy="angebot-heading">
-        <SectionHeading id="angebot-heading">{content.angebotHeading}</SectionHeading>
-        <div className="max-w-3xl">
-          <CheckList items={content.angebot} />
-        </div>
+        <TwoColumns heading={<SectionHeading id="angebot-heading">{content.angebotHeading}</SectionHeading>}>
+          <RuleList items={content.angebot} />
+        </TwoColumns>
       </Section>
 
-      <Section tone="low" labelledBy="preis-heading">
-        <SectionHeading id="preis-heading">{content.preisHeading}</SectionHeading>
-        <ul role="list" className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {content.preisfaktoren.map((faktor) => (
-            <li key={faktor.text}>
-              <Card className="h-full">
-                <Icon name={faktor.icon} className="text-4xl text-primary mb-6 block" />
-                <p className="text-on-surface leading-relaxed">{faktor.text}</p>
-              </Card>
-            </li>
-          ))}
-        </ul>
+      <Section labelledBy="preis-heading">
+        <TwoColumns heading={<SectionHeading id="preis-heading">{content.preisHeading}</SectionHeading>}>
+          <RuleList items={content.preisfaktoren} />
+        </TwoColumns>
       </Section>
 
       <CtaBand />

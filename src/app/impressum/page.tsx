@@ -78,13 +78,11 @@ export default function ImpressumPage() {
   return (
     <>
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
-      <div className="relative pt-32 pb-24">
-        <div className="max-w-4xl mx-auto px-8">
-          <div
-            className="legal-content"
-            dangerouslySetInnerHTML={{ __html: imprintHtml }}
-          />
-        </div>
+      <div className="wrap pt-6 pb-[clamp(3.5rem,2rem+5vw,9rem)] md:pt-10">
+        <div
+          className="legal-content"
+          dangerouslySetInnerHTML={{ __html: imprintHtml }}
+        />
       </div>
     </>
   );

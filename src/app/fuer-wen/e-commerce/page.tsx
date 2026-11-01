@@ -3,13 +3,14 @@ import Accordion from "@/components/Accordion";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import {
   BookingLink,
-  Card,
   CtaBand,
-  Icon,
+  EntryList,
   PageHero,
-  SecondaryLink,
+  QuietLink,
   Section,
   SectionHeading,
+  Steps,
+  TwoColumns,
   type Crumb,
 } from "@/components/ui";
 import { ecommerce } from "@/content/zielgruppen";
@@ -50,75 +51,52 @@ export default function EcommercePage() {
       />
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
 
-      <PageHero badge={ecommerce.badge} title={ecommerce.h1} intro={ecommerce.intro} breadcrumbs={breadcrumbs}>
-        <div className="flex flex-col sm:flex-row gap-4">
-          <BookingLink>
-            {ecommerce.heroCta}
-            <Icon name="arrow_forward" />
-          </BookingLink>
-          <SecondaryLink href="/so-arbeiten-wir">So arbeiten wir</SecondaryLink>
-        </div>
+      <PageHero label={ecommerce.badge} title={ecommerce.h1} intro={ecommerce.intro} breadcrumbs={breadcrumbs}>
+        <BookingLink>{ecommerce.heroCta}</BookingLink>
+        <QuietLink href="/so-arbeiten-wir">So arbeiten wir</QuietLink>
       </PageHero>
 
       <Section labelledBy="themen-heading">
-        <SectionHeading id="themen-heading">{ecommerce.themen.heading}</SectionHeading>
-        <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {ecommerce.themen.items.map((thema) => (
-            <li key={thema.begriff} className="grid">
-              <Card>
-                <Icon name={thema.icon} className="text-primary mb-5" />
-                <p className="text-on-surface-variant leading-relaxed">
-                  <strong className="font-bold text-on-surface">{thema.begriff}:</strong> {thema.text}
-                </p>
-              </Card>
-            </li>
-          ))}
-        </ul>
+        <TwoColumns heading={<SectionHeading id="themen-heading">{ecommerce.themen.heading}</SectionHeading>}>
+          <EntryList items={ecommerce.themen.items.map((thema) => ({ title: thema.begriff, text: thema.text }))} />
+        </TwoColumns>
       </Section>
 
-      <Section tone="low" labelledBy="tools-heading">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-          <SectionHeading id="tools-heading" intro={ecommerce.tools.text}>
-            {ecommerce.tools.heading}
-          </SectionHeading>
-          <ol aria-label={ecommerce.tools.schrittLabel}>
-            {ecommerce.tools.schritte.map((schritt, index) => (
-              <li key={schritt.titel}>
-                {index > 0 && (
-                  <div className="flex justify-center py-2">
-                    <Icon name="arrow_downward" className="text-primary" />
-                  </div>
-                )}
-                <div className="glass-card flex items-center gap-4 p-5 rounded-2xl border border-outline-variant/10">
-                  <Icon name={schritt.icon} className="text-primary shrink-0" />
-                  <div>
-                    <p className="font-headline font-bold text-on-surface">{schritt.titel}</p>
-                    {schritt.text && <p className="text-sm text-on-surface-variant leading-relaxed">{schritt.text}</p>}
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
+      <Section labelledBy="tools-heading">
+        <TwoColumns heading={<SectionHeading id="tools-heading">{ecommerce.tools.heading}</SectionHeading>}>
+          <p className="max-w-[34em] text-lead text-pretty">{ecommerce.tools.text}</p>
+        </TwoColumns>
+        <div className="mt-8 lg:mt-12">
+          <Steps
+            label={ecommerce.tools.schrittLabel}
+            items={ecommerce.tools.schritte.map((schritt) => ({ title: schritt.titel, text: schritt.text }))}
+          />
         </div>
+      </Section>
 
-        <div className="mt-16 md:mt-20 pt-12 border-t border-outline-variant/20">
-          <h3 className="mb-6 text-tertiary text-xs font-bold tracking-[0.2em] uppercase">
-            {ecommerce.plattformen.heading}
-          </h3>
-          <ul className="flex flex-wrap gap-x-8 gap-y-4">
-            {ecommerce.plattformen.namen.map((name) => (
-              <li key={name} className="font-headline text-lg md:text-xl font-bold text-on-surface-variant">
-                {name}
-              </li>
-            ))}
-          </ul>
+      <Section labelledBy="plattformen-heading">
+        <div className="grid-12">
+          <div className="col-content">
+            <div>
+              <SectionHeading id="plattformen-heading">{ecommerce.plattformen.heading}</SectionHeading>
+              <ul className="mt-4 flex flex-wrap gap-x-[0.5em] text-lead">
+                {ecommerce.plattformen.namen.map((name, index) => (
+                  <li key={name} className="whitespace-nowrap text-muted">
+                    {name}
+                    {index < ecommerce.plattformen.namen.length - 1 && <span aria-hidden="true"> ·</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </Section>
 
       {faqItems.length > 0 && (
-        <Section size="narrow" labelledBy="faq-heading">
-          <SectionHeading id="faq-heading">{ecommerce.faq.heading}</SectionHeading>
-          <Accordion items={faqItems} />
+        <Section labelledBy="faq-heading">
+          <TwoColumns heading={<SectionHeading id="faq-heading">{ecommerce.faq.heading}</SectionHeading>}>
+            <Accordion items={faqItems} />
+          </TwoColumns>
         </Section>
       )}
 

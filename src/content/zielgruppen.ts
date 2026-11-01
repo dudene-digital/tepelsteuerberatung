@@ -4,8 +4,6 @@ export interface Zielgruppe {
   slug: string;
   href: string;
   navLabel: string;
-  /** Material-Symbols-Name für die Kachel. */
-  icon: string;
   kachel: { titel: string; teaser: string };
   h1: string;
   intro: string;
@@ -21,13 +19,11 @@ export interface ZielgruppeSeite extends Zielgruppe {
 export interface EcommerceThema {
   begriff: string;
   text: string;
-  icon: string;
 }
 
 export interface ToolSchritt {
   titel: string;
   text?: string;
-  icon: string;
 }
 
 export interface FaqFrage {
@@ -51,7 +47,6 @@ export const ecommerce: Ecommerce = {
   slug: "e-commerce",
   href: "/fuer-wen/e-commerce",
   navLabel: "E-Commerce & Online-Handel",
-  icon: "storefront",
   kachel: {
     titel: "Online-Händler",
     teaser: "Shopify, Etsy, Amazon, eBay: OSS, Marktplatz-Meldungen und Buchhaltung, die mit deinem Shop spricht.",
@@ -68,32 +63,26 @@ export const ecommerce: Ecommerce = {
       {
         begriff: "OSS-Verfahren",
         text: "Überschreitest du die EU-weite Lieferschwelle von 10.000 €, gilt die Umsatzsteuer des Ziellandes. Wir melden quartalsweise über das One-Stop-Shop-Verfahren.",
-        icon: "public",
       },
       {
         begriff: "Amazon FBA & Lager im Ausland",
         text: "Lagert Amazon deine Ware in Polen oder Tschechien, entstehen Registrierungspflichten. Wir behalten den Überblick.",
-        icon: "warehouse",
       },
       {
         begriff: "Plattformgebühren",
         text: "Rechnungen von Amazon, Etsy oder eBay aus Luxemburg oder Irland lösen Reverse Charge aus – auch für Kleinunternehmer.",
-        icon: "receipt_long",
       },
       {
         begriff: "DAC7-Meldungen",
         text: "Marktplätze melden deine Verkäufe ans Bundeszentralamt für Steuern. Wir sorgen dafür, dass deine Erklärung dazu passt.",
-        icon: "fact_check",
       },
       {
         begriff: "Kleinunternehmerregelung",
         text: "Seit 2025 gelten 25.000 € (Vorjahr) und 100.000 € (laufendes Jahr) – wir sagen dir rechtzeitig, wann du rausfällst.",
-        icon: "speed",
       },
       {
         begriff: "Warenbestand & Retouren",
         text: "Inventur, Wareneinsatz und Retouren sauber abgebildet.",
-        icon: "assignment_return",
       },
     ],
   },
@@ -103,10 +92,10 @@ export const ecommerce: Ecommerce = {
     /* Schaubild desselben Satzes. Die Bausteine stammen aus dem Text oben, das Schaubild selbst nicht aus dem Briefing. */
     schrittLabel: "Weg deiner Daten in die Buchhaltung",
     schritte: [
-      { titel: "Deine Tools", text: "Verkäufe, Gebühren, Erstattungen und Zahlungen", icon: "storefront" },
-      { titel: "pathway", icon: "sync_alt" },
-      { titel: "ADDISON", text: "Unsere Buchhaltungssoftware", icon: "account_balance" },
-      { titel: "Buchhaltung", text: "Aufgeteilt nach Steuersatz und Lieferland, OSS-ready", icon: "menu_book" },
+      { titel: "Deine Tools", text: "Verkäufe, Gebühren, Erstattungen und Zahlungen" },
+      { titel: "pathway" },
+      { titel: "ADDISON", text: "Unsere Buchhaltungssoftware" },
+      { titel: "Buchhaltung", text: "Aufgeteilt nach Steuersatz und Lieferland, OSS-ready" },
     ],
   },
   plattformen: {
@@ -144,7 +133,6 @@ export const zielgruppenSeiten: readonly ZielgruppeSeite[] = [
     slug: "gmbh",
     href: "/fuer-wen/gmbh",
     navLabel: "GmbH & GmbH & Co. KG",
-    icon: "domain",
     kachel: {
       titel: "GmbH & GmbH & Co. KG",
       teaser: "Laufende Buchhaltung, Jahresabschluss, Geschäftsführergehalt und Ausschüttung – steuerlich durchdacht.",
@@ -165,7 +153,6 @@ export const zielgruppenSeiten: readonly ZielgruppeSeite[] = [
     slug: "freiberufler",
     href: "/fuer-wen/freiberufler",
     navLabel: "Freiberufler & Selbständige",
-    icon: "badge",
     kachel: {
       titel: "Freiberufler & Selbständige",
       teaser: "EÜR, Umsatzsteuer, Vorauszahlungen im Griff – ohne Schuhkarton.",
@@ -186,7 +173,6 @@ export const zielgruppenSeiten: readonly ZielgruppeSeite[] = [
     slug: "immobilien",
     href: "/fuer-wen/immobilien",
     navLabel: "Immobilien & Vermieter",
-    icon: "home_work",
     kachel: {
       titel: "Immobilien & Vermieter",
       teaser: "Anlage V, Grundstücksgemeinschaften, Feststellungserklärungen, AfA-Optimierung.",
@@ -208,7 +194,6 @@ export const zielgruppenSeiten: readonly ZielgruppeSeite[] = [
     slug: "gruender",
     href: "/fuer-wen/gruender",
     navLabel: "Gründer",
-    icon: "flag",
     kachel: {
       titel: "Gründer",
       teaser: "Rechtsform, Planzahlen, Anmeldung beim Finanzamt – sauber von Tag 1.",
