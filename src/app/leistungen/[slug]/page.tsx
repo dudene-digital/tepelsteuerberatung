@@ -4,6 +4,7 @@ import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import { CtaBand, PageHero, QuietLink, RuleList, Section, SectionHeading, TwoColumns, type Crumb } from "@/components/ui";
 import { getLeistung, leistungen } from "@/content/leistungen";
 import { site } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -21,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: leistung.navLabel,
     description: leistung.intro,
-    alternates: { canonical: `/leistungen/${leistung.slug}` },
+    ...pageMeta(`/leistungen/${leistung.slug}`),
   };
 }
 
@@ -57,17 +58,13 @@ export default async function LeistungPage({ params }: Props) {
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
       <PageHero title={leistung.h1} intro={leistung.intro} breadcrumbs={breadcrumbs} />
       <Section labelledBy="enthalten-heading">
-        <TwoColumns
-          heading={
-            <>
-              <SectionHeading id="enthalten-heading">Das ist enthalten</SectionHeading>
-              <div className="mt-1">
-                <QuietLink href="/so-arbeiten-wir">So arbeiten wir</QuietLink>
-              </div>
-            </>
-          }
-        >
-          <RuleList items={leistung.enthalten} />
+        <TwoColumns heading={<SectionHeading id="enthalten-heading">Das ist enthalten</SectionHeading>}>
+          <div>
+            <RuleList items={leistung.enthalten} />
+            <div className="mt-4">
+              <QuietLink href="/so-arbeiten-wir">So arbeiten wir</QuietLink>
+            </div>
+          </div>
         </TwoColumns>
       </Section>
       <CtaBand />

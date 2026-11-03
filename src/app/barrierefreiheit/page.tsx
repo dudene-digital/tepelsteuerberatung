@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
+import { Breadcrumbs } from "@/components/ui";
+import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Barrierefreiheitserklärung",
   description:
     "Erklärung zur Barrierefreiheit der Tepel Steuerberatung gemäß Barrierefreiheitsstärkungsgesetz (BFSG).",
-  alternates: { canonical: "/barrierefreiheit" },
+  ...pageMeta("/barrierefreiheit"),
 };
 
 const accessibilityHtml = `
@@ -23,20 +25,18 @@ Mobil: + 49 172 3870104</p>
 Link zum Impressum: <a href="https://tepel-steuerberatung.de/impressum">https://tepel-steuerberatung.de/impressum</a></p>
 
 <h2>Allgemeine Beschreibung der Dienstleistung</h2>
-<p>Die Dienstleistung umfasst die geschäftsmäßige Hilfeleistung in Steuersachen sowie die umfassende betriebswirtschaftliche und strategische Beratung. Neben den klassischen Tätigkeiten wie der Erstellung von Steuererklärungen und Jahresabschlüssen liegt der Schwerpunkt auf der vollumfänglichen, digitalen Finanz- und Lohnbuchhaltung. Besondere Kernkompetenzen bilden zudem die ganzheitliche Start-up-Betreuung (inkl. Gründungsberatung und Rechtsformwahl) sowie die Implementierung automatisierter, papierloser Finanzprozesse und KPI-Reportings für Unternehmen.</p>
+<p>Die Dienstleistung umfasst die geschäftsmäßige Hilfeleistung in Steuersachen für Online-Händler, Unternehmer und Vermieter im Rhein-Main-Gebiet: laufende Finanzbuchhaltung und Umsatzsteuer-Voranmeldungen, Lohn- und Gehaltsabrechnung, Jahresabschlüsse und Steuererklärungen, Gründungs- und Rechtsformberatung sowie Steuergestaltung.</p>
 
 <h2>Erläuterungen zur Durchführung der Dienstleistung</h2>
-<p>Die Dienstleistungserbringung erfolgt zu 100 % digital, papierlos und agil. Der Fokus liegt darauf, die steuerlichen und betriebswirtschaftlichen Prozesse so in den Alltag der Mandanten zu integrieren, dass sie maximal entlastet werden.</p>
+<p>Die Zusammenarbeit ist im Alltag digital und persönlich, wenn es darauf ankommt. Sie läuft in vier Schritten:</p>
 
-<p>Das Angebot wird wie folgt genutzt und durchgeführt:</p>
+<p><strong>Erstgespräch:</strong> Interessenten vereinbaren über die Website, per Telefon oder E-Mail ein kostenloses Erstgespräch von 30 Minuten, per Video oder im Büro.</p>
 
-<p><strong>Kontaktaufnahme &amp; Onboarding:</strong> Interessenten buchen zunächst ein kurzes, kostenloses Erstgespräch über die Kanzlei-Webseite. Kommt es zu einer Zusammenarbeit, erfolgen das gesamte Onboarding sowie die Vertragsunterzeichnung vollständig digital.</p>
+<p><strong>Festangebot:</strong> Innerhalb von zwei Werktagen erhalten Interessenten ein schriftliches Festangebot.</p>
 
-<p><strong>Laufende Finanz- und Lohnbuchhaltung (Digitaler Workflow):</strong> Physische Pendelordner gibt es nicht. Mandanten übermitteln ihre Belege laufend per Smartphone-App oder digitalen Upload. Für Bankkonten, Rechnungsprogramme und Bezahlsysteme werden automatisierte Schnittstellen eingerichtet. Auch die Lohnabrechnung ist digitalisiert: Mitarbeiter der Mandanten erhalten ihre monatlichen Auswertungen direkt und sicher via App.</p>
+<p><strong>Onboarding:</strong> Wir richten ein digitales Mandantenkonto ein, verbinden Bank und Shop und fordern die Unterlagen beim bisherigen Berater an.</p>
 
-<p><strong>Proaktive Kommunikation &amp; Strategie:</strong> Anstelle von jährlichen Pflichtterminen findet der Austausch agil und proaktiv über regelmäßige Video-Calls statt. So werden aktuelle Unternehmenskennzahlen (KPIs) besprochen, das Cashflow-Monitoring ausgewertet und die Steuerstrategie an das Wachstum des Unternehmens (z.&nbsp;B. bei Start-ups) angepasst.</p>
-
-<p><strong>Bereitstellung von Ergebnissen:</strong> Alle Arbeitsergebnisse (BWA, Jahresabschlüsse, Steuererklärungen) werden den Mandanten über ein sicheres, digitales Mandantenportal ortsunabhängig und jederzeit abrufbar zur Verfügung gestellt. Freigaben an das Finanzamt erfolgen ebenfalls über digitale Authentifizierungsverfahren.</p>
+<p><strong>Laufende Betreuung:</strong> Belege werden per App übermittelt, Auswertungen stehen online bereit, der Datenaustausch läuft über ein verschlüsseltes Mandantenportal. Besprechungen finden per Video oder im Büro statt. Wer lieber mit Papierbelegen arbeitet, kann diese weiterhin im Büro abgeben.</p>
 
 <h2>Stand der Vereinbarkeit mit den Anforderungen</h2>
 <p>Wir setzen uns für digitale Barrierefreiheit ein und verfolgen das Ziel, unsere Website so zu gestalten, dass sie für alle Nutzerinnen und Nutzer uneingeschränkt zugänglich ist. Daher arbeiten wir kontinuierlich daran, die Anforderungen des Barrierefreiheitsstärkungsgesetzes (BFSG) und der Verordnung zum Barrierefreiheitsstärkungsgesetz (BFSGV) vollständig umzusetzen.</p>
@@ -46,7 +46,7 @@ Link zum Impressum: <a href="https://tepel-steuerberatung.de/impressum">https://
 
 <p><strong>Vorlesefunktion und ARIA-Attribute:</strong> Unsere Website ist mit ARIA-Attributen versehen, um die Nutzung mit Screenreadern zu erleichtern. Alle interaktiven Elemente verfügen über aussagekräftige Labels (aria-label, aria-labelledby). Dekorative Elemente sind als solche gekennzeichnet (aria-hidden) und werden von Screenreadern übersprungen. Dialoge sind mit role=&quot;dialog&quot; und aria-modal ausgezeichnet. Alle Bilder besitzen beschreibende Alternativtexte.</p>
 
-<p><strong>Optimierte Kontraste und flexible Schriftgrößen:</strong> Wir gewährleisten ein Farbkontrastverhältnis von mindestens 4,5:1 (WCAG AA) für alle Textinhalte. Die Schriftgrößen sind in relativen Einheiten definiert, sodass sie über die Browser-Einstellungen individuell angepasst werden können. Links sind nicht nur durch Farbe, sondern auch durch Unterstreichung als solche erkennbar.</p>
+<p><strong>Optimierte Kontraste und flexible Schriftgrößen:</strong> Wir gewährleisten ein Farbkontrastverhältnis von mindestens 4,5:1 (WCAG AA) für alle Textinhalte. Die Schriftgrößen sind in relativen Einheiten definiert, sodass sie über die Browser-Einstellungen individuell angepasst werden können. Links im Fließtext sind durch Unterstreichung erkennbar, Links in Navigation und Fußzeile durch ihre Anordnung in eigenen Menüs; beim Überfahren mit der Maus werden auch sie unterstrichen.</p>
 
 <p><strong>Semantische Strukturierung:</strong> Die Website verwendet eine korrekte HTML5-Seitenstruktur mit semantischen Elementen (&lt;nav&gt;, &lt;main&gt;, &lt;footer&gt;, &lt;section&gt;) und einer logischen Überschriftenhierarchie, die die Navigation mit assistiven Technologien erleichtert.</p>
 
@@ -61,12 +61,12 @@ Telefon: 0611 / 15756 0<br />
 Mobil: + 49 172 3870104</p>
 
 <h2>Zuständige Marktüberwachungsbehörde</h2>
-<p>Marktüberwachungsstelle der Länder für die Barrierefreiheit von Produkten und Dienstleistungen (MLBF)<br />
-c/o Ministerium für Arbeit, Soziales, Gesundheit und Gleichstellung Sachsen-Anhalt<br />
-Postfach 39 11 55<br />
-39135 Magdeburg</p>
-<p>Telefon: + 49 (0) 391 567 6970<br />
-E-Mail: mlbf@ms.sachsen-anhalt.de</p>
+<p>Marktüberwachungsstelle der Länder für die Barrierefreiheit von Produkten und Dienstleistungen – Anstalt öffentlichen Rechts (MLBF AöR)<br />
+Carl-Miller-Straße 6<br />
+39112 Magdeburg</p>
+<p>Telefon: +49 391 289 230 23<br />
+E-Mail: kontakt@mlbf-barrierefrei.de<br />
+Website: <a href="https://www.mlbf-barrierefrei.de" target="_blank" rel="noopener noreferrer">mlbf-barrierefrei.de</a></p>
 `;
 
 const breadcrumbs = [
@@ -78,9 +78,10 @@ export default function BarrierefreiheitPage() {
   return (
     <>
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
-      <div className="wrap pt-6 pb-[clamp(3.5rem,2rem+5vw,9rem)] md:pt-10">
+      <div className="wrap pt-1.5 pb-[clamp(3.5rem,2rem+5vw,9rem)]">
+        <Breadcrumbs items={breadcrumbs} />
         <div
-          className="legal-content"
+          className="legal-content mt-6 md:mt-10"
           dangerouslySetInnerHTML={{ __html: accessibilityHtml }}
         />
       </div>

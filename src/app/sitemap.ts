@@ -32,11 +32,10 @@ const seiten: readonly Eintrag[] = [
   { path: "/barrierefreiheit", changeFrequency: "yearly", priority: 0.3 },
 ];
 
+/* Kein lastModified: Das Build-Datum wäre bei jedem Deploy neu und sagt nichts über echte Änderungen. */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
   return seiten.map(({ path, changeFrequency, priority }) => ({
     url: path === "/" ? site.url : `${site.url}${path}`,
-    lastModified,
     changeFrequency,
     priority,
   }));

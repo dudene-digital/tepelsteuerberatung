@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
-import { CtaBand, EntryList, PageHero, Section, SectionHeading, Steps, TwoColumns } from "@/components/ui";
-import { soArbeitenWir as content } from "@/content/kanzlei";
+import { CtaBand, PageHero, PhotoSplit, Section, SectionHeading, Steps, TwoColumns } from "@/components/ui";
+import { fabianAmLaptop, soArbeitenWir as content } from "@/content/kanzlei";
+import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: content.seo.title,
   description: content.seo.description,
-  alternates: { canonical: "/so-arbeiten-wir" },
+  ...pageMeta("/so-arbeiten-wir"),
 };
 
 const breadcrumbs = [
@@ -24,11 +25,18 @@ export default function SoArbeitenWirPage() {
         <Steps headingLevel={2} items={content.steps} />
       </Section>
 
-      <Section labelledBy="tools-heading">
-        <TwoColumns heading={<SectionHeading id="tools-heading">{content.toolsHeading}</SectionHeading>}>
-          <EntryList items={content.tools.map(({ name, text }) => ({ title: name, text }))} />
-        </TwoColumns>
-      </Section>
+      {/* Digitale Werkzeuge neben dem Foto am Laptop */}
+      <PhotoSplit photo={fabianAmLaptop} imageClassName="object-[62%_50%]" labelledBy="tools-heading">
+        <SectionHeading id="tools-heading">{content.toolsHeading}</SectionHeading>
+        <ul className="mt-4 border-t border-rule">
+          {content.tools.map((tool) => (
+            <li key={tool.name} className="border-b border-rule py-3.5">
+              <h3 className="font-display text-2xl leading-tight">{tool.name}</h3>
+              <p className="mt-1 text-muted text-pretty">{tool.text}</p>
+            </li>
+          ))}
+        </ul>
+      </PhotoSplit>
 
       <Section id="beraterwechsel" labelledBy="beraterwechsel-heading">
         <TwoColumns heading={<SectionHeading id="beraterwechsel-heading">{content.beraterwechselHeading}</SectionHeading>}>

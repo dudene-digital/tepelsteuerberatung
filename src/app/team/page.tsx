@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import StandortKarte from "@/components/StandortKarte";
-import { CtaBand, InfoRows, PageHero, Section, SectionHeading, Statements, TwoColumns } from "@/components/ui";
-import { fabianImBuero, fabianPortrait, team as content, teamMembers } from "@/content/kanzlei";
+import { CtaBand, InfoRows, PageHero, PhotoSplit, Section, SectionHeading, Statements, TwoColumns } from "@/components/ui";
+import { fabianAmTelefon, fabianArmeVerschraenkt, team as content, teamMembers } from "@/content/kanzlei";
 import { site } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: content.seo.title,
   description: content.seo.description,
-  alternates: { canonical: "/team" },
+  ...pageMeta("/team"),
 };
 
 const breadcrumbs = [
@@ -27,10 +28,10 @@ export default function TeamPage() {
         <div className="grid-12 gap-y-6">
           <div className="-mx-[var(--gutter)] isolate self-start border-b border-ink bg-bg lg:col-span-5 lg:mr-0">
             <Image
-              src={fabianPortrait.src}
-              alt={fabianPortrait.alt}
-              width={fabianPortrait.width}
-              height={fabianPortrait.height}
+              src={fabianArmeVerschraenkt.src}
+              alt={fabianArmeVerschraenkt.alt}
+              width={fabianArmeVerschraenkt.width}
+              height={fabianArmeVerschraenkt.height}
               sizes="(min-width: 1920px) 800px, (min-width: 1024px) 42vw, 100vw"
               loading="eager"
               className="block h-auto w-full mix-blend-lighten"
@@ -92,49 +93,37 @@ export default function TeamPage() {
         <Statements items={content.werte} />
       </Section>
 
-      <section aria-labelledby="buero-heading" className="section">
-        <div className="grid-12 items-end gap-y-6">
-          <div className="relative aspect-[1.148] overflow-hidden lg:col-span-8">
-            <Image
-              src={fabianImBuero.src}
-              alt={fabianImBuero.alt}
-              fill
-              sizes="(min-width: 1920px) 1280px, (min-width: 1024px) 67vw, 100vw"
-              className="object-cover object-right"
-            />
-          </div>
-          <div className="wrap min-w-0 lg:col-span-4 lg:pl-0">
-            <h2 id="buero-heading" className="mb-4 font-display text-h2 text-balance">
-              {content.bueroHeading}
-            </h2>
-            <InfoRows
-              rows={[
-                {
-                  label: "Adresse",
-                  content: (
-                    <address className="not-italic">
-                      {site.address.street}, {site.address.postalCode} {site.address.city}
-                    </address>
-                  ),
-                },
-                {
-                  label: content.telefonLabel,
-                  content: (
-                    <a href={site.phone.href} className="inline-link tap">
-                      {site.phone.label}
-                    </a>
-                  ),
-                },
-                { label: "Erreichbarkeit", content: site.hoursLong },
-                { label: "Termine", content: content.termineHinweis },
-              ]}
-            />
-            <div className="mt-6">
-              <StandortKarte />
-            </div>
-          </div>
+      {/* Erreichbarkeit: Fabian am Telefon */}
+      <PhotoSplit photo={fabianAmTelefon} imageClassName="object-[0%_50%]" labelledBy="buero-heading">
+        <h2 id="buero-heading" className="mb-4 font-display text-h2 text-balance">
+          {content.bueroHeading}
+        </h2>
+        <InfoRows
+          rows={[
+            {
+              label: "Adresse",
+              content: (
+                <address className="not-italic">
+                  {site.address.street}, {site.address.postalCode} {site.address.city}
+                </address>
+              ),
+            },
+            {
+              label: content.telefonLabel,
+              content: (
+                <a href={site.phone.href} className="inline-link tap">
+                  {site.phone.label}
+                </a>
+              ),
+            },
+            { label: "Erreichbarkeit", content: site.hoursLong },
+            { label: "Termine", content: content.termineHinweis },
+          ]}
+        />
+        <div className="mt-6">
+          <StandortKarte />
         </div>
-      </section>
+      </PhotoSplit>
 
       <CtaBand />
     </>

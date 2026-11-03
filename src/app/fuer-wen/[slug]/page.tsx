@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import { CtaBand, PageHero, QuietLink, RuleList, Section, SectionHeading, TwoColumns, type Crumb } from "@/components/ui";
 import { getZielgruppeSeite, punkteHeading, zielgruppenSeiten } from "@/content/zielgruppen";
+import { site } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -21,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: zielgruppe.seoTitle,
     description: zielgruppe.intro,
-    alternates: { canonical: zielgruppe.href },
+    ...pageMeta(zielgruppe.href),
   };
 }
 
@@ -38,6 +40,21 @@ export default async function ZielgruppePage({ params }: Props) {
 
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: zielgruppe.navLabel,
+          description: zielgruppe.intro,
+          url: `${site.url}${zielgruppe.href}`,
+          provider: {
+            "@type": "AccountingService",
+            "@id": `${site.url}/#kanzlei`,
+            name: site.name,
+            url: site.url,
+          },
+        }}
+      />
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
       <PageHero title={zielgruppe.h1} intro={zielgruppe.intro} breadcrumbs={breadcrumbs} />
       <Section labelledBy="punkte-heading">

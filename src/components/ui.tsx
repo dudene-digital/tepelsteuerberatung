@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { bookingHref, bookingUrl } from "@/lib/site";
 
@@ -287,6 +288,50 @@ export function Statements({
         </div>
       ))}
     </div>
+  );
+}
+
+/* Seitenverhältnis des Fotorahmens in PhotoSplit, passend zu aspect-[1.148] unten. */
+const SPLIT_ASPECT = 1.148;
+
+/** Farbfoto über acht Spalten, Text rechts daneben auf der Grundlinie des Fotos. Am Handy steht der Text darunter.
+    Ist der Text höher als das Foto, wächst der Rahmen mit, damit die Überschrift nicht über dem Foto hängt. */
+export function PhotoSplit({
+  photo,
+  imageClassName = "",
+  labelledBy,
+  className = "",
+  children,
+}: {
+  photo: { src: string; alt: string; width: number; height: number };
+  imageClassName?: string;
+  labelledBy: string;
+  className?: string;
+  children: ReactNode;
+}) {
+  /* Ein breiteres Foto füllt den Rahmen über die Höhe und wird dabei breiter gemalt als der Rahmen.
+     sizes muss diese Breite nennen, sonst lädt der Browser eine zu kleine Datei. */
+  const overscan = Math.max(1, photo.width / photo.height / SPLIT_ASPECT);
+  const sizes = `(min-width: 1920px) ${Math.round(1280 * overscan)}px, (min-width: 1024px) ${Math.round(
+    67 * overscan
+  )}vw, ${Math.round(100 * overscan)}vw`;
+  return (
+    <section aria-labelledby={labelledBy} className={`section ${className}`}>
+      <div className="grid-12 items-end gap-y-5">
+        {/* Der Platzhalter gibt die Mindesthöhe vor. Die Breite bleibt an die Spalte gebunden, auch wenn der Rahmen mitwächst. */}
+        <div className="relative overflow-hidden lg:col-span-8 lg:self-stretch">
+          <div aria-hidden="true" className="aspect-[1.148]" />
+          <Image
+            src={photo.src}
+            alt={photo.alt}
+            fill
+            sizes={sizes}
+            className={`object-cover ${imageClassName}`}
+          />
+        </div>
+        <div className="wrap min-w-0 lg:col-span-4 lg:pl-0">{children}</div>
+      </div>
+    </section>
   );
 }
 

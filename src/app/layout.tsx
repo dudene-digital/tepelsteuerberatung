@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { baseOpenGraph } from "@/lib/seo";
 
 const gloock = Gloock({
   variable: "--font-gloock",
@@ -44,12 +45,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Fabian Tepel" }],
   creator: "Tepel Steuerberatung",
-  openGraph: {
-    type: "website",
-    locale: "de_DE",
-    siteName: "Tepel Steuerberatung",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Fabian Tepel Steuerberatung in Wiesbaden" }],
-  },
+  openGraph: baseOpenGraph,
   twitter: {
     card: "summary_large_image",
     images: ["/og-image.png"],

@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import { CtaBand, LeadIndex, PageHero, Section, type Crumb } from "@/components/ui";
 import { fuerWenUebersicht, zielgruppen } from "@/content/zielgruppen";
+import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: fuerWenUebersicht.h1,
   description: fuerWenUebersicht.intro,
-  alternates: { canonical: "/fuer-wen" },
+  ...pageMeta("/fuer-wen"),
 };
 
 const breadcrumbs: Crumb[] = [

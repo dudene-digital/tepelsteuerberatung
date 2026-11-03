@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import Accordion, { type AccordionItem } from "@/components/Accordion";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
-import { BookingLink, InfoRows, PageHero, RuleList, Section, SectionHeading, TwoColumns } from "@/components/ui";
-import { willkommen as content } from "@/content/kanzlei";
+import { BookingLink, InfoRows, PageHero, PhotoSplit, RuleList, Section, SectionHeading, TwoColumns } from "@/components/ui";
+import { fabianImBuero, willkommen as content } from "@/content/kanzlei";
 import { site } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: content.seo.title,
   description: content.seo.description,
-  alternates: { canonical: "/willkommen" },
+  ...pageMeta("/willkommen"),
   robots: { index: false, follow: true },
 };
 
@@ -45,28 +46,33 @@ export default function WillkommenPage() {
         </Section>
       )}
 
-      <section aria-labelledby="erreichbarkeit-heading" className="wrap section pb-[clamp(3.5rem,2rem+5vw,9rem)]">
-        <TwoColumns heading={<SectionHeading id="erreichbarkeit-heading">{content.erreichbarkeitHeading}</SectionHeading>}>
-          <div>
-            <InfoRows
-              rows={[
-                {
-                  label: "Telefon",
-                  content: (
-                    <a href={site.phone.href} className="inline-link tap">
-                      {site.phone.label}
-                    </a>
-                  ),
-                },
-                { label: "Zeiten", content: site.hoursShort },
-              ]}
-            />
-            <div className="mt-6">
-              <BookingLink>{content.cta}</BookingLink>
-            </div>
-          </div>
-        </TwoColumns>
-      </section>
+      {/* Für übernommene Mandanten: Fabian im Türrahmen, daneben die Wege zu ihm */}
+      <PhotoSplit
+        photo={fabianImBuero}
+        imageClassName="object-right"
+        labelledBy="erreichbarkeit-heading"
+        className="pb-[clamp(3.5rem,2rem+5vw,9rem)]"
+      >
+        <SectionHeading id="erreichbarkeit-heading">{content.erreichbarkeitHeading}</SectionHeading>
+        <div className="mt-4">
+          <InfoRows
+            rows={[
+              {
+                label: "Telefon",
+                content: (
+                  <a href={site.phone.href} className="inline-link tap">
+                    {site.phone.label}
+                  </a>
+                ),
+              },
+              { label: "Zeiten", content: site.hoursShort },
+            ]}
+          />
+        </div>
+        <div className="mt-6">
+          <BookingLink>{content.cta}</BookingLink>
+        </div>
+      </PhotoSplit>
     </>
   );
 }

@@ -15,11 +15,12 @@ import {
 } from "@/components/ui";
 import { ecommerce } from "@/content/zielgruppen";
 import { site } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: { absolute: ecommerce.seoTitle },
   description: ecommerce.intro,
-  alternates: { canonical: ecommerce.href },
+  ...pageMeta(ecommerce.href),
 };
 
 const breadcrumbs: Crumb[] = [

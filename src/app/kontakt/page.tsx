@@ -4,6 +4,7 @@ import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import StandortKarte from "@/components/StandortKarte";
 import { CtaBand, InfoRows, PageHero, Section, type Crumb } from "@/components/ui";
 import { bookingUrl, site } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 
 const title = "Kontakt, Anfahrt, Erstgespräch";
 const intro = "Schreib uns, ruf an oder komm im Büro vorbei. Antwort innerhalb von 24 Stunden an Werktagen.";
@@ -11,7 +12,7 @@ const intro = "Schreib uns, ruf an oder komm im Büro vorbei. Antwort innerhalb 
 export const metadata: Metadata = {
   title,
   description: intro,
-  alternates: { canonical: "/kontakt" },
+  ...pageMeta("/kontakt"),
 };
 
 const breadcrumbs: Crumb[] = [

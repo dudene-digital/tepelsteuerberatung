@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import { CtaBand, PageHero, RuleList, Section, SectionHeading, TwoColumns } from "@/components/ui";
 import { honorar as content } from "@/content/kanzlei";
+import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: content.seo.title,
   description: content.seo.description,
-  alternates: { canonical: "/honorar" },
+  ...pageMeta("/honorar"),
 };
 
 const breadcrumbs = [

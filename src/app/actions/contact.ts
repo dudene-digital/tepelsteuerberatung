@@ -20,11 +20,22 @@ const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const recentRequests = new Map<string, number[]>();
 
+/* Entfernt abgelaufene Zeitstempel und IPs ohne gültige Zeitstempel. */
+function purgeExpired(now: number) {
+  for (const [key, times] of recentRequests) {
+    const valid = times.filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+    if (valid.length === 0) recentRequests.delete(key);
+    else if (valid.length !== times.length) recentRequests.set(key, valid);
+  }
+}
+
+/* Läuft jede Minute, auch ohne neue Anfragen. Eine IP ist damit spätestens elf Minuten nach ihrer
+   letzten Anfrage gelöscht, so steht es in der Datenschutzerklärung. unref hält den Prozess nicht am Leben. */
+setInterval(() => purgeExpired(Date.now()), 60 * 1000).unref();
+
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
-  for (const [key, times] of recentRequests) {
-    if (times.every((t) => now - t >= RATE_LIMIT_WINDOW_MS)) recentRequests.delete(key);
-  }
+  purgeExpired(now);
   const times = (recentRequests.get(ip) ?? []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
   if (times.length >= RATE_LIMIT_MAX) {
     recentRequests.set(ip, times);

@@ -3,11 +3,12 @@ import Accordion from "@/components/Accordion";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import { CtaBand, PageHero, Section, type Crumb } from "@/components/ui";
 import { faqIntro, faqItems } from "@/content/faq";
+import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: faqIntro.title,
   description: faqIntro.intro,
-  alternates: { canonical: "/faq" },
+  ...pageMeta("/faq"),
 };
 
 const breadcrumbs: Crumb[] = [

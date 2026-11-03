@@ -2,16 +2,18 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import HashRedirect from "@/components/HashRedirect";
 import JsonLd from "@/components/JsonLd";
-import { BookingLink, CtaBand, LeadIndex, QuietLink, Section, SectionHeading, Statements, TwoColumns } from "@/components/ui";
+import { BookingLink, CtaBand, LeadIndex, PhotoSplit, QuietLink, Section, SectionHeading, Statements, TwoColumns } from "@/components/ui";
+import { bewertungen, bewertungenHinweis, bewertungenStand } from "@/content/bewertungen";
 import { fabianImBuero, fabianPortrait } from "@/content/kanzlei";
 import { zielgruppen } from "@/content/zielgruppen";
 import { leistungenNav, site } from "@/lib/site";
+import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: { absolute: "Steuerberater Wiesbaden für Online-Händler & Unternehmer | Tepel" },
   description:
     "Digitale Steuerberatung in Wiesbaden: Buchhaltung, Lohn, Jahresabschluss und Steuern für E-Commerce, GmbH, Freiberufler und Vermieter. Fester Ansprechpartner, Antwort in 24 Stunden.",
-  alternates: { canonical: "/" },
+  ...pageMeta("/"),
 };
 
 const trustItems = ["Steuerberater seit 2021", "Inhabergeführt", "Antwort innerhalb von 24 Stunden", "Büro in Wiesbaden"];
@@ -173,38 +175,52 @@ export default function Home() {
       </Section>
 
       {/* Team-Teaser: das einzige Farbbild der Seite */}
-      <section aria-labelledby="team-heading" className="section">
-        <div className="grid-12 items-end">
-          <div className="relative aspect-[1.148] overflow-hidden lg:col-span-8">
-            <Image
-              src={fabianImBuero.src}
-              alt={fabianImBuero.alt}
-              fill
-              sizes="(min-width: 1920px) 1280px, (min-width: 1024px) 67vw, 100vw"
-              className="object-cover object-right"
-            />
-          </div>
-          <div className="wrap mt-5 lg:col-span-4 lg:mt-0 lg:pl-0">
-            <SectionHeading id="team-heading">
-              Seit September 2026 sind wir zu viert: Fabian Tepel und drei erfahrene Kolleginnen.
-            </SectionHeading>
-            <p className="mt-3 text-muted text-pretty">
-              Für dich heißt das: Inhaber als Ansprechpartner, dazu Kapazität und Vertretung im Urlaub.
-            </p>
-            <div className="mt-1">
-              <QuietLink href="/team">Team kennenlernen</QuietLink>
-            </div>
-          </div>
+      <PhotoSplit photo={fabianImBuero} imageClassName="object-right" labelledBy="team-heading">
+        <SectionHeading id="team-heading">
+          Seit September 2026 sind wir zu viert: Fabian Tepel und drei erfahrene Kolleginnen.
+        </SectionHeading>
+        <p className="mt-3 text-muted text-pretty">
+          Für dich heißt das: Inhaber als Ansprechpartner, dazu Kapazität und Vertretung im Urlaub.
+        </p>
+        <div className="mt-1">
+          <QuietLink href="/team">Team kennenlernen</QuietLink>
         </div>
-      </section>
+      </PhotoSplit>
 
-      {/* Google-Bewertungen: nur Verweis auf das Profil, ohne Zitate und ohne Einbindung von Google. */}
+      {/* Google-Bewertungen: statische Zitate aus dem Profil, ohne Einbindung von Google. Ohne Einträge nur der Verweis. */}
       <Section labelledBy="bewertungen-heading">
         <TwoColumns heading={<SectionHeading id="bewertungen-heading">Google-Bewertungen</SectionHeading>}>
           <div>
-            <p className="max-w-[34em] text-lead text-pretty">
-              Was Mandanten über die Zusammenarbeit mit uns schreiben, liest du in unserem Google-Unternehmensprofil.
-            </p>
+            {bewertungen.length > 0 ? (
+              <>
+                <ul className="border-t border-rule">
+                  {bewertungen.slice(0, 3).map((bewertung) => (
+                    <li key={`${bewertung.autor}-${bewertung.datum}`} className="border-b border-rule py-5 lg:py-6">
+                      <figure>
+                        <p className="text-base text-muted">
+                          <span aria-hidden="true">{"★".repeat(bewertung.sterne)}</span>
+                          <span className="sr-only">{bewertung.sterne} von 5 Sternen</span>
+                        </p>
+                        <blockquote className="mt-2 max-w-[34em] text-lead text-pretty">
+                          <p>„{bewertung.text}“</p>
+                        </blockquote>
+                        <figcaption className="mt-2 text-base text-muted">
+                          {bewertung.autor}, {bewertung.datum}
+                        </figcaption>
+                      </figure>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-4 max-w-[46rem] text-base text-muted text-pretty">
+                  {bewertungenHinweis}
+                  {bewertungenStand && ` Stand: ${bewertungenStand}.`}
+                </p>
+              </>
+            ) : (
+              <p className="max-w-[34em] text-lead text-pretty">
+                Was Mandanten über die Zusammenarbeit mit uns schreiben, liest du in unserem Google-Unternehmensprofil.
+              </p>
+            )}
             <a href={site.googleProfile} target="_blank" rel="noopener noreferrer" className="quiet-link mt-2">
               Bewertungen bei Google ansehen<span className="sr-only"> (öffnet in einem neuen Tab)</span>
             </a>

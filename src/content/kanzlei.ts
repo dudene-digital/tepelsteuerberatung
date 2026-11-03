@@ -32,6 +32,27 @@ export const fabianImBuero: Photo = {
   height: 3648,
 };
 
+export const fabianArmeVerschraenkt: Photo = {
+  src: "/fabian-portrait-arme.jpg",
+  alt: "Schwarz-Weiß-Porträt von Fabian Tepel mit verschränkten Armen in schwarzem T-Shirt",
+  width: 1200,
+  height: 1243,
+};
+
+export const fabianAmTelefon: Photo = {
+  src: "/fabian-telefon.jpg",
+  alt: "Fabian Tepel telefoniert auf einem ockerfarbenen Sofa im hellen Büro",
+  width: 2000,
+  height: 1333,
+};
+
+export const fabianAmLaptop: Photo = {
+  src: "/fabian-laptop.jpg",
+  alt: "Fabian Tepel arbeitet lächelnd am Laptop an einem hellen Tisch im Büro",
+  width: 2000,
+  height: 1333,
+};
+
 /* ── /so-arbeiten-wir ── */
 
 export interface AblaufSchritt {

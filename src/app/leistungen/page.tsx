@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import { CtaBand, EntryList, PageHero, Section, type Crumb } from "@/components/ui";
 import { leistungen, leistungenUebersicht } from "@/content/leistungen";
+import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: leistungenUebersicht.title,
   description: leistungenUebersicht.description,
-  alternates: { canonical: "/leistungen" },
+  ...pageMeta("/leistungen"),
 };
 
 const breadcrumbs: Crumb[] = [

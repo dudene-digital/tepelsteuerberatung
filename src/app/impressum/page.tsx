@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
+import { Breadcrumbs } from "@/components/ui";
+import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Impressum",
   description:
     "Impressum der Tepel Steuerberatung – Fabian Tepel, Steuerberater in Wiesbaden. Angaben gemäß § 5 DDG.",
-  alternates: { canonical: "/impressum" },
+  ...pageMeta("/impressum"),
 };
 
 const imprintHtml = `
@@ -78,9 +80,10 @@ export default function ImpressumPage() {
   return (
     <>
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
-      <div className="wrap pt-6 pb-[clamp(3.5rem,2rem+5vw,9rem)] md:pt-10">
+      <div className="wrap pt-1.5 pb-[clamp(3.5rem,2rem+5vw,9rem)]">
+        <Breadcrumbs items={breadcrumbs} />
         <div
-          className="legal-content"
+          className="legal-content mt-6 md:mt-10"
           dangerouslySetInnerHTML={{ __html: imprintHtml }}
         />
       </div>
