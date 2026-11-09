@@ -1,21 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Gloock, Schibsted_Grotesk } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { gloock, schibsted } from "@/lib/fonts";
 import { baseOpenGraph } from "@/lib/seo";
-
-const gloock = Gloock({
-  variable: "--font-gloock",
-  weight: "400",
-  subsets: ["latin"],
-});
-
-const schibsted = Schibsted_Grotesk({
-  variable: "--font-schibsted",
-  subsets: ["latin"],
-});
 
 const siteUrl = "https://tepel-steuerberatung.de";
 

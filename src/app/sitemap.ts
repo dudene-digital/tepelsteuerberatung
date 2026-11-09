@@ -1,4 +1,6 @@
 import type { MetadataRoute } from "next";
+import { connection } from "next/server";
+import { veroeffentlichteArtikel } from "@/lib/ratgeber";
 import { site } from "@/lib/site";
 
 type Eintrag = {
@@ -25,6 +27,7 @@ const seiten: readonly Eintrag[] = [
   { path: "/so-arbeiten-wir", changeFrequency: "monthly", priority: 0.7 },
   { path: "/honorar", changeFrequency: "monthly", priority: 0.7 },
   { path: "/team", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/wissen", changeFrequency: "monthly", priority: 0.7 },
   { path: "/faq", changeFrequency: "monthly", priority: 0.6 },
   { path: "/kontakt", changeFrequency: "monthly", priority: 0.7 },
   { path: "/impressum", changeFrequency: "yearly", priority: 0.3 },
@@ -32,11 +35,29 @@ const seiten: readonly Eintrag[] = [
   { path: "/barrierefreiheit", changeFrequency: "yearly", priority: 0.3 },
 ];
 
-/* Kein lastModified: Das Build-Datum wäre bei jedem Deploy neu und sagt nichts über echte Änderungen. */
-export default function sitemap(): MetadataRoute.Sitemap {
-  return seiten.map(({ path, changeFrequency, priority }) => ({
+/* Statische Seiten ohne lastModified: Das Build-Datum wäre bei jedem Deploy neu und sagt nichts über echte Änderungen.
+   Ratgeber-Artikel kommen zur Laufzeit dazu, mit ihrem tatsächlichen Änderungsdatum. */
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  await connection();
+  const statisch: MetadataRoute.Sitemap = seiten.map(({ path, changeFrequency, priority }) => ({
     url: path === "/" ? site.url : `${site.url}${path}`,
     changeFrequency,
     priority,
   }));
+  try {
+    const artikel = await veroeffentlichteArtikel();
+    return [
+      ...statisch,
+      ...artikel.map((eintrag) => ({
+        url: `${site.url}/wissen/${eintrag.slug}`,
+        lastModified: eintrag.updatedAt,
+        changeFrequency: "yearly" as const,
+        priority: 0.6,
+      })),
+    ];
+  } catch (error) {
+    // Ist die Datenbank kurz nicht erreichbar, bleibt die Sitemap trotzdem gültig.
+    console.error("[SITEMAP] Artikel nicht abrufbar:", error instanceof Error ? error.message : error);
+    return statisch;
+  }
 }

@@ -19,6 +19,8 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 # Braucht die Seite NEXT_PUBLIC_-Variablen beim Build, hier ergänzen, z. B.:
 # ARG NEXT_PUBLIC_SITE_URL
+# Begrenzt den Speicher des Builds, damit er andere Apps auf dem Server nicht verdrängt.
+ENV NODE_OPTIONS=--max-old-space-size=3072
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
@@ -31,6 +33,9 @@ ENV NODE_ENV=production \
     PORT=3000 \
     HOSTNAME=0.0.0.0
 COPY --from=build --chown=node:node /app ./
+# Uploads aus dem CMS. In Coolify als persistentes Volume auf /app/media einhängen.
+RUN mkdir -p /app/media && chown node:node /app/media
+ENV PAYLOAD_MEDIA_DIR=/app/media
 USER node
 EXPOSE 3000
 CMD ["npm", "start"]

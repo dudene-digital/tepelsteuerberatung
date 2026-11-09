@@ -8,6 +8,7 @@ const kanzleiLinks = [
   { label: "So arbeiten wir", href: "/so-arbeiten-wir" },
   { label: "Honorar", href: "/honorar" },
   { label: "Über uns & Team", href: "/team" },
+  { label: "Ratgeber", href: "/wissen" },
   { label: "FAQ", href: "/faq" },
   { label: "Kontakt", href: "/kontakt" },
 ];

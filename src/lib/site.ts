@@ -55,7 +55,7 @@ export const fuerWenNav: NavChild[] = [
   { label: "Gründer", href: "/fuer-wen/gruender" },
 ];
 
-/* „Kanzlei“ und „Wissen“ führen bis Phase 2 direkt auf ihre einzige Seite. */
+/* „Kanzlei“ führt bis zur Karriere-Seite direkt auf /team. */
 export const mainNav: NavItem[] = [
   {
     label: "Leistungen",
@@ -76,7 +76,14 @@ export const mainNav: NavItem[] = [
     ],
   },
   { label: "Kanzlei", href: "/team" },
-  { label: "Wissen", href: "/faq" },
+  {
+    label: "Wissen",
+    href: "/wissen",
+    children: [
+      { label: "Ratgeber", href: "/wissen" },
+      { label: "FAQ", href: "/faq" },
+    ],
+  },
   { label: "Kontakt", href: "/kontakt" },
 ];
 
