@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
+import { RatgeberTeaser } from "@/components/Ratgeber";
 import { CtaBand, PageHero, QuietLink, RuleList, Section, SectionHeading, TwoColumns, type Crumb } from "@/components/ui";
 import { getZielgruppeSeite, punkteHeading, zielgruppenSeiten } from "@/content/zielgruppen";
+import { neuesteArtikel } from "@/lib/ratgeber";
 import { site } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
 
@@ -31,6 +34,9 @@ export default async function ZielgruppePage({ params }: Props) {
   const { slug } = await params;
   const zielgruppe = getZielgruppeSeite(slug);
   if (!zielgruppe) notFound();
+  // Artikel der passenden Kategorie, verbunden über den gleichen URL-Teil (Kategorie „GmbH“ → /fuer-wen/gmbh).
+  await connection();
+  const artikel = await neuesteArtikel({ kategorie: zielgruppe.slug });
 
   const breadcrumbs: Crumb[] = [
     { name: "Startseite", href: "/" },
@@ -73,6 +79,7 @@ export default async function ZielgruppePage({ params }: Props) {
           <RuleList items={zielgruppe.punkte} />
         </TwoColumns>
       </Section>
+      <RatgeberTeaser artikel={artikel} mitKategorie={false} />
       <CtaBand />
     </>
   );

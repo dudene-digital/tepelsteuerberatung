@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { connection } from "next/server";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
+import { ArtikelListe } from "@/components/Ratgeber";
 import { CtaBand, PageHero, Section, type Crumb } from "@/components/ui";
-import { formatDatum, veroeffentlichteArtikel } from "@/lib/ratgeber";
+import { veroeffentlichteArtikel } from "@/lib/ratgeber";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -35,22 +35,7 @@ export default async function RatgeberPage() {
             {artikel.length === 0 ? (
               <p className="text-lead text-muted">Hier erscheinen bald die ersten Artikel.</p>
             ) : (
-              <ul className="border-t border-rule">
-                {artikel.map((eintrag) => (
-                  <li key={eintrag.id} className="border-b border-rule">
-                    <Link href={`/wissen/${eintrag.slug}`} className="group block py-5 lg:py-7">
-                      <p className="text-base text-muted">
-                        {eintrag.kategorie.name}
-                        {eintrag.veroeffentlichtAm && <> · {formatDatum(eintrag.veroeffentlichtAm)}</>}
-                      </p>
-                      <h3 className="mt-1 font-display text-h2 text-balance decoration-1 underline-offset-[0.14em] group-hover:underline touch:underline">
-                        {eintrag.titel}
-                      </h3>
-                      <p className="mt-2 max-w-[46rem] text-muted text-pretty">{eintrag.teaser}</p>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <ArtikelListe artikel={artikel} />
             )}
           </div>
         </div>

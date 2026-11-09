@@ -15,6 +15,9 @@ if (!process.env.RESEND_API_KEY) {
   );
 }
 
+/* Auf der passwortgeschützten Testseite gehen Anfragen echt an Fabian, im Betreff aber erkennbar als Test. */
+const betreffZusatz = process.env.STAGING_BASIC_AUTH ? "[Testseite] " : "";
+
 /* Schlichtes Limit je IP. Der Zähler liegt im Speicher, das reicht für eine einzelne Instanz. */
 const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
@@ -115,7 +118,7 @@ export async function sendContactEmail(
       from: "Kontaktformular <no-reply@tepel-steuerberatung.de>",
       to: "fabian@tepel-steuerberatung.de",
       replyTo: email,
-      subject: `Kontaktanfrage: ${subject}`,
+      subject: `${betreffZusatz}Kontaktanfrage: ${subject}`,
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background: #f8fafc; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0;">
           <div style="background: #0c0c0b; padding: 32px 40px;">

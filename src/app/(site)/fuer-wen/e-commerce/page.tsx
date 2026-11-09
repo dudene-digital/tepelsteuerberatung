@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import Accordion from "@/components/Accordion";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
+import { RatgeberTeaser } from "@/components/Ratgeber";
 import {
   BookingLink,
   CtaBand,
@@ -14,6 +16,7 @@ import {
   type Crumb,
 } from "@/components/ui";
 import { ecommerce } from "@/content/zielgruppen";
+import { neuesteArtikel } from "@/lib/ratgeber";
 import { site } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
 
@@ -32,7 +35,11 @@ const breadcrumbs: Crumb[] = [
 /* Fragen ohne Antwort bleiben unsichtbar, bis Fabian sie liefert. */
 const faqItems = ecommerce.faq.fragen.flatMap(({ question, answer }) => (answer ? [{ question, answer }] : []));
 
-export default function EcommercePage() {
+export default async function EcommercePage() {
+  // Artikel der Kategorie „E-Commerce“ kommen zur Laufzeit aus dem CMS.
+  await connection();
+  const artikel = await neuesteArtikel({ kategorie: ecommerce.slug });
+
   return (
     <>
       <JsonLd
@@ -100,6 +107,8 @@ export default function EcommercePage() {
           </TwoColumns>
         </Section>
       )}
+
+      <RatgeberTeaser artikel={artikel} mitKategorie={false} />
 
       {/* Leerer text: Das Briefing gibt nur diesen einen Satz vor, der Standardtext von CtaBand passt nicht zum Check. */}
       <CtaBand title={ecommerce.cta} text="" />

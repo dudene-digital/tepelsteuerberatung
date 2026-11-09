@@ -1,10 +1,10 @@
 import type { CollectionConfig } from "payload";
-import { HeadingFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
+import { HeadingFeature, LinkFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 import { angemeldet, nurAdmin } from "./access";
 import { slugField } from "./slug";
 
 /* Funktionen, die zum Design der Seite nicht passen oder Überschriften außerhalb von H2/H3 erzeugen würden. */
-const ohne = new Set(["heading", "subscript", "superscript", "inlineCode", "checklist", "indent", "align", "relationship"]);
+const ohne = new Set(["heading", "link", "subscript", "superscript", "inlineCode", "checklist", "indent", "align", "relationship"]);
 
 export const Artikel: CollectionConfig = {
   slug: "artikel",
@@ -13,6 +13,11 @@ export const Artikel: CollectionConfig = {
     useAsTitle: "titel",
     defaultColumns: ["titel", "kategorie", "_status", "veroeffentlichtAm"],
     group: "Ratgeber",
+    // Adresse für den Knopf „Ansehen“. Mit ?vorschau=<ID> zeigt die Seite angemeldeten Nutzern auch Entwürfe.
+    preview: (doc) =>
+      typeof doc.slug === "string" && doc.slug && doc.id ? `/wissen/${doc.slug}?vorschau=${String(doc.id)}` : null,
+    // Payloads Vorschau-Knopf ist nur ein Symbol; dieser trägt eine Beschriftung.
+    components: { edit: { PreviewButton: "/components/admin/ArtikelAnsehen#ArtikelAnsehen" } },
   },
   defaultSort: "-veroeffentlichtAm",
   versions: { drafts: true, maxPerDoc: 20 },
@@ -43,6 +48,8 @@ export const Artikel: CollectionConfig = {
         features: ({ defaultFeatures }) => [
           ...defaultFeatures.filter((feature) => !ohne.has(feature.key)),
           HeadingFeature({ enabledHeadingSizes: ["h2", "h3"] }),
+          // Interne Links nur auf andere Artikel; die Website setzt daraus /wissen/<slug>.
+          LinkFeature({ enabledCollections: ["artikel"] }),
         ],
       }),
     },

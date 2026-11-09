@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import SiteShell, { Statistik } from "@/components/SiteShell";
 import { gloock, schibsted } from "@/lib/fonts";
 import { baseOpenGraph } from "@/lib/seo";
 
@@ -63,21 +61,10 @@ export default function RootLayout({
       className={`${gloock.variable} ${schibsted.variable} antialiased scroll-smooth`}
     >
       <head>
-        <Script
-          defer
-          data-domain="tepel-steuerberatung.de"
-          src="https://analytics.tepel-steuerberatung.de/js/script.js"
-        />
+        <Statistik />
       </head>
       <body suppressHydrationWarning className="flex flex-col">
-        <a href="#main-content" className="skip-to-content">
-          Zum Inhalt springen
-        </a>
-        <Navbar />
-        <main id="main-content" className="frame flex-1">
-          {children}
-        </main>
-        <Footer />
+        <SiteShell>{children}</SiteShell>
       </body>
     </html>
   );

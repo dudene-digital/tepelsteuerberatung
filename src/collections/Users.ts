@@ -4,13 +4,18 @@ import { adminOderSelbst, nurAdmin, nurAdminFeld } from "./access";
 export const Users: CollectionConfig = {
   slug: "users",
   labels: { singular: "Benutzer", plural: "Benutzer" },
-  auth: true,
+  auth: {
+    // Über HTTPS nur sichere Cookies. Lokal (http) bleibt das Cookie unsicher, sonst klappt die Anmeldung nicht.
+    cookies: { secure: Boolean(process.env.SERVER_URL?.startsWith("https://")), sameSite: "Lax" },
+  },
   admin: { useAsTitle: "name", defaultColumns: ["name", "email", "rolle"], group: "Verwaltung" },
   access: {
     read: adminOderSelbst,
     create: nurAdmin,
     update: adminOderSelbst,
     delete: nurAdmin,
+    // Gesperrte Konten (zu viele Fehlversuche) entsperrt nur ein Admin.
+    unlock: nurAdmin,
   },
   fields: [
     { name: "name", type: "text", label: "Name", required: true },

@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { connection } from "next/server";
 import HashRedirect from "@/components/HashRedirect";
 import JsonLd from "@/components/JsonLd";
+import { RatgeberTeaser } from "@/components/Ratgeber";
 import { BookingLink, CtaBand, LeadIndex, PhotoSplit, QuietLink, Section, SectionHeading, Statements, TwoColumns } from "@/components/ui";
 import { bewertungen, bewertungenHinweis, bewertungenStand } from "@/content/bewertungen";
 import { fabianImBuero, fabianPortrait } from "@/content/kanzlei";
 import { zielgruppen } from "@/content/zielgruppen";
+import { neuesteArtikel } from "@/lib/ratgeber";
 import { leistungenNav, site } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
 
@@ -97,8 +100,11 @@ const kanzleiJsonLd = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
   const [schwerpunkt, ...weitere] = zielgruppen;
+  // Die neuesten Ratgeber-Artikel kommen zur Laufzeit aus dem CMS, nicht aus dem Build.
+  await connection();
+  const artikel = await neuesteArtikel();
 
   return (
     <>
@@ -227,6 +233,8 @@ export default function Home() {
           </div>
         </TwoColumns>
       </Section>
+
+      <RatgeberTeaser artikel={artikel} />
 
       <CtaBand />
     </>

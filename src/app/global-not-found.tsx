@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./(site)/globals.css";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+import SiteShell, { Statistik } from "@/components/SiteShell";
 import { gloock, schibsted } from "@/lib/fonts";
 import NotFound from "./(site)/not-found";
 
@@ -12,15 +11,20 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#0c0c0b",
+};
+
 export default function GlobalNotFound() {
   return (
-    <html lang="de" className={`${gloock.variable} ${schibsted.variable} antialiased`}>
+    <html lang="de" className={`${gloock.variable} ${schibsted.variable} antialiased scroll-smooth`}>
+      <head>
+        <Statistik />
+      </head>
       <body className="flex flex-col">
-        <Navbar />
-        <main id="main-content" className="frame flex-1">
+        <SiteShell>
           <NotFound />
-        </main>
-        <Footer />
+        </SiteShell>
       </body>
     </html>
   );

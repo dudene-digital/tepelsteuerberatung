@@ -218,7 +218,7 @@ export interface Kategorien {
   id: number;
   name: string;
   /**
-   * Wird aus dem Titel gebildet. Nach dem Veröffentlichen nicht mehr ändern, sonst gehen Links ins Leere.
+   * Verbindet die Kategorie mit ihrer Branchenseite, „gmbh“ etwa mit /fuer-wen/gmbh. Nicht ändern, sonst fehlen die Artikel dort.
    */
   slug?: string | null;
   updatedAt: string;
