@@ -17,7 +17,11 @@ export const viewport: Viewport = {
 
 export default function GlobalNotFound() {
   return (
-    <html lang="de" className={`${gloock.variable} ${schibsted.variable} antialiased scroll-smooth`}>
+    <html
+      lang="de"
+      data-scroll-behavior="smooth"
+      className={`${gloock.variable} ${schibsted.variable} antialiased scroll-smooth`}
+    >
       <head>
         <Statistik />
       </head>

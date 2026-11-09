@@ -56,8 +56,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    // data-scroll-behavior: Seit Next.js 16 schaltet Next das weiche Scrollen beim Seitenwechsel nur damit ab.
+    // Ohne das Attribut blieb eine neue Seite auf der Scrollposition der alten stehen.
     <html
       lang="de"
+      data-scroll-behavior="smooth"
       className={`${gloock.variable} ${schibsted.variable} antialiased scroll-smooth`}
     >
       <head>
