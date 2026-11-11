@@ -8,9 +8,9 @@ export const metadata: Metadata = {
 /* Gilt auch für Adressen, die es nie gab. Next setzt dafür selbst noindex und den Status 404. */
 export default function NotFound() {
   return (
-    <section className="wrap pt-6 pb-[clamp(3.5rem,2rem+5vw,9rem)] md:pt-10">
+    <section className="wrap pt-6 pb-[clamp(3rem,2rem+3.5vw,6rem)] md:pt-10">
       <h1 className="font-display text-title text-balance">Diese Seite gibt es nicht.</h1>
-      <div className="grid-12 mt-6 md:mt-10">
+      <div className="grid-12 mt-5 md:mt-7">
         <div className="col-content min-w-0">
           <p className="max-w-[34em] text-lead text-pretty">
             Vielleicht hat sich die Adresse geändert. Von hier aus geht es weiter:

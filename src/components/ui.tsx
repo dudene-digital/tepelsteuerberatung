@@ -132,10 +132,10 @@ export function PageHero({
   return (
     <section className="wrap pt-1.5">
       {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
-      {label && <p className="mt-6 font-medium md:mt-10">{label}</p>}
-      <h1 className={`font-display text-title text-balance ${label ? "mt-2" : "mt-6 md:mt-10"}`}>{tidyTitle(title)}</h1>
+      {label && <p className="mt-6 font-medium md:mt-8">{label}</p>}
+      <h1 className={`font-display text-title text-balance ${label ? "mt-2" : "mt-6 md:mt-8"}`}>{tidyTitle(title)}</h1>
       {(intro || children) && (
-        <div className="grid-12 mt-6 md:mt-10">
+        <div className="grid-12 mt-5 md:mt-7">
           <div className="col-content min-w-0">
             {intro && <p className="max-w-[34em] text-lead text-pretty">{intro}</p>}
             {children && <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3 md:mt-8">{children}</div>}
@@ -151,8 +151,9 @@ export function RuleList({ items }: { items: readonly string[] }) {
   return (
     <ul className="border-t border-rule">
       {items.map((item) => (
-        <li key={item} className="max-w-[46rem] border-b border-rule py-4 text-pretty lg:max-w-none lg:py-5">
-          {item}
+        <li key={item} className="border-b border-rule py-4 lg:py-5">
+          {/* Die Linie läuft über die ganze Spalte, der Text bleibt in lesbarer Zeilenlänge. */}
+          <span className="block max-w-[40rem] text-pretty">{item}</span>
         </li>
       ))}
     </ul>
@@ -211,7 +212,7 @@ export function EntryList({
   );
 }
 
-/** Der Schwerpunkt groß, von Rand zu Rand, die übrigen Einträge als Inhaltsverzeichnis darunter. */
+/** Der Schwerpunkt groß vorneweg, die übrigen Einträge als Inhaltsverzeichnis darunter. */
 export function LeadIndex({
   lead,
   items,
@@ -224,13 +225,11 @@ export function LeadIndex({
   const Heading = `h${headingLevel}` as const;
   return (
     <div className="grid-12">
-      <Link href={lead.href} className="group col-sub col-full pb-8 max-lg:block lg:pb-[clamp(2.75rem,5vw,6rem)]">
-        <div className="fit-box col-full">
-          <Heading className="fit-lead decoration-2 underline-offset-[0.08em] group-hover:underline touch:underline">
-            {lead.title}
-          </Heading>
-        </div>
-        <p className="mt-3 max-w-[27em] text-lead text-pretty lg:col-span-9 lg:col-start-4 lg:mt-5">{lead.text}</p>
+      <Link href={lead.href} className="group col-sub col-full pb-8 max-lg:block lg:pb-[clamp(2rem,3.5vw,4rem)]">
+        <Heading className="col-full font-display text-focus text-balance decoration-2 underline-offset-[0.1em] group-hover:underline touch:underline">
+          {lead.title}
+        </Heading>
+        <p className="mt-3 max-w-[27em] text-lead text-pretty lg:col-span-9 lg:col-start-4 lg:mt-4">{lead.text}</p>
       </Link>
       <div className="col-content">
         <EntryList items={items} headingLevel={headingLevel} />
@@ -270,7 +269,7 @@ export function Steps({
   );
 }
 
-/** Lesetext im Großformat: Das Stichwort läuft in die Zeile ein. */
+/** Lesetext eine Stufe über dem Fließtext: Das Stichwort läuft in die Zeile ein. */
 export function Statements({
   items,
   headingLevel = 3,
@@ -280,7 +279,7 @@ export function Statements({
 }) {
   const Heading = `h${headingLevel}` as const;
   return (
-    <div className="text-statement text-muted">
+    <div className="max-w-[27em] text-statement text-muted">
       {items.map((item, index) => (
         <div key={item.title} className={index > 0 ? "mt-[0.85em]" : ""}>
           <Heading className="inline font-display text-ink">{item.title}</Heading>{" "}
@@ -362,9 +361,9 @@ export function CtaBand({
   href?: string;
 }) {
   return (
-    <section className="wrap section pb-[clamp(3.5rem,2rem+5vw,9rem)]">
+    <section className="wrap section pb-[clamp(3rem,2rem+3.5vw,6rem)]">
       <h2 className="font-display text-closing text-balance">{tidyTitle(title)}</h2>
-      <div className="grid-12 mt-8 md:mt-12">
+      <div className="grid-12 mt-6 md:mt-8">
         <div className="col-content flex flex-col items-start gap-x-8 gap-y-4 md:flex-row md:flex-wrap md:items-center">
           {text && <p className="text-lead">{text}</p>}
           {href ? <PrimaryLink href={href}>{label}</PrimaryLink> : <BookingLink>{label}</BookingLink>}

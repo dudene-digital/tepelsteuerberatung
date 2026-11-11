@@ -134,7 +134,7 @@ export default async function Home() {
             <span className="block">und Vermieter </span>
             <span className="block">in Wiesbaden</span>
           </h1>
-          <p className="mt-3 max-w-[27em] text-[clamp(1.0625rem,1.4vw,1.5rem)] leading-[1.4] text-pretty lg:mt-5">
+          <p className="mt-3 max-w-[27em] text-[clamp(1.125rem,0.125rem+1.25vw,1.25rem)] leading-[1.4] text-pretty lg:mt-5">
             Digital im Alltag, persönlich, wenn es darauf ankommt. Wir kümmern uns um Buchhaltung, Lohn, Abschluss und
             Steuern – du um dein Business.
           </p>
@@ -161,7 +161,7 @@ export default async function Home() {
         </ul>
       </div>
 
-      {/* Zielgruppen: Der Schwerpunkt so groß wie der Name im Kopf, der Rest als Inhaltsverzeichnis. */}
+      {/* Zielgruppen: Der Schwerpunkt groß vorneweg, der Rest als Inhaltsverzeichnis. */}
       <Section labelledBy="zielgruppen-heading">
         <div className="mb-2 lg:mb-3">
           <SectionHeading id="zielgruppen-heading">Für wen wir arbeiten</SectionHeading>
@@ -182,11 +182,10 @@ export default async function Home() {
 
       {/* Team-Teaser: das einzige Farbbild der Seite */}
       <PhotoSplit photo={fabianImBuero} imageClassName="object-right" labelledBy="team-heading">
-        <SectionHeading id="team-heading">
-          Seit September 2026 sind wir zu viert: Fabian Tepel und drei erfahrene Kolleginnen.
-        </SectionHeading>
+        <SectionHeading id="team-heading">Seit September 2026 sind wir zu viert.</SectionHeading>
         <p className="mt-3 text-muted text-pretty">
-          Für dich heißt das: Inhaber als Ansprechpartner, dazu Kapazität und Vertretung im Urlaub.
+          Fabian Tepel und drei erfahrene Kolleginnen. Für dich heißt das: Inhaber als Ansprechpartner, dazu Kapazität
+          und Vertretung im Urlaub.
         </p>
         <div className="mt-1">
           <QuietLink href="/team">Team kennenlernen</QuietLink>

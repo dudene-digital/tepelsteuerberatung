@@ -137,7 +137,7 @@ export default async function ArtikelPage(props: Props) {
                 className="mb-8 h-auto w-full"
               />
             )}
-            <RichText data={artikel.inhalt} converters={converters(vorschau)} className="rich-text max-w-[42rem]" />
+            <RichText data={artikel.inhalt} converters={converters(vorschau)} className="rich-text max-w-[38rem]" />
           </div>
         </div>
       </Section>

@@ -177,7 +177,8 @@ export const zielgruppenSeiten: readonly ZielgruppeSeite[] = [
       titel: "Immobilien & Vermieter",
       teaser: "Anlage V, Grundstücksgemeinschaften, Feststellungserklärungen, AfA-Optimierung.",
     },
-    h1: "Steuerberatung für Vermieter und Grundstücksgemeinschaften",
+    // Weiche Trennstelle: Am Handy ist das lange Wort breiter als der Bildschirm.
+    h1: "Steuerberatung für Vermieter und Grundstücks\u00adgemeinschaften",
     intro:
       "Ob eine Wohnung oder ein ganzes Portfolio, ob allein oder in der Erbengemeinschaft: Wir holen aus deinen Immobilien steuerlich heraus, was drin ist.",
     seoTitle: "Steuerberatung für Vermieter und Grundstücksgemeinschaften",
