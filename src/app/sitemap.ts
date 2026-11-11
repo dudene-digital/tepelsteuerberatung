@@ -18,6 +18,7 @@ const seiten: readonly Eintrag[] = [
   { path: "/leistungen/jahresabschluss", changeFrequency: "monthly", priority: 0.8 },
   { path: "/leistungen/gruendung", changeFrequency: "monthly", priority: 0.8 },
   { path: "/leistungen/steuergestaltung", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/cfo-as-a-service", changeFrequency: "monthly", priority: 0.9 },
   { path: "/fuer-wen", changeFrequency: "monthly", priority: 0.8 },
   { path: "/fuer-wen/e-commerce", changeFrequency: "monthly", priority: 0.9 },
   { path: "/fuer-wen/gmbh", changeFrequency: "monthly", priority: 0.8 },

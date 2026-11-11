@@ -37,6 +37,8 @@ export interface NavItem {
   label: string;
   href: string;
   children?: NavChild[];
+  /** Schwerpunktthema: steht vorn und ist als umrandeter Button abgesetzt. */
+  highlight?: boolean;
 }
 
 export const leistungenNav: NavChild[] = [
@@ -45,6 +47,7 @@ export const leistungenNav: NavChild[] = [
   { label: "Jahresabschluss & Steuererklärungen", href: "/leistungen/jahresabschluss" },
   { label: "Gründung & Rechtsformwahl", href: "/leistungen/gruendung" },
   { label: "Steuergestaltung & Beratung", href: "/leistungen/steuergestaltung" },
+  { label: "CFO as a Service", href: "/cfo-as-a-service" },
 ];
 
 export const fuerWenNav: NavChild[] = [
@@ -55,8 +58,12 @@ export const fuerWenNav: NavChild[] = [
   { label: "Gründer", href: "/fuer-wen/gruender" },
 ];
 
-/* „Kanzlei“ führt bis zur Karriere-Seite direkt auf /team. */
+/* Reihenfolge laut Briefing „CFO as a Service“: die beiden Schwerpunkte vorn, dann Leistungen bis Kontakt.
+   „Wissen“ nennt das Briefing dort nicht, bleibt aber, weil hier der Ratgeber liegt.
+   „Kanzlei“ führt bis zur Karriere-Seite direkt auf /team. */
 export const mainNav: NavItem[] = [
+  { label: "E-Commerce", href: "/fuer-wen/e-commerce", highlight: true },
+  { label: "CFO as a Service", href: "/cfo-as-a-service", highlight: true },
   {
     label: "Leistungen",
     href: "/leistungen",

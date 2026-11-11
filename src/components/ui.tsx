@@ -334,6 +334,19 @@ export function PhotoSplit({
   );
 }
 
+/** Hinweis auf CFO as a Service. Der einzige gerahmte Block der Seiten, damit er sich vom Raster abhebt. */
+export function CfoHinweis({ text }: { text: string }) {
+  return (
+    <aside aria-label="Hinweis auf CFO as a Service" className="border border-ink p-5 md:p-8">
+      <p className="font-medium">Neu: CFO as a Service</p>
+      <p className="mt-2 max-w-[24em] font-display text-h2 text-balance">{text}</p>
+      <div className="mt-3">
+        <QuietLink href="/cfo-as-a-service">Mehr zu CFO as a Service</QuietLink>
+      </div>
+    </aside>
+  );
+}
+
 /** Beschriftete Zeilen für Kontaktdaten. */
 export function InfoRows({ rows }: { rows: readonly { label: string; content: ReactNode }[] }) {
   return (

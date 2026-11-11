@@ -3,7 +3,17 @@ import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import { RatgeberTeaser } from "@/components/Ratgeber";
-import { CtaBand, PageHero, QuietLink, RuleList, Section, SectionHeading, TwoColumns, type Crumb } from "@/components/ui";
+import {
+  CfoHinweis,
+  CtaBand,
+  PageHero,
+  QuietLink,
+  RuleList,
+  Section,
+  SectionHeading,
+  TwoColumns,
+  type Crumb,
+} from "@/components/ui";
 import { getZielgruppeSeite, punkteHeading, zielgruppenSeiten } from "@/content/zielgruppen";
 import { neuesteArtikel } from "@/lib/ratgeber";
 import { site } from "@/lib/site";
@@ -76,7 +86,14 @@ export default async function ZielgruppePage({ params }: Props) {
             </>
           }
         >
-          <RuleList items={zielgruppe.punkte} />
+          <div>
+            <RuleList items={zielgruppe.punkte} />
+            {zielgruppe.cfoHinweis && (
+              <div className="mt-10 lg:mt-14">
+                <CfoHinweis text={zielgruppe.cfoHinweis} />
+              </div>
+            )}
+          </div>
         </TwoColumns>
       </Section>
       <RatgeberTeaser artikel={artikel} mitKategorie={false} />

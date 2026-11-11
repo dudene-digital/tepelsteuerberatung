@@ -45,8 +45,9 @@ export default function Navbar() {
   }, [isOpen]);
 
   // Wird das Fenster breit genug für die Desktop-Navigation, darf das Menü die Seite nicht gesperrt lassen.
+  // Mit den beiden Schwerpunkt-Buttons passt die Leiste erst ab 80rem in eine Zeile.
   useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 64rem)");
+    const desktop = window.matchMedia("(min-width: 80rem)");
     const close = (e: MediaQueryListEvent) => {
       if (e.matches) setIsOpen(false);
     };
@@ -144,16 +145,36 @@ export default function Navbar() {
               className="flex min-h-12 min-w-0 shrink-0 items-baseline gap-x-2 pt-3"
             >
               {showName && <span className="font-display text-[1.375rem] leading-none whitespace-nowrap">Fabian Tepel</span>}{" "}
-              <span className={`text-base leading-none font-medium whitespace-nowrap ${showName ? "max-[21rem]:sr-only" : ""}`}>
+              {/* Mit „Wissen“ und den beiden Schwerpunkt-Buttons ist die Leiste erst ab 86rem breit genug für den ganzen Namen.
+                  Darunter bleibt „Steuerberatung“ nur für Screenreader stehen. */}
+              <span
+                className={`text-base leading-none font-medium whitespace-nowrap ${
+                  showName ? "max-[21rem]:sr-only xl:max-[86rem]:sr-only" : ""
+                }`}
+              >
                 Steuerberatung
               </span>
             </Link>
 
             {/* Desktop */}
-            <div ref={desktopRef} className="hidden items-center gap-x-[clamp(1rem,1.8vw,2.25rem)] lg:flex">
+            <div ref={desktopRef} className="hidden items-center gap-x-[clamp(1rem,1.35vw,2.25rem)] xl:flex">
               {mainNav.map((item) => {
                 const childHrefs = item.children?.map((c) => c.href) ?? [];
                 const active = isActive(item.href, childHrefs);
+                if (item.highlight) {
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      aria-current={pathname === item.href ? "page" : undefined}
+                      className={`btn btn-small btn-outline whitespace-nowrap decoration-1 underline-offset-[0.3em] ${
+                        active ? "underline" : ""
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
                 if (!item.children) {
                   return (
                     <Link
@@ -220,7 +241,7 @@ export default function Navbar() {
               aria-expanded={isOpen}
               aria-controls="mobile-menu"
               onClick={() => setIsOpen(true)}
-              className="-mr-2 flex min-h-12 cursor-pointer items-center px-2 text-base font-medium underline decoration-1 underline-offset-[0.3em] lg:hidden"
+              className="-mr-2 flex min-h-12 cursor-pointer items-center px-2 text-base font-medium underline decoration-1 underline-offset-[0.3em] xl:hidden"
             >
               Menü
             </button>
@@ -236,7 +257,7 @@ export default function Navbar() {
         aria-modal="true"
         aria-label="Navigation"
         hidden={!isOpen}
-        className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain bg-bg lg:hidden"
+        className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain bg-bg xl:hidden"
       >
         <div className="wrap flex min-h-full flex-col pb-8">
           <div className="flex min-h-12 items-center justify-between border-b border-ink">
@@ -250,8 +271,28 @@ export default function Navbar() {
             </button>
           </div>
 
-          <ul className="mt-2">
-            {mainNav.map((item) => {
+          {/* Die Schwerpunkte stehen als umrandete Buttons über der Liste, wie in der Leiste am Desktop. */}
+          <ul className="mt-5 grid grid-cols-1 gap-2 min-[22.5rem]:grid-cols-2">
+            {mainNav
+              .filter((item) => item.highlight)
+              .map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={pathname === item.href ? "page" : undefined}
+                    onClick={() => setIsOpen(false)}
+                    className={`btn btn-outline w-full px-3 whitespace-nowrap decoration-1 underline-offset-[0.3em] ${
+                      pathname === item.href ? "underline" : ""
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+          </ul>
+
+          <ul className="mt-3">
+            {mainNav.filter((item) => !item.highlight).map((item) => {
               const rowClass = "flex min-h-14 w-full items-center justify-between font-display text-[1.75rem] leading-tight text-left";
               if (!item.children) {
                 return (

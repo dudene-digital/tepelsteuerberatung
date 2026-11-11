@@ -131,10 +131,21 @@ body {
     padding: 0.25rem 0.9rem;
   }
 
+  /* Umrandet statt gefüllt: hebt Schwerpunkte hervor, ohne mit dem Erstgespräch-Button zu konkurrieren. */
+  .btn-outline {
+    background: transparent;
+    color: var(--color-ink);
+  }
+
   @media (hover: hover) {
     .btn:hover {
       background: transparent;
       color: var(--color-ink);
+    }
+
+    .btn-outline:hover {
+      background: var(--color-ink);
+      color: var(--color-bg);
     }
 
     .quiet-link:hover,
@@ -146,6 +157,11 @@ body {
   .btn:active {
     background: transparent;
     color: var(--color-ink);
+  }
+
+  .btn-outline:active {
+    background: var(--color-ink);
+    color: var(--color-bg);
   }
 
   .quiet-link {
@@ -358,7 +374,8 @@ body {
 /* Lange deutsche Wörter brechen in schmalen Spalten sonst weit vor dem Rand um. */
 @media (max-width: 47.99rem) {
   main p,
-  main li {
+  main li,
+  main td {
     hyphens: auto;
     hyphenate-limit-chars: 10 4 4;
   }

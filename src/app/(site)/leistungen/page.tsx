@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import { CtaBand, EntryList, PageHero, Section, type Crumb } from "@/components/ui";
+import { cfo } from "@/content/cfo";
 import { leistungen, leistungenUebersicht } from "@/content/leistungen";
 import { pageMeta } from "@/lib/seo";
 
@@ -25,11 +26,15 @@ export default function LeistungenPage() {
           <div className="col-content">
             <EntryList
               headingLevel={2}
-              items={leistungen.map((leistung) => ({
-                title: leistung.h1,
-                text: leistung.intro,
-                href: `/leistungen/${leistung.slug}`,
-              }))}
+              items={[
+                ...leistungen.map((leistung) => ({
+                  title: leistung.h1,
+                  text: leistung.intro,
+                  href: `/leistungen/${leistung.slug}`,
+                })),
+                /* Sechste Kachel laut Briefing „CFO as a Service“. Die Seite liegt außerhalb von /leistungen. */
+                { title: cfo.h1, text: cfo.intro, href: cfo.href },
+              ]}
             />
           </div>
         </div>

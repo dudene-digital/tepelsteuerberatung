@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { connection } from "next/server";
 import HashRedirect from "@/components/HashRedirect";
 import JsonLd from "@/components/JsonLd";
 import { RatgeberTeaser } from "@/components/Ratgeber";
 import { BookingLink, CtaBand, LeadIndex, PhotoSplit, QuietLink, Section, SectionHeading, Statements, TwoColumns } from "@/components/ui";
 import { bewertungen, bewertungenHinweis, bewertungenStand } from "@/content/bewertungen";
+import { cfo } from "@/content/cfo";
 import { fabianImBuero, fabianPortrait } from "@/content/kanzlei";
-import { zielgruppen } from "@/content/zielgruppen";
+import { ecommerce, zielgruppen } from "@/content/zielgruppen";
 import { neuesteArtikel } from "@/lib/ratgeber";
 import { leistungenNav, site } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
@@ -34,6 +36,12 @@ const versprechen = [
     title: "Digital, aber nicht anonym",
     text: "Belege per App, Auswertungen online, Besprechung per Video oder bei uns im Büro.",
   },
+];
+
+/* Doppelkachel aus dem Briefing „CFO as a Service“. Die kleinen Zeilen über den Titeln stehen nicht im Briefing. */
+const schwerpunkte = [
+  { label: "Schwerpunkt", titel: "E-Commerce", text: ecommerce.kachel.teaser, href: ecommerce.href },
+  { label: "Neu", titel: cfo.navLabel, text: cfo.startseiteKachel, href: cfo.href },
 ];
 
 const kanzleiJsonLd = {
@@ -127,7 +135,7 @@ export default async function Home() {
         </div>
 
         <div className="wrap relative pt-4 pb-8 md:ml-[46%] md:py-[clamp(1.25rem,2.2vw,2.75rem)] md:pl-0">
-          <h1 className="font-display text-[clamp(1.75rem,9vw,3.5rem)] leading-[1.04] tracking-[-0.012em] md:text-[max(2rem,min(4.3vw,5.2rem,calc((100svh-29.46vw-9.875rem)/5.2)))]">
+          <h1 className="font-display text-[clamp(1.75rem,9vw,3.5rem)] leading-[1.04] tracking-[-0.012em] md:text-[max(2rem,min(4.3vw,5.2rem,calc((100svh-29.46vw-11.875rem)/5.2)))]">
             <span className="block">Steuerberatung </span>
             <span className="block">für Online-Händler, </span>
             <span className="block">Unternehmer </span>
@@ -142,6 +150,12 @@ export default async function Home() {
             <BookingLink>Kostenloses Erstgespräch buchen</BookingLink>
             <QuietLink href="/so-arbeiten-wir">So arbeiten wir</QuietLink>
           </div>
+          {/* Der Kopf füllt am Desktop genau den Bildschirm. Die 11.875rem in der H1-Größe enthalten diese Zeile mit 2rem. */}
+          <p>
+            <Link href={cfo.href} className="quiet-link lg:min-h-8">
+              {cfo.startseiteLink}
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -170,6 +184,26 @@ export default async function Home() {
           lead={{ title: schwerpunkt.kachel.titel, text: schwerpunkt.kachel.teaser, href: schwerpunkt.href }}
           items={weitere.map((gruppe) => ({ title: gruppe.kachel.titel, text: gruppe.kachel.teaser, href: gruppe.href }))}
         />
+      </Section>
+
+      {/* Schwerpunkte: zwei gleich große Kacheln nebeneinander, der ganze Block ist jeweils der Link. */}
+      <Section labelledBy="schwerpunkte-heading">
+        <h2 id="schwerpunkte-heading" className="sr-only">
+          Unsere Schwerpunkte
+        </h2>
+        <ul className="grid gap-x-[var(--col-gap)] gap-y-10 md:grid-cols-2">
+          {schwerpunkte.map((kachel) => (
+            <li key={kachel.href}>
+              <Link href={kachel.href} className="group block h-full border-t border-ink pt-4 pb-2 lg:pt-5">
+                <p className="font-medium">{kachel.label}</p>
+                <h3 className="mt-2 font-display text-focus decoration-2 underline-offset-[0.1em] group-hover:underline touch:underline">
+                  {kachel.titel}
+                </h3>
+                <p className="mt-3 max-w-[27em] text-lead text-muted text-pretty lg:mt-4">{kachel.text}</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </Section>
 
       {/* Drei Versprechen */}

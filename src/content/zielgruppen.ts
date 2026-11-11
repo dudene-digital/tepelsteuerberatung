@@ -9,6 +9,8 @@ export interface Zielgruppe {
   intro: string;
   /** Das Briefing nennt nur für E-Commerce einen SEO-Title. Sonst: Anfang der H1. */
   seoTitle: string;
+  /** Text der Hinweisbox auf CFO as a Service. Das Briefing verlangt die Box, gibt aber keinen Text vor. */
+  cfoHinweis?: string;
 }
 
 export interface ZielgruppeSeite extends Zielgruppe {
@@ -55,6 +57,8 @@ export const ecommerce: Ecommerce = {
   intro:
     "Dein Shop verkauft in ganz Europa, deine Buchhaltung soll Schritt halten. Wir verstehen Marktplätze, Zahlungsdienstleister und Umsatzsteuer im Binnenmarkt – und verbinden deine Tools direkt mit der Buchhaltung.",
   seoTitle: "Steuerberater für Online-Händler, Amazon & Shopify | Tepel Steuerberatung",
+  cfoHinweis:
+    "Wissen, welcher Kanal wirklich Geld verdient: Deckungsbeiträge inklusive Retouren, Gebühren und Werbekosten.",
   badge: "E-Commerce & Online-Handel",
   heroCta: "Kostenloser Umsatzsteuer-Check",
   themen: {
@@ -141,6 +145,8 @@ export const zielgruppenSeiten: readonly ZielgruppeSeite[] = [
     intro:
       "Bei der GmbH hängen Unternehmen und Privatperson steuerlich eng zusammen. Wir betreuen beides aus einer Hand – von der laufenden Buchhaltung bis zur optimalen Gewinnverwendung.",
     seoTitle: "Steuerberatung für inhabergeführte GmbHs",
+    cfoHinweis:
+      "Deine GmbH nach vorn steuern: Liquidität, Planung und Bankgespräche aus derselben Hand wie Buchhaltung und Abschluss.",
     punkte: [
       "Laufende Buchhaltung, Lohn inkl. Geschäftsführer, Jahresabschluss, E-Bilanz, Offenlegung",
       "Gehalt oder Ausschüttung, Vermeidung verdeckter Gewinnausschüttungen",
