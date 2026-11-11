@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import { CtaBand, PageHero, QuietLink, RuleList, Section, SectionHeading, TwoColumns, type Crumb } from "@/components/ui";
@@ -61,6 +62,14 @@ export default async function LeistungPage({ params }: Props) {
         <TwoColumns heading={<SectionHeading id="enthalten-heading">Das ist enthalten</SectionHeading>}>
           <div>
             <RuleList items={leistung.enthalten} />
+            {leistung.weiter && (
+              <p className="mt-6 max-w-[34em] text-lead text-pretty lg:mt-8">
+                {leistung.weiter.frage}{" "}
+                <Link href={leistung.weiter.href} className="inline-link whitespace-nowrap">
+                  {leistung.weiter.label}
+                </Link>
+              </p>
+            )}
             <div className="mt-4">
               <QuietLink href="/so-arbeiten-wir">So arbeiten wir</QuietLink>
             </div>

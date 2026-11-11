@@ -13,6 +13,8 @@ export interface Leistung {
   h1: string;
   intro: string;
   enthalten: readonly string[];
+  /** Frage mit Link auf eine verwandte Seite, unter der Liste. */
+  weiter?: { frage: string; label: string; href: string };
 }
 
 export const leistungen: readonly Leistung[] = [
@@ -87,6 +89,12 @@ export const leistungen: readonly Leistung[] = [
       "Unterjährige Steuerprognosen und Kennzahlen-Reporting",
       "Begleitung von Betriebsprüfungen",
     ],
+    /* Aus dem Briefing „CFO as a Service“. */
+    weiter: {
+      frage: "Du willst laufend steuern statt einmal im Jahr?",
+      label: "CFO as a Service",
+      href: "/cfo-as-a-service",
+    },
   },
 ];
 
@@ -95,7 +103,7 @@ export const leistungenUebersicht = {
   title: "Leistungen",
   h1: "Unsere Leistungen",
   description:
-    "Unsere Leistungen im Überblick: Finanzbuchhaltung & UStVA, Lohn & Gehalt, Jahresabschluss & Steuererklärungen, Gründung & Rechtsformwahl, Steuergestaltung & Beratung.",
+    "Unsere Leistungen im Überblick: Finanzbuchhaltung & UStVA, Lohn & Gehalt, Jahresabschluss & Steuererklärungen, Gründung & Rechtsformwahl, Steuergestaltung & Beratung, CFO as a Service.",
 } as const;
 
 export function getLeistung(slug: string): Leistung | undefined {

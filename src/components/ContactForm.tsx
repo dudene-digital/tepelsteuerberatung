@@ -10,6 +10,7 @@ const ANLIEGEN_OPTIONS = [
   { value: "Jahresabschluss & Steuererklärung", label: "Jahresabschluss & Steuererklärung" },
   { value: "Gründung", label: "Gründung" },
   { value: "Steuergestaltung & Beratung", label: "Steuergestaltung & Beratung" },
+  { value: "CFO as a Service", label: "CFO as a Service" },
   { value: "E-Commerce", label: "E-Commerce" },
   { value: "Immobilien/Vermietung", label: "Immobilien/Vermietung" },
   { value: "Sonstiges", label: "Sonstiges" },

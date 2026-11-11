@@ -3,6 +3,7 @@ import Accordion from "@/components/Accordion";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import {
   BookingLink,
+  CfoHinweis,
   CtaBand,
   EntryList,
   PageHero,
@@ -59,7 +60,15 @@ export default function EcommercePage() {
 
       <Section labelledBy="themen-heading">
         <TwoColumns heading={<SectionHeading id="themen-heading">{ecommerce.themen.heading}</SectionHeading>}>
-          <EntryList items={ecommerce.themen.items.map((thema) => ({ title: thema.begriff, text: thema.text }))} />
+          {/* Fragment statt Hülle: EntryList braucht col-content als direkten Elternteil für sein Raster. */}
+          <>
+            <EntryList items={ecommerce.themen.items.map((thema) => ({ title: thema.begriff, text: thema.text }))} />
+            {ecommerce.cfoHinweis && (
+              <div className="mt-6 lg:mt-10">
+                <CfoHinweis text={ecommerce.cfoHinweis} />
+              </div>
+            )}
+          </>
         </TwoColumns>
       </Section>
 

@@ -1,7 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
-import { CtaBand, PageHero, QuietLink, RuleList, Section, SectionHeading, TwoColumns, type Crumb } from "@/components/ui";
+import {
+  CfoHinweis,
+  CtaBand,
+  PageHero,
+  QuietLink,
+  RuleList,
+  Section,
+  SectionHeading,
+  TwoColumns,
+  type Crumb,
+} from "@/components/ui";
 import { getZielgruppeSeite, punkteHeading, zielgruppenSeiten } from "@/content/zielgruppen";
 import { site } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
@@ -70,7 +80,14 @@ export default async function ZielgruppePage({ params }: Props) {
             </>
           }
         >
-          <RuleList items={zielgruppe.punkte} />
+          <div>
+            <RuleList items={zielgruppe.punkte} />
+            {zielgruppe.cfoHinweis && (
+              <div className="mt-10 lg:mt-14">
+                <CfoHinweis text={zielgruppe.cfoHinweis} />
+              </div>
+            )}
+          </div>
         </TwoColumns>
       </Section>
       <CtaBand />
