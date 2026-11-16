@@ -1,40 +1,77 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { bookingHref, bookingUrl, mainNav, site } from "@/lib/site";
+
+const bookingProps = bookingUrl ? { target: "_blank", rel: "noopener noreferrer" } : {};
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
+  const [mastheadVisible, setMastheadVisible] = useState(true);
+  const mastheadRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const desktopRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
-  // Handle scroll effect
+  // Bei Seitenwechsel im selben Render schließen, damit das Menü nicht kurz stehen bleibt.
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setIsOpen(false);
+    setOpenMenu(null);
+    setOpenGroup(null);
+  }
+
+  // Auf der Startseite steht der Name im großen Kopf. In der Leiste erscheint er erst, wenn der Kopf weggescrollt ist.
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    const masthead = mastheadRef.current;
+    if (!masthead) return;
+    const observer = new IntersectionObserver(([entry]) => setMastheadVisible(entry.isIntersecting));
+    observer.observe(masthead);
+    return () => observer.disconnect();
+  }, [isHome]);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Prevent scrolling when menu is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
   }, [isOpen]);
 
-  // Close menu on Escape key
+  // Wird das Fenster breit genug für die Desktop-Navigation, darf das Menü die Seite nicht gesperrt lassen.
+  // Mit den beiden Schwerpunkt-Buttons passt die Leiste erst ab 80rem in eine Zeile.
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 80rem)");
+    const close = (e: MediaQueryListEvent) => {
+      if (e.matches) setIsOpen(false);
+    };
+    desktop.addEventListener("change", close);
+    return () => desktop.removeEventListener("change", close);
+  }, []);
+
+  const closeMobile = useCallback(() => {
+    setIsOpen(false);
+    toggleRef.current?.focus();
+  }, []);
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        setIsOpen(false);
-        toggleRef.current?.focus();
+      if (e.key !== "Escape") return;
+      if (isOpen) {
+        closeMobile();
+      } else if (openMenu) {
+        const label = openMenu;
+        setOpenMenu(null);
+        desktopRef.current?.querySelector<HTMLElement>(`[data-menu="${label}"]`)?.focus();
       }
     },
-    [isOpen]
+    [isOpen, openMenu, closeMobile]
   );
 
   useEffect(() => {
@@ -42,175 +79,274 @@ export default function Navbar() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
-  // Focus trap: keep Tab within the mobile menu while open
+  useEffect(() => {
+    if (!openMenu) return;
+    const close = (e: PointerEvent) => {
+      if (!desktopRef.current?.contains(e.target as Node)) setOpenMenu(null);
+    };
+    document.addEventListener("pointerdown", close);
+    return () => document.removeEventListener("pointerdown", close);
+  }, [openMenu]);
+
+  // Fokus bleibt im mobilen Menü, solange es offen ist.
   useEffect(() => {
     if (!isOpen || !menuRef.current) return;
-
     const menu = menuRef.current;
-    const focusableSelector =
-      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-    // Small delay to allow animation to complete
-    const timer = setTimeout(() => {
-      const firstFocusable = menu.querySelector<HTMLElement>(focusableSelector);
-      firstFocusable?.focus();
-    }, 100);
-
+    const selector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    menu.querySelector<HTMLElement>(selector)?.focus();
     const trapFocus = (e: KeyboardEvent) => {
       if (e.key !== "Tab") return;
-
-      const focusableElements =
-        menu.querySelectorAll<HTMLElement>(focusableSelector);
-      if (focusableElements.length === 0) return;
-
-      const first = focusableElements[0];
-      const last = focusableElements[focusableElements.length - 1];
-
-      if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
+      const items = [...menu.querySelectorAll<HTMLElement>(selector)].filter((item) => item.offsetParent !== null);
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
       }
     };
-
     document.addEventListener("keydown", trapFocus);
-    return () => {
-      clearTimeout(timer);
-      document.removeEventListener("keydown", trapFocus);
-    };
+    return () => document.removeEventListener("keydown", trapFocus);
   }, [isOpen]);
 
-  const navLinks = [
-    { name: "Home", href: "/#home" },
-    { name: "Services", href: "/#services" },
-    { name: "FAQ", href: "/#faq" },
-    { name: "Kontakt", href: "/#kontakt" },
-  ];
+  const isActive = (href: string, childHrefs: string[] = []) =>
+    pathname === href || pathname.startsWith(`${href}/`) || childHrefs.includes(pathname);
+
+  const topClass = (active: boolean) =>
+    `inline-flex min-h-12 items-center whitespace-nowrap text-base decoration-1 underline-offset-[0.3em] hover:underline ${
+      active ? "underline" : ""
+    }`;
+
+  const showName = !isHome || !mastheadVisible;
 
   return (
     <>
-      <nav
-        aria-label="Hauptnavigation"
-        className={`fixed top-0 w-full z-[100] transition-all duration-300 ${
-          scrolled || isOpen
-            ? "bg-slate-950/80 backdrop-blur-xl shadow-[0_0_40px_rgba(165,231,255,0.06)] py-4"
-            : "bg-transparent py-6"
-        }`}
-      >
-        <div className="flex justify-between items-center max-w-7xl mx-auto px-6 md:px-8">
-          <a
-            href="/"
-            aria-label="Fabian Tepel Steuerberatung – Startseite"
-            className="flex items-center gap-3 relative z-[110]"
-          >
-            <span
-              className="material-symbols-outlined text-cyan-400 text-2xl"
-              aria-hidden="true"
-              data-icon="account_balance"
-            >
-              account_balance
-            </span>
-            <span className="text-xl font-extrabold tracking-tighter text-slate-50 dark:text-white font-manrope uppercase">
-              FABIAN TEPEL
-            </span>
-          </a>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-10">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                className="font-manrope text-sm font-semibold tracking-widest uppercase text-slate-300 hover:text-cyan-400 transition-colors"
-                href={link.href}
-              >
-                {link.name}
-              </a>
-            ))}
+      {isHome && (
+        <div ref={mastheadRef} className="frame wrap pt-2.5 md:pt-3">
+          <div className="fit-box">
+            <p className="fit-name">Fabian Tepel</p>
           </div>
-
-          <div className="hidden md:block">
-            <a
-              href="/#kontakt"
-              className="bg-primary-container text-on-primary-container font-headline font-bold px-6 py-2.5 rounded-lg scale-95 active:scale-90 transition-transform hover:shadow-[0_0_20px_rgba(0,210,255,0.3)] inline-block"
-            >
-              Erstgespräch
-            </a>
-          </div>
-
-          {/* Mobile Menu Toggle Button */}
-          <button
-            ref={toggleRef}
-            aria-label={isOpen ? "Menü schließen" : "Menü öffnen"}
-            aria-expanded={isOpen}
-            aria-controls="mobile-menu"
-            className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 relative z-[110]"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <span
-              aria-hidden="true"
-              className={`block w-6 h-0.5 bg-white transition-transform duration-300 rounded ${
-                isOpen ? "rotate-45 translate-y-2" : ""
-              }`}
-            ></span>
-            <span
-              aria-hidden="true"
-              className={`block w-6 h-0.5 bg-white transition-opacity duration-300 rounded ${
-                isOpen ? "opacity-0" : ""
-              }`}
-            ></span>
-            <span
-              aria-hidden="true"
-              className={`block w-6 h-0.5 bg-white transition-transform duration-300 rounded ${
-                isOpen ? "-rotate-45 -translate-y-2" : ""
-              }`}
-            ></span>
-          </button>
         </div>
-      </nav>
+      )}
 
-      {/* Mobile Menu Overlay */}
+      {/* Die Leiste bleibt beim Scrollen stehen. Auf der Startseite liegt sie direkt unter dem großen Namen. */}
+      <header className="sticky top-0 z-50 bg-bg">
+        <div className="frame wrap">
+          <nav
+            aria-label="Hauptnavigation"
+            className={`flex min-h-12 items-center justify-between gap-6 border-b border-ink ${isHome ? "border-t" : ""}`}
+          >
+            <Link
+              href="/"
+              aria-label={`${site.legalName} – Startseite`}
+              className="flex min-h-12 min-w-0 shrink-0 items-baseline gap-x-2 pt-3"
+            >
+              {showName && <span className="font-display text-[1.375rem] leading-none whitespace-nowrap">Fabian Tepel</span>}{" "}
+              <span className={`text-base leading-none font-medium whitespace-nowrap ${showName ? "max-[21rem]:sr-only" : ""}`}>
+                Steuerberatung
+              </span>
+            </Link>
+
+            {/* Desktop */}
+            <div ref={desktopRef} className="hidden items-center gap-x-[clamp(1rem,1.35vw,2.25rem)] xl:flex">
+              {mainNav.map((item) => {
+                const childHrefs = item.children?.map((c) => c.href) ?? [];
+                const active = isActive(item.href, childHrefs);
+                if (item.highlight) {
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      aria-current={pathname === item.href ? "page" : undefined}
+                      className={`btn btn-small btn-outline whitespace-nowrap decoration-1 underline-offset-[0.3em] ${
+                        active ? "underline" : ""
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
+                if (!item.children) {
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      aria-current={pathname === item.href ? "page" : undefined}
+                      className={topClass(active)}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
+                const expanded = openMenu === item.label;
+                const panelId = `nav-${item.href.slice(1)}`;
+                return (
+                  <div
+                    key={item.href}
+                    className="relative"
+                    onPointerEnter={(e) => {
+                      if (e.pointerType === "mouse") setOpenMenu(item.label);
+                    }}
+                    onPointerLeave={(e) => {
+                      if (e.pointerType === "mouse") setOpenMenu(null);
+                    }}
+                  >
+                    <button
+                      type="button"
+                      data-menu={item.label}
+                      aria-expanded={expanded}
+                      aria-controls={panelId}
+                      onClick={() => setOpenMenu(expanded ? null : item.label)}
+                      className={`cursor-pointer ${topClass(active)}`}
+                    >
+                      {item.label}
+                    </button>
+                    <div id={panelId} hidden={!expanded} className="absolute top-full -left-4 w-max max-w-[24rem]">
+                      <ul className="border border-ink bg-bg py-2">
+                        {item.children.map((child) => (
+                          <li key={child.href}>
+                            <Link
+                              href={child.href}
+                              aria-current={pathname === child.href ? "page" : undefined}
+                              className={`flex min-h-10 items-center px-4 text-base decoration-1 underline-offset-[0.3em] hover:underline ${
+                                pathname === child.href ? "underline" : ""
+                              }`}
+                            >
+                              {child.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
+              <Link href={bookingHref} {...bookingProps} className="btn btn-small whitespace-nowrap">
+                Erstgespräch
+              </Link>
+            </div>
+
+            <button
+              ref={toggleRef}
+              type="button"
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
+              onClick={() => setIsOpen(true)}
+              className="-mr-2 flex min-h-12 cursor-pointer items-center px-2 text-base font-medium underline decoration-1 underline-offset-[0.3em] xl:hidden"
+            >
+              Menü
+            </button>
+          </nav>
+        </div>
+      </header>
+
+      {/* Mobil */}
       <div
         ref={menuRef}
         id="mobile-menu"
         role="dialog"
         aria-modal="true"
         aria-label="Navigation"
-        className={`fixed inset-0 bg-slate-950/95 backdrop-blur-2xl z-[90] flex flex-col justify-center items-center transition-all duration-500 ease-in-out md:hidden ${
-          isOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        }`}
+        hidden={!isOpen}
+        className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain bg-bg xl:hidden"
       >
-        <div className="flex flex-col items-center gap-8 w-full px-8">
-          {navLinks.map((link, index) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setIsOpen(false)}
-              className={`font-headline text-3xl font-bold uppercase tracking-widest text-white hover:text-cyan-400 transition-all transform duration-300 ${
-                isOpen
-                  ? `translate-y-0 opacity-100 ${index === 0 ? "delay-0" : index === 1 ? "delay-[100ms]" : "delay-[200ms]"}`
-                  : "translate-y-8 opacity-0 delay-0"
-              }`}
+        <div className="wrap flex min-h-full flex-col pb-8">
+          <div className="flex min-h-12 items-center justify-between border-b border-ink">
+            <span className="font-display text-[1.375rem] leading-none whitespace-nowrap">Fabian Tepel</span>
+            <button
+              type="button"
+              onClick={closeMobile}
+              className="-mr-2 flex min-h-12 cursor-pointer items-center px-2 text-base font-medium underline decoration-1 underline-offset-[0.3em]"
             >
-              {link.name}
+              Schließen
+            </button>
+          </div>
+
+          {/* Die Schwerpunkte stehen als umrandete Buttons über der Liste, wie in der Leiste am Desktop. */}
+          <ul className="mt-5 grid grid-cols-1 gap-2 min-[22.5rem]:grid-cols-2">
+            {mainNav
+              .filter((item) => item.highlight)
+              .map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={pathname === item.href ? "page" : undefined}
+                    onClick={() => setIsOpen(false)}
+                    className={`btn btn-outline w-full px-3 whitespace-nowrap decoration-1 underline-offset-[0.3em] ${
+                      pathname === item.href ? "underline" : ""
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+          </ul>
+
+          <ul className="mt-3">
+            {mainNav.filter((item) => !item.highlight).map((item) => {
+              const rowClass = "flex min-h-14 w-full items-center justify-between font-display text-[1.75rem] leading-tight text-left";
+              if (!item.children) {
+                return (
+                  <li key={item.href} className="border-b border-rule">
+                    <Link
+                      href={item.href}
+                      aria-current={pathname === item.href ? "page" : undefined}
+                      onClick={() => setIsOpen(false)}
+                      className={rowClass}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              }
+              const expanded = openGroup === item.label;
+              const groupId = `menu-${item.href.slice(1)}`;
+              return (
+                <li key={item.href} className="border-b border-rule">
+                  <button
+                    type="button"
+                    aria-expanded={expanded}
+                    aria-controls={groupId}
+                    onClick={() => setOpenGroup(expanded ? null : item.label)}
+                    className={`cursor-pointer ${rowClass}`}
+                  >
+                    {item.label}
+                    <span aria-hidden="true" className="font-sans text-2xl leading-none font-normal">
+                      {expanded ? "−" : "+"}
+                    </span>
+                  </button>
+                  <ul id={groupId} hidden={!expanded} className="pb-3">
+                    {item.children.map((child) => (
+                      <li key={child.href}>
+                        <Link
+                          href={child.href}
+                          aria-current={pathname === child.href ? "page" : undefined}
+                          onClick={() => setIsOpen(false)}
+                          className={`flex min-h-11 items-center text-[1.0625rem] leading-snug decoration-1 underline-offset-[0.3em] ${
+                            pathname === child.href ? "underline" : ""
+                          }`}
+                        >
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="mt-auto pt-8">
+            <Link href={bookingHref} {...bookingProps} onClick={() => setIsOpen(false)} className="btn w-full">
+              Erstgespräch buchen
+            </Link>
+            <a href={site.phone.href} className="quiet-link mt-2 w-full justify-center">
+              {site.phone.label}
             </a>
-          ))}
-          <a
-            href="/#kontakt"
-            onClick={() => setIsOpen(false)}
-            className={`mt-8 bg-primary-container text-on-primary-container font-headline font-bold px-8 py-4 rounded-xl text-lg w-full text-center transition-all transform duration-300 ${
-              isOpen
-                ? "translate-y-0 opacity-100 delay-[400ms] shadow-[0_0_30px_rgba(0,210,255,0.2)]"
-                : "translate-y-8 opacity-0 delay-0"
-            }`}
-          >
-            Erstgespräch Buchen
-          </a>
+          </div>
         </div>
       </div>
     </>
