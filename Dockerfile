@@ -3,7 +3,7 @@
 # Dependabot (Ökosystem "docker") kann sie automatisch hochziehen.
 
 # --- Abhängigkeiten installieren ---
-FROM node:22.23.4-alpine AS deps
+FROM node:22.23.5-alpine AS deps
 WORKDIR /app
 RUN apk add --no-cache libc6-compat
 COPY package.json package-lock.json* pnpm-lock.yaml* yarn.lock* ./
@@ -14,7 +14,7 @@ RUN corepack enable \
     else npm install; fi
 
 # --- Bauen ---
-FROM node:22.23.4-alpine AS build
+FROM node:22.23.5-alpine AS build
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 # Braucht die Seite NEXT_PUBLIC_-Variablen beim Build, hier ergänzen, z. B.:
@@ -24,7 +24,7 @@ COPY . .
 RUN npm run build
 
 # --- Laufzeit ---
-FROM node:22.23.4-alpine AS run
+FROM node:22.23.5-alpine AS run
 WORKDIR /app
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
