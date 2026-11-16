@@ -15,25 +15,31 @@
   --font-display: var(--font-gloock), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-schibsted), "Helvetica Neue", Arial, sans-serif;
 
-  /* Eine Skala für alle Seiten. Jede Stufe wächst linear von 320 bis 1920 px. */
-  --text-title: clamp(1.875rem, 0.85rem + 5.125vw, 7rem);
-  --text-title--line-height: 1.04;
+  /* Eine Skala für alle Seiten. Jede Stufe wächst linear von 320 bis 1920 px.
+     Groß von Rand zu Rand läuft nur der Name im Kopf der Startseite (.fit-name). */
+  --text-title: clamp(1.875rem, 1.44rem + 2.55vw, 4.5rem);
+  --text-title--line-height: 1.08;
   --text-title--letter-spacing: -0.012em;
-  --text-closing: clamp(2.25rem, 1.06rem + 6.6vw, 9rem);
-  --text-closing--line-height: 1.02;
-  --text-closing--letter-spacing: -0.02em;
-  --text-statement: clamp(1.5rem, 0.84rem + 3.37vw, 5.25rem);
-  --text-statement--line-height: 1.16;
-  --text-h2: clamp(1.625rem, 1.2rem + 1.1vw, 2.5rem);
+  --text-closing: clamp(2rem, 1.55rem + 2.61vw, 4.75rem);
+  --text-closing--line-height: 1.06;
+  --text-closing--letter-spacing: -0.012em;
+  --text-focus: clamp(2.25rem, 1.8rem + 1.83vw, 4rem);
+  --text-focus--line-height: 1.04;
+  --text-focus--letter-spacing: -0.015em;
+  --text-statement: clamp(1.3125rem, 1.18rem + 0.78vw, 2.125rem);
+  --text-statement--line-height: 1.28;
+  --text-h2: clamp(1.625rem, 1.4rem + 0.61vw, 2.125rem);
   --text-h2--line-height: 1.15;
-  --text-lead: clamp(1.1875rem, 1rem + 0.9vw, 1.875rem);
-  --text-lead--line-height: 1.36;
+  --text-h3: clamp(1.25rem, 1.15rem + 0.45vw, 1.625rem);
+  --text-h3--line-height: 1.2;
+  --text-lead: clamp(1.1875rem, 1.15rem + 0.3vw, 1.5rem);
+  --text-lead--line-height: 1.4;
 }
 
 :root {
   --gutter: clamp(1rem, 3.4vw, 4.5rem);
   --col-gap: clamp(1rem, 1.5vw, 1.75rem);
-  --section-space: clamp(4rem, 2.5rem + 7.5vw, 11rem);
+  --section-space: clamp(4rem, 2.9rem + 4.2vw, 8rem);
   color-scheme: dark;
   scroll-padding-top: 4.5rem;
 }
@@ -77,14 +83,12 @@ body {
     padding-top: var(--section-space);
   }
 
-  /* Text, der exakt von Rand zu Rand läuft. Die Teiler sind am Schriftbild von Gloock gemessen,
-     der Einzug nimmt den Leerraum vor dem ersten Buchstaben weg. */
+  /* Der Name im Kopf der Startseite läuft exakt von Rand zu Rand. Der Teiler ist am Schriftbild von Gloock gemessen. */
   .fit-box {
     container-type: inline-size;
   }
 
-  .fit-name,
-  .fit-lead {
+  .fit-name {
     display: block;
     width: max-content;
     font-family: var(--font-display);
@@ -102,12 +106,6 @@ body {
     .fit-name {
       font-size: 18svh;
     }
-  }
-
-  .fit-lead {
-    font-size: calc(100cqw / 7.06);
-    line-height: 1.02;
-    margin-left: -0.006em;
   }
 
   .btn {
