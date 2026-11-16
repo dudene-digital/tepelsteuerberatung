@@ -91,7 +91,7 @@ export default function CfoPage() {
 
       {/* Rückspiegel und Windschutzscheibe: Zeile für Zeile dieselbe Frage, links rückblickend, rechts vorausschauend. */}
       <Section labelledBy="vergleich-heading">
-        <h2 id="vergleich-heading" className="max-w-[16em] font-display text-statement text-balance">
+        <h2 id="vergleich-heading" className="max-w-[16em] font-display text-focus text-balance">
           {vergleich.heading}
         </h2>
         <div className="grid-12 mt-8 lg:mt-12">

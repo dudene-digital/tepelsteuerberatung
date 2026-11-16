@@ -39,7 +39,7 @@ export default function TeamPage() {
           </div>
           <div className="min-w-0 lg:col-span-7">
             <SectionHeading id="fabian-heading">{content.fabianHeading}</SectionHeading>
-            <blockquote className="mt-4 max-w-[34em] text-lead text-pretty lg:mt-6">
+            <blockquote className="mt-4 max-w-[34em] text-pretty lg:mt-6">
               <p>{content.fabianQuote}</p>
             </blockquote>
           </div>

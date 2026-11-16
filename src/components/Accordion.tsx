@@ -28,7 +28,7 @@ export default function Accordion({ items }: { items: readonly AccordionItem[] }
                 onClick={() => setOpenIndex(isOpen ? null : index)}
                 className="group flex w-full cursor-pointer items-baseline justify-between gap-5 py-4 text-left lg:py-5"
               >
-                <span className="font-display text-h2 text-pretty decoration-1 underline-offset-[0.14em] group-hover:underline">
+                <span className="font-display text-h3 text-pretty decoration-1 underline-offset-[0.14em] group-hover:underline">
                   {item.question}
                 </span>
                 <span aria-hidden="true" className="w-5 shrink-0 text-center text-2xl leading-none">
