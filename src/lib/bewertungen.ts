@@ -1,6 +1,7 @@
 import config from "@payload-config";
 import { getPayload } from "payload";
-import { bewertungenAufStartseite, sichtbar } from "@/collections/Bewertungen";
+import { sichtbar } from "@/collections/Bewertungen";
+import { anzahlStartseiteMax, anzahlStartseiteVorgabe } from "@/globals/GoogleProfil";
 import type { Bewertung, GoogleProfil } from "@/payload-types";
 
 /* Zugriff der Website auf die Google-Bewertungen. Abfragen laufen mit overrideAccess: false, also mit den Rechten
@@ -9,7 +10,7 @@ import type { Bewertung, GoogleProfil } from "@/payload-types";
    zeigt die Startseite nur den Link auf das Google-Profil. */
 
 export type BewertungEintrag = Pick<Bewertung, "id" | "text" | "autor" | "datum" | "sterne">;
-export type ProfilAngaben = Pick<GoogleProfil, "gesamtnote" | "anzahl" | "stand" | "hinweis">;
+export type ProfilAngaben = Pick<GoogleProfil, "gesamtnote" | "anzahl" | "stand" | "hinweis" | "anzahlStartseite">;
 
 export interface BewertungenDaten {
   bewertungen: BewertungEintrag[];
@@ -20,25 +21,29 @@ export interface BewertungenDaten {
 export async function bewertungenStartseite(): Promise<BewertungenDaten> {
   try {
     const payload = await getPayload({ config });
-    const [{ docs }, profil] = await Promise.all([
+    // Beide Abfragen laufen gleichzeitig. Darum holt die erste so viele Bewertungen, wie höchstens erlaubt sind,
+    // und gekürzt wird erst, wenn die eingestellte Anzahl aus dem Google-Profil da ist.
+    const [{ docs }, profilDoc] = await Promise.all([
       payload.find({
         collection: "bewertungen",
         where: sichtbar,
         select: { text: true, autor: true, datum: true, sterne: true },
         sort: ["-datum", "-createdAt"],
         depth: 0,
-        limit: bewertungenAufStartseite,
+        limit: anzahlStartseiteMax,
         pagination: false,
         overrideAccess: false,
       }),
       payload.findGlobal({
         slug: "google-profil",
-        select: { gesamtnote: true, anzahl: true, stand: true, hinweis: true },
+        select: { gesamtnote: true, anzahl: true, stand: true, hinweis: true, anzahlStartseite: true },
         depth: 0,
         overrideAccess: false,
       }),
     ]);
-    return { bewertungen: docs as BewertungEintrag[], profil: (profil ?? {}) as Partial<ProfilAngaben> };
+    const profil = (profilDoc ?? {}) as Partial<ProfilAngaben>;
+    const anzahl = profil.anzahlStartseite ?? anzahlStartseiteVorgabe;
+    return { bewertungen: (docs as BewertungEintrag[]).slice(0, anzahl), profil };
   } catch (fehler) {
     console.error("Google-Bewertungen konnten nicht geladen werden", fehler);
     return { bewertungen: [], profil: {} };

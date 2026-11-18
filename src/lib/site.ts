@@ -18,8 +18,8 @@ export const site = {
   hoursShort: "Mo\u2060–\u2060Do 9\u2060–\u206016\u00a0Uhr, Fr 9\u2060–\u206013\u00a0Uhr",
   hoursLong: "Montag bis Donnerstag 9\u2060–\u206016\u00a0Uhr, Freitag 9\u2060–\u206013\u00a0Uhr",
   linkedin: "https://www.linkedin.com/in/fabian-tepel-0925bb108",
-  googleProfile:
-    "https://www.google.com/maps/place/Fabian+Tepel+Steuerberatung/@50.0588221,8.2396785",
+  /* Teilen-Link aus dem Google-Unternehmensprofil. Führt direkt zum Eintrag, nicht zu einer Suche nach dem Namen. */
+  googleProfile: "https://maps.app.goo.gl/kDmAHcLTN2wkbTia6",
 } as const;
 
 /**

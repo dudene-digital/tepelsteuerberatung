@@ -5,11 +5,8 @@ import { angemeldet } from "./access";
    Die Website bindet Google nicht ein: kein Abruf bei Google, keine Google-Skripte im Browser, kein Tracking.
    Pflege: neue Bewertungen wörtlich übernehmen, nicht auswählen oder kürzen. Namen nur so, wie sie bei Google
    öffentlich stehen, am besten Vorname und Initial. Neue Einträge sind Entwürfe; erst wenn Fabian sie veröffentlicht,
-   sind sie live. Die Startseite zeigt die drei neuesten veröffentlichten Bewertungen, die nicht ausgeblendet sind.
-   Note, Anzahl, Stand und den Hinweis nach § 5b Abs. 3 UWG pflegt das Global „Google-Profil“. */
-
-/** So viele Bewertungen zeigt die Startseite. Der UWG-Hinweis im Global nennt dieselbe Zahl. */
-export const bewertungenAufStartseite = 3;
+   sind sie live. Die Startseite zeigt die neuesten veröffentlichten Bewertungen, die nicht ausgeblendet sind.
+   Wie viele, dazu Note, Anzahl, Stand und den Hinweis nach § 5b Abs. 3 UWG pflegt das Global „Google-Profil“. */
 
 /** Was Besucher sehen dürfen: veröffentlicht und nicht ausgeblendet. */
 export const sichtbar: Where = { and: [{ _status: { equals: "published" } }, { ausgeblendet: { not_equals: true } }] };
@@ -24,7 +21,7 @@ export const Bewertungen: CollectionConfig = {
     listSearchableFields: ["autor", "text"],
     group: "Google-Bewertungen",
     description:
-      "Die Startseite zeigt automatisch die drei neuesten veröffentlichten Bewertungen. Bewertungen wörtlich aus dem Google-Profil übernehmen und erst nach Fabians Freigabe veröffentlichen.",
+      "Die Startseite zeigt automatisch die neuesten veröffentlichten Bewertungen; wie viele, steht im Google-Profil. Bewertungen wörtlich aus dem Google-Profil übernehmen und erst nach Fabians Freigabe veröffentlichen.",
   },
   defaultSort: "-datum",
   versions: { drafts: true, maxPerDoc: 10 },

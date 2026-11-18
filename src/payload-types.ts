@@ -231,7 +231,7 @@ export interface Kategorien {
   createdAt: string;
 }
 /**
- * Die Startseite zeigt automatisch die drei neuesten veröffentlichten Bewertungen. Bewertungen wörtlich aus dem Google-Profil übernehmen und erst nach Fabians Freigabe veröffentlichen.
+ * Die Startseite zeigt automatisch die neuesten veröffentlichten Bewertungen; wie viele, steht im Google-Profil. Bewertungen wörtlich aus dem Google-Profil übernehmen und erst nach Fabians Freigabe veröffentlichen.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "bewertungen".
@@ -550,6 +550,10 @@ export interface GoogleProfil {
    */
   stand: string;
   /**
+   * So viele der neuesten veröffentlichten Bewertungen zeigt die Startseite, höchstens 10. Nennt der Hinweis unten eine Zahl, dort mit anpassen.
+   */
+  anzahlStartseite: number;
+  /**
    * Steht unter den Bewertungen. Fabian prüft den Text, bevor er veröffentlicht wird.
    */
   hinweis: string;
@@ -565,6 +569,7 @@ export interface GoogleProfilSelect<T extends boolean = true> {
   gesamtnote?: T;
   anzahl?: T;
   stand?: T;
+  anzahlStartseite?: T;
   hinweis?: T;
   _status?: T;
   updatedAt?: T;
