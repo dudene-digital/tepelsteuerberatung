@@ -3,13 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { connection } from "next/server";
 import HashRedirect from "@/components/HashRedirect";
+import { GoogleBewertungen } from "@/components/GoogleBewertungen";
 import JsonLd from "@/components/JsonLd";
 import { RatgeberTeaser } from "@/components/Ratgeber";
-import { BookingLink, CtaBand, LeadIndex, PhotoSplit, QuietLink, Section, SectionHeading, Statements, TwoColumns } from "@/components/ui";
-import { bewertungen, bewertungenHinweis, bewertungenStand } from "@/content/bewertungen";
+import { BookingLink, CtaBand, LeadIndex, PhotoSplit, QuietLink, Section, SectionHeading, Statements } from "@/components/ui";
 import { cfo } from "@/content/cfo";
 import { fabianImBuero, fabianPortrait } from "@/content/kanzlei";
 import { ecommerce, zielgruppen } from "@/content/zielgruppen";
+import { bewertungenStartseite } from "@/lib/bewertungen";
 import { neuesteArtikel } from "@/lib/ratgeber";
 import { leistungenNav, site } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
@@ -110,9 +111,9 @@ const kanzleiJsonLd = {
 
 export default async function Home() {
   const [schwerpunkt, ...weitere] = zielgruppen;
-  // Die neuesten Ratgeber-Artikel kommen zur Laufzeit aus dem CMS, nicht aus dem Build.
+  // Ratgeber-Artikel und Google-Bewertungen kommen zur Laufzeit aus dem CMS, nicht aus dem Build.
   await connection();
-  const artikel = await neuesteArtikel();
+  const [artikel, bewertungen] = await Promise.all([neuesteArtikel(), bewertungenStartseite()]);
 
   return (
     <>
@@ -226,46 +227,7 @@ export default async function Home() {
         </div>
       </PhotoSplit>
 
-      {/* Google-Bewertungen: statische Zitate aus dem Profil, ohne Einbindung von Google. Ohne Einträge nur der Verweis. */}
-      <Section labelledBy="bewertungen-heading">
-        <TwoColumns heading={<SectionHeading id="bewertungen-heading">Google-Bewertungen</SectionHeading>}>
-          <div>
-            {bewertungen.length > 0 ? (
-              <>
-                <ul className="border-t border-rule">
-                  {bewertungen.slice(0, 3).map((bewertung) => (
-                    <li key={`${bewertung.autor}-${bewertung.datum}`} className="border-b border-rule py-5 lg:py-6">
-                      <figure>
-                        <p className="text-base text-muted">
-                          <span aria-hidden="true">{"★".repeat(bewertung.sterne)}</span>
-                          <span className="sr-only">{bewertung.sterne} von 5 Sternen</span>
-                        </p>
-                        <blockquote className="mt-2 max-w-[34em] text-lead text-pretty">
-                          <p>„{bewertung.text}“</p>
-                        </blockquote>
-                        <figcaption className="mt-2 text-base text-muted">
-                          {bewertung.autor}, {bewertung.datum}
-                        </figcaption>
-                      </figure>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-4 max-w-[46rem] text-base text-muted text-pretty">
-                  {bewertungenHinweis}
-                  {bewertungenStand && ` Stand: ${bewertungenStand}.`}
-                </p>
-              </>
-            ) : (
-              <p className="max-w-[34em] text-lead text-pretty">
-                Was Mandanten über die Zusammenarbeit mit uns schreiben, liest du in unserem Google-Unternehmensprofil.
-              </p>
-            )}
-            <a href={site.googleProfile} target="_blank" rel="noopener noreferrer" className="quiet-link mt-2">
-              Bewertungen bei Google ansehen<span className="sr-only"> (öffnet in einem neuen Tab)</span>
-            </a>
-          </div>
-        </TwoColumns>
-      </Section>
+      <GoogleBewertungen {...bewertungen} />
 
       <RatgeberTeaser artikel={artikel} />
 

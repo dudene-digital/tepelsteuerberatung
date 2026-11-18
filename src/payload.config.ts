@@ -6,9 +6,11 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { de } from "@payloadcms/translations/languages/de";
 import sharp from "sharp";
 import { Artikel } from "./collections/Artikel";
+import { Bewertungen } from "./collections/Bewertungen";
 import { Kategorien, kategorienStart } from "./collections/Kategorien";
 import { Media } from "./collections/Media";
 import { Users } from "./collections/Users";
+import { GoogleProfil } from "./globals/GoogleProfil";
 import { migrations } from "./migrations";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -26,7 +28,8 @@ export default buildConfig({
     importMap: { baseDir: path.resolve(dirname) },
     meta: { titleSuffix: " – Tepel Redaktion" },
   },
-  collections: [Artikel, Kategorien, Media, Users],
+  collections: [Artikel, Kategorien, Bewertungen, Media, Users],
+  globals: [GoogleProfil],
   editor: lexicalEditor(),
   db: postgresAdapter({
     pool: {

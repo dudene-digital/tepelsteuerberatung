@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import { Breadcrumbs } from "@/components/ui";
 import { pageMeta } from "@/lib/seo";
-import { bewertungen } from "@/content/bewertungen";
+import { zeigtBewertungen } from "@/lib/bewertungen";
 import { bookingUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -67,21 +68,21 @@ const bookingHtml = bookingUrl
 `
   : "";
 
-/* Entwurf für die Google-Bewertungen auf der Startseite. Er erscheint erst, wenn src/content/bewertungen.ts Einträge enthält.
-   Fabian prüft den Text vor dem Livegang. */
-const reviewsHtml =
-  bewertungen.length > 0
-    ? `
+/* Entwurf für die Google-Bewertungen auf der Startseite. Er erscheint erst, wenn im CMS eine Bewertung veröffentlicht
+   und nicht ausgeblendet ist. Fabian prüft den Text vor dem Livegang. */
+const reviewsHtml = `
 <h3>Bewertungen aus unserem Google-Unternehmensprofil</h3> <p>Auf der Startseite zeigen wir einige Bewertungen, die Mandantinnen und Mandanten in unserem Google-Unternehmensprofil &ouml;ffentlich abgegeben haben. Wir &uuml;bernehmen sie von Hand als Text. Google ist dabei nicht eingebunden; beim Aufruf unserer Website werden keine Daten an Google &uuml;bermittelt.</p> <p>Angezeigt werden der Bewertungstext, die Sternezahl, der Monat der Bewertung und der Name in der Form, in der er bei Google ver&ouml;ffentlicht ist, nach M&ouml;glichkeit gek&uuml;rzt auf Vorname und Initial. Rechtsgrundlage ist unser berechtigtes Interesse, Interessenten einen Eindruck von unserer Arbeit zu geben (Art. 6 Abs. 1 lit. f DSGVO). Wer nicht m&ouml;chte, dass seine Bewertung hier erscheint, kann uns jederzeit kontaktieren; wir entfernen sie dann.</p>
-`
-    : "";
+`;
 
 const breadcrumbs = [
   { name: "Startseite", href: "/" },
   { name: "Datenschutz", href: "/datenschutz" },
 ];
 
-export default function DatenschutzPage() {
+export default async function DatenschutzPage() {
+  // Ob Bewertungen live sind, steht im CMS. Deshalb entsteht die Seite je Aufruf, wie die Startseite.
+  await connection();
+  const mitBewertungen = await zeigtBewertungen();
   return (
     <>
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
@@ -89,7 +90,7 @@ export default function DatenschutzPage() {
         <Breadcrumbs items={breadcrumbs} />
         <div
           className="legal-content mt-6 md:mt-10"
-          dangerouslySetInnerHTML={{ __html: privacyHtml + reviewsHtml + bookingHtml }}
+          dangerouslySetInnerHTML={{ __html: privacyHtml + (mitBewertungen ? reviewsHtml : "") + bookingHtml }}
         />
       </div>
     </>

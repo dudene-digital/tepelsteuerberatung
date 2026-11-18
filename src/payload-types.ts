@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     artikel: Artikel;
     kategorien: Kategorien;
+    bewertungen: Bewertung;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -80,6 +81,7 @@ export interface Config {
   collectionsSelect: {
     artikel: ArtikelSelect<false> | ArtikelSelect<true>;
     kategorien: KategorienSelect<false> | KategorienSelect<true>;
+    bewertungen: BewertungenSelect<false> | BewertungenSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -91,8 +93,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'google-profil': GoogleProfil;
+  };
+  globalsSelect: {
+    'google-profil': GoogleProfilSelect<false> | GoogleProfilSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -225,6 +231,38 @@ export interface Kategorien {
   createdAt: string;
 }
 /**
+ * Die Startseite zeigt automatisch die drei neuesten veröffentlichten Bewertungen. Bewertungen wörtlich aus dem Google-Profil übernehmen und erst nach Fabians Freigabe veröffentlichen.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "bewertungen".
+ */
+export interface Bewertung {
+  id: number;
+  /**
+   * Wörtlich wie bei Google, ohne Kürzungen. Anführungszeichen setzt die Website selbst.
+   */
+  text: string;
+  /**
+   * So, wie er bei Google steht, am besten Vorname und Initial, z. B. „Anna M.“
+   */
+  autor: string;
+  /**
+   * Steht bei Google nur „vor 3 Monaten“, den ungefähren Monat wählen.
+   */
+  datum: string;
+  /**
+   * 1 bis 5, wie bei Google.
+   */
+  sterne: number;
+  /**
+   * Etwa wenn die Bewertung bei Google nicht mehr steht. Widerspricht jemand der Anzeige, die Bewertung besser löschen.
+   */
+  ausgeblendet?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -286,6 +324,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'kategorien';
         value: number | Kategorien;
+      } | null)
+    | ({
+        relationTo: 'bewertungen';
+        value: number | Bewertung;
       } | null)
     | ({
         relationTo: 'media';
@@ -365,6 +407,20 @@ export interface KategorienSelect<T extends boolean = true> {
   slug?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "bewertungen_select".
+ */
+export interface BewertungenSelect<T extends boolean = true> {
+  text?: T;
+  autor?: T;
+  datum?: T;
+  sterne?: T;
+  ausgeblendet?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -472,6 +528,48 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Gesamtnote, Anzahl und Stand wie im Google-Unternehmensprofil. Bei jeder Übernahme neuer Bewertungen mit aktualisieren.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "google-profil".
+ */
+export interface GoogleProfil {
+  id: number;
+  /**
+   * Wie bei Google, z. B. 4,9. Leer lassen, dann zeigt die Startseite keine Gesamtnote.
+   */
+  gesamtnote?: number | null;
+  /**
+   * Wie bei Google neben der Gesamtnote.
+   */
+  anzahl?: number | null;
+  /**
+   * Tag, an dem ihr Bewertungen, Note und Anzahl zuletzt mit dem Google-Profil abgeglichen habt.
+   */
+  stand: string;
+  /**
+   * Steht unter den Bewertungen. Fabian prüft den Text, bevor er veröffentlicht wird.
+   */
+  hinweis: string;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "google-profil_select".
+ */
+export interface GoogleProfilSelect<T extends boolean = true> {
+  gesamtnote?: T;
+  anzahl?: T;
+  stand?: T;
+  hinweis?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
