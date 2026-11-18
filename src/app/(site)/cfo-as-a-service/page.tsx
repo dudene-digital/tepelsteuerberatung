@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import Accordion from "@/components/Accordion";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
+import KennzahlenCockpit from "@/components/KennzahlenCockpit";
 import {
   BookingLink,
   CtaBand,
@@ -142,25 +142,10 @@ export default function CfoPage() {
         </TwoColumns>
       </Section>
 
-      {/* Beispiel-Cockpit über die volle Breite, damit Zahlen und Achsen am Desktop lesbar bleiben. */}
+      {/* Beispiel-Cockpit über die volle Breite, als echter Seiteninhalt statt als Bild. */}
       <Section labelledBy="cockpit-heading">
         <SectionHeading id="cockpit-heading">{cockpit.heading}</SectionHeading>
-        <figure className="mt-6 lg:mt-8">
-          <Image
-            src={cockpit.image.src}
-            alt={cockpit.image.alt}
-            width={cockpit.image.width}
-            height={cockpit.image.height}
-            sizes="(min-width: 1920px) 1776px, 94vw"
-            className="h-auto w-full"
-          />
-          <figcaption className="mt-3 flex flex-wrap items-baseline gap-x-5 text-base text-muted">
-            <span>{cockpit.caption}</span>
-            <a href={cockpit.image.src} target="_blank" rel="noopener noreferrer" className="inline-link tap text-ink">
-              Bild in voller Größe öffnen<span className="sr-only"> (öffnet in einem neuen Tab)</span>
-            </a>
-          </figcaption>
-        </figure>
+        <KennzahlenCockpit daten={cockpit} />
       </Section>
 
       {/* Vier Takte von links nach rechts, vom kürzesten zum längsten Abstand. */}
