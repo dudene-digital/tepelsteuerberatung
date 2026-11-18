@@ -1,43 +1,37 @@
-import type { Metadata, Viewport } from "next";
-import { Gloock, Schibsted_Grotesk } from "next/font/google";
+import type { Metadata } from "next";
+import { Inter, Manrope } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { baseOpenGraph } from "@/lib/seo";
 
-const gloock = Gloock({
-  variable: "--font-gloock",
-  weight: "400",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const schibsted = Schibsted_Grotesk({
-  variable: "--font-schibsted",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
 });
+
+
 
 const siteUrl = "https://tepel-steuerberatung.de";
-
-export const viewport: Viewport = {
-  themeColor: "#0c0c0b",
-};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Steuerberater Wiesbaden für Online-Händler & Unternehmer | Tepel",
+    default: "Fabian Tepel | Steuerberatung in Wiesbaden",
     template: "%s | Tepel Steuerberatung",
   },
   description:
-    "Digitale Steuerberatung in Wiesbaden: Buchhaltung, Lohn, Jahresabschluss und Steuern für E-Commerce, GmbH, Freiberufler und Vermieter. Fester Ansprechpartner, Antwort in 24 Stunden.",
+    "Digitale & agile Steuerberatung in Wiesbaden. Fabian Tepel bietet maßgeschneiderte Lösungen für Unternehmer, Start-ups und Freiberufler – von Buchhaltung über Lohn & Gehalt bis zur strategischen Steuergestaltung.",
   keywords: [
     "Steuerberater Wiesbaden",
     "Steuerberatung Wiesbaden",
     "digitale Steuerberatung",
     "Buchhaltung Wiesbaden",
     "Lohnabrechnung Wiesbaden",
-    "Steuerberater für Online-Händler",
+    "Steuerberater für Start-ups",
     "Fabian Tepel",
     "Tepel Steuerberatung",
     "Steuergestaltung",
@@ -45,9 +39,28 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Fabian Tepel" }],
   creator: "Tepel Steuerberatung",
-  openGraph: baseOpenGraph,
+  openGraph: {
+    type: "website",
+    locale: "de_DE",
+    url: siteUrl,
+    siteName: "Tepel Steuerberatung",
+    title: "Fabian Tepel | Digitale Steuerberatung in Wiesbaden",
+    description:
+      "Maßgeschneiderte Steuerberatung für Unternehmer, Start-ups und Freiberufler. Digital, agil und persönlich betreut.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Tepel Steuerberatung – Digitale & Agile Steuerberatung in Wiesbaden",
+      },
+    ],
+  },
   twitter: {
     card: "summary_large_image",
+    title: "Fabian Tepel | Digitale Steuerberatung in Wiesbaden",
+    description:
+      "Maßgeschneiderte Steuerberatung für Unternehmer, Start-ups und Freiberufler. Digital, agil und persönlich betreut.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -69,12 +82,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // data-scroll-behavior: Seit Next.js 16 schaltet Next das weiche Scrollen beim Seitenwechsel nur damit ab.
-    // Ohne das Attribut blieb eine neue Seite auf der Scrollposition der alten stehen.
     <html
       lang="de"
-      data-scroll-behavior="smooth"
-      className={`${gloock.variable} ${schibsted.variable} antialiased scroll-smooth`}
+      className={`${inter.variable} ${manrope.variable} dark antialiased scroll-smooth`}
     >
       <head>
         <Script
@@ -83,15 +93,11 @@ export default function RootLayout({
           src="https://analytics.tepel-steuerberatung.de/js/script.js"
         />
       </head>
-      <body suppressHydrationWarning className="flex flex-col">
+      <body suppressHydrationWarning className="antialiased selection:bg-primary selection:text-on-primary min-h-full flex flex-col overflow-x-hidden">
         <a href="#main-content" className="skip-to-content">
           Zum Inhalt springen
         </a>
-        <Navbar />
-        <main id="main-content" className="frame flex-1">
-          {children}
-        </main>
-        <Footer />
+        {children}
       </body>
     </html>
   );

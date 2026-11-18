@@ -20,22 +20,11 @@ const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const recentRequests = new Map<string, number[]>();
 
-/* Entfernt abgelaufene Zeitstempel und IPs ohne gültige Zeitstempel. */
-function purgeExpired(now: number) {
-  for (const [key, times] of recentRequests) {
-    const valid = times.filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
-    if (valid.length === 0) recentRequests.delete(key);
-    else if (valid.length !== times.length) recentRequests.set(key, valid);
-  }
-}
-
-/* Läuft jede Minute, auch ohne neue Anfragen. Eine IP ist damit spätestens elf Minuten nach ihrer
-   letzten Anfrage gelöscht, so steht es in der Datenschutzerklärung. unref hält den Prozess nicht am Leben. */
-setInterval(() => purgeExpired(Date.now()), 60 * 1000).unref();
-
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
-  purgeExpired(now);
+  for (const [key, times] of recentRequests) {
+    if (times.every((t) => now - t >= RATE_LIMIT_WINDOW_MS)) recentRequests.delete(key);
+  }
   const times = (recentRequests.get(ip) ?? []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
   if (times.length >= RATE_LIMIT_MAX) {
     recentRequests.set(ip, times);
@@ -118,7 +107,7 @@ export async function sendContactEmail(
       subject: `Kontaktanfrage: ${subject}`,
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background: #f8fafc; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0;">
-          <div style="background: #0c0c0b; padding: 32px 40px;">
+          <div style="background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%); padding: 32px 40px;">
             <h1 style="color: #ffffff; font-size: 22px; margin: 0; font-weight: 700;">Neue Kontaktanfrage</h1>
             <p style="color: rgba(255,255,255,0.85); font-size: 14px; margin: 8px 0 0;">über tepel-steuerberatung.de</p>
           </div>
@@ -130,7 +119,7 @@ export async function sendContactEmail(
               </tr>
               <tr>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: top;">E-Mail</td>
-                <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #1e293b; font-size: 15px;"><a href="mailto:${escapeHtml(email)}" style="color: #0c0c0b; text-decoration: none;">${escapeHtml(email)}</a></td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #1e293b; font-size: 15px;"><a href="mailto:${escapeHtml(email)}" style="color: #0891b2; text-decoration: none;">${escapeHtml(email)}</a></td>
               </tr>
               <tr>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: top;">Telefon</td>
@@ -165,7 +154,7 @@ export async function sendContactEmail(
       subject: "Deine Anfrage bei Tepel Steuerberatung",
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background: #f8fafc; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0;">
-          <div style="background: #0c0c0b; padding: 32px 40px;">
+          <div style="background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%); padding: 32px 40px;">
             <h1 style="color: #ffffff; font-size: 22px; margin: 0; font-weight: 700;">Vielen Dank für deine Nachricht!</h1>
           </div>
           <div style="padding: 32px 40px;">
@@ -188,7 +177,7 @@ export async function sendContactEmail(
           <div style="background: #f1f5f9; padding: 20px 40px; text-align: center; border-top: 1px solid #e2e8f0;">
             <p style="color: #94a3b8; font-size: 12px; margin: 0;">
               Tepel Steuerberatung · Gottfried-Kinkel-Straße 21 · 65187 Wiesbaden · 0611 / 15756 0<br/>
-              <a href="https://tepel-steuerberatung.de" style="color: #0c0c0b; text-decoration: none;">tepel-steuerberatung.de</a> · <a href="mailto:fabian@tepel-steuerberatung.de" style="color: #0c0c0b; text-decoration: none;">fabian@tepel-steuerberatung.de</a>
+              <a href="https://tepel-steuerberatung.de" style="color: #0891b2; text-decoration: none;">tepel-steuerberatung.de</a> · <a href="mailto:fabian@tepel-steuerberatung.de" style="color: #0891b2; text-decoration: none;">fabian@tepel-steuerberatung.de</a>
             </p>
           </div>
         </div>
